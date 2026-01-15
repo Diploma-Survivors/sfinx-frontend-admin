@@ -15,9 +15,14 @@ import { useProgrammingLanguages } from '@/hooks/use-programming-languages';
 import { ProgrammingLanguageTable } from '@/components/programming-language/programming-language-table';
 
 import { CreateProgrammingLanguageDialog } from '@/components/programming-language/create-programming-language-dialog';
+import { EditProgrammingLanguageDialog } from '@/components/programming-language/edit-programming-language-dialog';
+import { ProgrammingLanguage } from '@/types/programing-language-type';
+import { useState } from 'react';
 
 export default function ProgrammingLanguagePage() {
     const t = useTranslations('ProgrammingLanguagePage');
+    const [selectedLanguage, setSelectedLanguage] = useState<ProgrammingLanguage | null>(null);
+    const [isEditOpen, setIsEditOpen] = useState(false);
 
     const {
         languages,
@@ -44,9 +49,9 @@ export default function ProgrammingLanguagePage() {
         setFilters({ search: '', isActive: undefined });
     };
 
-    const handleEdit = (language: any) => {
-        // Placeholder for Edit Dialog
-        console.log('Edit language:', language);
+    const handleEdit = (language: ProgrammingLanguage) => {
+        setSelectedLanguage(language);
+        setIsEditOpen(true);
     };
 
     const handleDelete = (language: any) => {
@@ -120,6 +125,13 @@ export default function ProgrammingLanguagePage() {
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 onStatusChange={handleStatusChange}
+            />
+
+            <EditProgrammingLanguageDialog
+                language={selectedLanguage}
+                open={isEditOpen}
+                onOpenChange={setIsEditOpen}
+                onSuccess={refresh}
             />
         </div>
     );

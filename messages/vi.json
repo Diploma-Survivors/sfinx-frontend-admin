@@ -364,6 +364,26 @@
         "createSuccess": "Tạo ngôn ngữ thành công",
         "createError": "Tạo ngôn ngữ thất bại"
     },
+    "EditProgrammingLanguageDialog": {
+        "title": "Chỉnh sửa ngôn ngữ lập trình",
+        "description": "Cập nhật thông tin ngôn ngữ lập trình.",
+        "nameLabel": "Tên",
+        "namePlaceholder": "Ví dụ: C++",
+        "judge0IdLabel": "Judge0 ID",
+        "judge0IdPlaceholder": "Ví dụ: 54",
+        "monacoLanguageLabel": "Monaco Language",
+        "monacoLanguagePlaceholder": "Ví dụ: cpp",
+        "orderIndexLabel": "Thứ tự hiển thị",
+        "orderIndexPlaceholder": "Ví dụ: 1",
+        "starterCodeLabel": "Mã khởi đầu",
+        "starterCodePlaceholder": "Nhập mã khởi đầu...",
+        "nameRequired": "Tên là bắt buộc",
+        "starterCodeRequired": "Mã khởi đầu là bắt buộc",
+        "save": "Lưu thay đổi",
+        "saving": "Đang lưu...",
+        "updateSuccess": "Cập nhật ngôn ngữ thành công",
+        "updateError": "Cập nhật ngôn ngữ thất bại"
+    },
     "CreateTagDialog": {
         "tagNameRequired": "Tên thẻ là bắt buộc",
         "tagNameTooLong": "Tên thẻ quá dài",
