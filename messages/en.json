@@ -344,6 +344,26 @@
         "activate": "Activate",
         "deactivate": "Deactivate"
     },
+    "CreateProgrammingLanguageDialog": {
+        "title": "Create Programming Language",
+        "description": "Add a new programming language to the system.",
+        "nameLabel": "Name",
+        "namePlaceholder": "e.g. C++",
+        "judge0IdLabel": "Judge0 ID",
+        "judge0IdPlaceholder": "e.g. 54",
+        "monacoLanguageLabel": "Monaco Language",
+        "monacoLanguagePlaceholder": "e.g. cpp",
+        "orderIndexLabel": "Order Index",
+        "orderIndexPlaceholder": "e.g. 1",
+        "starterCodeLabel": "Starter Code",
+        "starterCodePlaceholder": "Enter starter code...",
+        "nameRequired": "Name is required",
+        "starterCodeRequired": "Starter code is required",
+        "create": "Create",
+        "creating": "Creating...",
+        "createSuccess": "Language created successfully",
+        "createError": "Failed to create language"
+    },
     "CreateTagDialog": {
         "tagNameRequired": "Tag name is required",
         "tagNameTooLong": "Tag name is too long",

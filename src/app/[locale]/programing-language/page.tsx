@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Plus, RotateCcw, Search } from 'lucide-react';
+import { RotateCcw, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/select';
 import { useProgrammingLanguages } from '@/hooks/use-programming-languages';
 import { ProgrammingLanguageTable } from '@/components/programming-language/programming-language-table';
+
+import { CreateProgrammingLanguageDialog } from '@/components/programming-language/create-programming-language-dialog';
 
 export default function ProgrammingLanguagePage() {
     const t = useTranslations('ProgrammingLanguagePage');
@@ -42,11 +44,6 @@ export default function ProgrammingLanguagePage() {
         setFilters({ search: '', isActive: undefined });
     };
 
-    const handleCreate = () => {
-        // Placeholder for Create Dialog
-        console.log('Open Create Dialog');
-    };
-
     const handleEdit = (language: any) => {
         // Placeholder for Edit Dialog
         console.log('Edit language:', language);
@@ -71,10 +68,7 @@ export default function ProgrammingLanguagePage() {
                         {t('description')}
                     </p>
                 </div>
-                <Button onClick={handleCreate}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    {t('createLanguage')}
-                </Button>
+                <CreateProgrammingLanguageDialog onSuccess={refresh} />
             </div>
 
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
