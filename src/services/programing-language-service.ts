@@ -15,7 +15,7 @@ export const ProgrammingLanguageService = {
         params?: QueryProgrammingLanguageParams
     ): Promise<PaginatedProgrammingLanguageResponse> => {
         const response = await axiosInstance.get('/programming-languages', { params });
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -23,7 +23,7 @@ export const ProgrammingLanguageService = {
      */
     getAllActiveProgrammingLanguages: async (): Promise<ProgrammingLanguage[]> => {
         const response = await axiosInstance.get('/programming-languages/active');
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -31,7 +31,7 @@ export const ProgrammingLanguageService = {
      */
     getProgrammingLanguageById: async (id: number): Promise<ProgrammingLanguage> => {
         const response = await axiosInstance.get(`/programming-languages/${id}`);
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -39,7 +39,7 @@ export const ProgrammingLanguageService = {
      */
     getProgrammingLanguageBySlug: async (slug: string): Promise<ProgrammingLanguage> => {
         const response = await axiosInstance.get(`/programming-languages/slug/${slug}`);
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -49,7 +49,7 @@ export const ProgrammingLanguageService = {
         data: CreateProgrammingLanguageRequest
     ): Promise<ProgrammingLanguage> => {
         const response = await axiosInstance.post('/programming-languages', data);
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -60,7 +60,7 @@ export const ProgrammingLanguageService = {
         data: UpdateProgrammingLanguageRequest
     ): Promise<ProgrammingLanguage> => {
         const response = await axiosInstance.patch(`/programming-languages/${id}`, data);
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -75,7 +75,7 @@ export const ProgrammingLanguageService = {
      */
     activateProgrammingLanguage: async (id: number): Promise<ProgrammingLanguage> => {
         const response = await axiosInstance.patch(`/programming-languages/${id}/activate`);
-        return response.data;
+        return response.data.data;
     },
 
     /**
@@ -83,6 +83,6 @@ export const ProgrammingLanguageService = {
      */
     deactivateProgrammingLanguage: async (id: number): Promise<ProgrammingLanguage> => {
         const response = await axiosInstance.patch(`/programming-languages/${id}/deactivate`);
-        return response.data;
+        return response.data.data;
     },
 };
