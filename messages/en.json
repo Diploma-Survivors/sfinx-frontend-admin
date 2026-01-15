@@ -905,5 +905,11 @@
     "Loading": {
         "title": "Loading application...",
         "description": "Please wait while we initialize the system"
+    },
+    "UserTable": {
+        "noUsersFound": "No users found",
+        "banSuccess": "User {username} has been banned successfully",
+        "unbanSuccess": "User {username} has been unbanned successfully",
+        "actionError": "Failed to perform action. Please try again."
     }
 }
