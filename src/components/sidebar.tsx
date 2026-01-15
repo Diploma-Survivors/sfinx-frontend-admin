@@ -132,7 +132,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           name: t('rolesAndPermissions'),
           href: '/roles',
           icon: Shield,
-          permissions: [PermissionEnum.ROLE_READ]
+          permissions: [PermissionEnum.ADMIN_ROLES]
         },
       ],
     },
