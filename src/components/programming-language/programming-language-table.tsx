@@ -12,14 +12,15 @@ import { Badge } from '@/components/ui/badge';
 import { ProgrammingLanguage } from '@/types/programing-language-type';
 import { Edit, Trash2, Power, PowerOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Pagination } from '@/components/ui/pagination'; // Adjust import based on your Pagination component
-import { DataTablePagination } from '@/components/ui/data-table-pagination'; // Using existing pagination component if available
+import { DataTablePagination } from '@/components/ui/data-table-pagination';
 
 interface ProgrammingLanguageTableProps {
     languages: ProgrammingLanguage[];
     loading: boolean;
     page: number;
     totalPages: number;
+    total: number;
+    limit: number;
     onPageChange: (page: number) => void;
     onEdit?: (language: ProgrammingLanguage) => void;
     onDelete?: (language: ProgrammingLanguage) => void;
@@ -31,6 +32,8 @@ export function ProgrammingLanguageTable({
     loading,
     page,
     totalPages,
+    total,
+    limit,
     onPageChange,
     onEdit,
     onDelete,
@@ -48,7 +51,7 @@ export function ProgrammingLanguageTable({
 
     return (
         <div className="space-y-4">
-            <div className="rounded-md border border-slate-200 dark:border-slate-800">
+            <div className="rounded-md border border-slate-200 dark:border-slate-800 overflow-hidden">
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -119,35 +122,21 @@ export function ProgrammingLanguageTable({
                         ))}
                     </TableBody>
                 </Table>
-            </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="flex justify-end">
-                    {/* Assuming you have a reusable pagination component, otherwise implement basic buttons */}
-                    <div className="flex gap-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => onPageChange(page - 1)}
-                            disabled={page <= 1}
-                        >
-                            Previous
-                        </Button>
-                        <span className="flex items-center text-sm px-2">
-                            Page {page} of {totalPages}
-                        </span>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => onPageChange(page + 1)}
-                            disabled={page >= totalPages}
-                        >
-                            Next
-                        </Button>
-                    </div>
-                </div>
-            )}
+                <DataTablePagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={onPageChange}
+                    meta={{
+                        page,
+                        limit,
+                        total,
+                        hasPreviousPage: page > 1,
+                        hasNextPage: page < totalPages
+                    }}
+                    entityName="languages"
+                />
+            </div>
         </div>
     );
 }

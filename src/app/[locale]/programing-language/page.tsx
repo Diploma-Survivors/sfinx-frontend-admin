@@ -22,6 +22,8 @@ export default function ProgrammingLanguagePage() {
         isLoading,
         page,
         totalPages,
+        total,
+        limit,
         filters,
         setPage,
         setFilters,
@@ -118,6 +120,8 @@ export default function ProgrammingLanguagePage() {
                 loading={isLoading}
                 page={page}
                 totalPages={totalPages}
+                total={total}
+                limit={limit}
                 onPageChange={setPage}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
