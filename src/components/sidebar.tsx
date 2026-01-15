@@ -111,6 +111,12 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           icon: CheckSquare,
           permissions: [PermissionEnum.SUBMISSION_READ]
         },
+        {
+          name: t('programmingLanguages'),
+          href: '/programing-language',
+          icon: Code,
+          permissions: [PermissionEnum.LANGUAGE_READ]
+        },
       ],
     },
     {
