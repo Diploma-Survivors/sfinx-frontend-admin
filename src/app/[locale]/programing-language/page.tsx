@@ -14,6 +14,9 @@ import {
 import { useProgrammingLanguages } from '@/hooks/use-programming-languages';
 import { ProgrammingLanguageTable } from '@/components/programming-language/programming-language-table';
 
+import { toastService } from '@/services/toasts-service';
+import { useDialog } from '@/components/providers/dialog-provider';
+import { ProgrammingLanguageService } from '@/services/programing-language-service';
 import { CreateProgrammingLanguageDialog } from '@/components/programming-language/create-programming-language-dialog';
 import { EditProgrammingLanguageDialog } from '@/components/programming-language/edit-programming-language-dialog';
 import { ProgrammingLanguage } from '@/types/programing-language-type';
@@ -23,6 +26,7 @@ export default function ProgrammingLanguagePage() {
     const t = useTranslations('ProgrammingLanguagePage');
     const [selectedLanguage, setSelectedLanguage] = useState<ProgrammingLanguage | null>(null);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const { confirm } = useDialog();
 
     const {
         languages,
@@ -54,14 +58,67 @@ export default function ProgrammingLanguagePage() {
         setIsEditOpen(true);
     };
 
-    const handleDelete = (language: any) => {
-        // Placeholder for Delete Action
-        console.log('Delete language:', language);
+    const handleDelete = async (language: ProgrammingLanguage) => {
+        const confirmed = await confirm({
+            title: t('confirmDeleteTitle'),
+            message: (
+                <span>
+                    {t.rich('confirmDeleteMessage', {
+                        name: language.name,
+                        span: (chunks) => <span className="font-semibold text-foreground"> "{chunks}" </span>
+                    })}
+                </span>
+            ),
+            confirmText: t('delete'),
+            cancelText: t('cancel'),
+            color: 'red',
+        });
+
+        if (confirmed) {
+            try {
+                await ProgrammingLanguageService.deleteProgrammingLanguage(language.id);
+                toastService.success(t('deleteSuccess'));
+                refresh();
+            } catch (error) {
+                console.error('Failed to delete language:', error);
+                toastService.error(t('deleteError'));
+            }
+        }
     };
 
-    const handleStatusChange = (language: any) => {
-        // Placeholder for Status Change
-        console.log('Change status:', language);
+    const handleStatusChange = async (language: ProgrammingLanguage) => {
+        const newStatus = !language.isActive;
+        const action = newStatus ? 'activate' : 'deactivate';
+
+        const confirmed = await confirm({
+            title: newStatus ? t('confirmActivateTitle') : t('confirmDeactivateTitle'),
+            message: (
+                <span>
+                    {t.rich(newStatus ? 'confirmActivateMessage' : 'confirmDeactivateMessage', {
+                        name: language.name,
+                        span: (chunks) => <span className="font-semibold text-foreground"> "{chunks}" </span>
+                    })}
+                </span>
+            ),
+            confirmText: newStatus ? t('activate') : t('deactivate'),
+            cancelText: t('cancel'),
+            color: newStatus ? 'green' : 'red',
+        });
+
+        if (confirmed) {
+            try {
+                if (newStatus) {
+                    await ProgrammingLanguageService.activateProgrammingLanguage(language.id);
+                } else {
+                    await ProgrammingLanguageService.deactivateProgrammingLanguage(language.id);
+                }
+                toastService.success(newStatus ? t('activateSuccess') : t('deactivateSuccess'));
+                refresh();
+            } catch (error) {
+                console.error(`Failed to ${action} language:`, error);
+                toastService.error(newStatus ? t('activateError') : t('deactivateError'));
+            }
+        }
     };
 
     return (
