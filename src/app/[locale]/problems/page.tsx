@@ -6,7 +6,7 @@ import { Plus } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import useProblems from '@/hooks/use-problems';
 import ProblemFilter from '@/components/problem-filters/problem-filter';
-import ProblemTable, { ProblemTableMode } from '@/components/problem-table';
+import ProblemTable, { ProblemTableMode } from '@/components/problems/problem-table';
 import { useDialog } from '@/components/providers/dialog-provider';
 import { toastService } from '@/services/toasts-service';
 

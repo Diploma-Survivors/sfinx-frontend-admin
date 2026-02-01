@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, X } from 'lucide-react';
 import MarkdownEditor from '@/components/markdown-editor/markdown-editor';
 import { cn } from '@/lib/utils';
-import type { CreateProblemFormValues } from '@/components/problem-create-form';
+import type { CreateProblemFormValues } from '@/components/problems/problem-create-form';
 import { useTranslations } from 'next-intl';
 
 export function SolutionHintsStep() {

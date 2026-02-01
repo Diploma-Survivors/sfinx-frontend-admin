@@ -998,5 +998,45 @@
         "banSuccess": "User {username} has been banned successfully",
         "unbanSuccess": "User {username} has been unbanned successfully",
         "actionError": "Failed to perform action. Please try again."
+    },
+    "Subscription": {
+        "title": "Subscription Management",
+        "plans": "Plans",
+        "features": "Features",
+        "transactions": "Transactions",
+        "statistics": "Statistics",
+        "plansDescription": "Manage subscription plans and pricing.",
+        "transactionsDescription": "View payment history and transaction details.",
+        "statsDescription": "Monitor revenue and subscriber growth.",
+        "table": {
+            "id": "ID",
+            "name": "Name",
+            "price": "Price (USD)",
+            "duration": "Duration (Months)",
+            "status": "Status",
+            "actions": "Actions",
+            "user": "User",
+            "amount": "Amount",
+            "provider": "Provider",
+            "date": "Date",
+            "txnId": "Transaction ID"
+        },
+        "stats": {
+            "totalRevenue": "Total Revenue",
+            "monthlyRevenue": "Monthly Revenue",
+            "activeSubscribers": "Active Subscribers",
+            "churnRate": "Churn Rate",
+            "revenueOverTime": "Revenue Over Time",
+            "subsByPlan": "Subscriptions by Plan"
+        },
+        "status": {
+            "success": "Success",
+            "pending": "Pending",
+            "failed": "Failed",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "editPlan": "Edit Plan",
+        "updateSuccess": "Plan updated successfully"
     }
 }

@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/sortable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table';
-import { SelectProblemsModal } from '@/components/related-problems-modal';
+import { SelectProblemsModal } from '@/components/problems/related-problems-modal';
 import { Problem } from '@/types/problems';
 import { FieldErrors } from 'react-hook-form';
 import { ContestFormValues } from './schema';

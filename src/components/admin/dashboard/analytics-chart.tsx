@@ -42,8 +42,6 @@ export function AnalyticsChart() {
     });
     const [isCustomOpen, setIsCustomOpen] = useState(false);
 
-    console.log(data);
-
     useEffect(() => {
         const fetchData = async () => {
             if (range === 'custom' && (!customRange.from || !customRange.to)) {

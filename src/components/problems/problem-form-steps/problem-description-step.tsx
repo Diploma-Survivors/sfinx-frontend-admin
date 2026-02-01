@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import MarkdownEditor from '@/components/markdown-editor/markdown-editor';
 import { cn } from '@/lib/utils';
-import type { CreateProblemFormValues } from '@/components/problem-create-form';
+import type { CreateProblemFormValues } from '@/components/problems/problem-create-form';
 
 export function ProblemDescriptionStep() {
   const { control } = useFormContext<CreateProblemFormValues>();

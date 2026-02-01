@@ -26,11 +26,13 @@ import {
   Trophy,
   Users,
   X,
+  CreditCard,
+  BarChart3,
 } from 'lucide-react';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { UserSettingsDialog } from './user/user-settings-dialog';
+import { UserSettingsDialog } from '@/components/user/user-settings-dialog';
 import { PermissionEnum } from '@/types/permission';
 
 interface SideBarProps {
@@ -42,6 +44,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('Sidebar');
+  const tSub = useTranslations('Subscription');
 
   const { user, hasPermission } = useApp();
 
@@ -139,6 +142,36 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           href: '/roles',
           icon: Shield,
           permissions: [PermissionEnum.ADMIN_ROLES]
+        },
+      ],
+    },
+    {
+      // Subscription Management Section
+      title: tSub('title'),
+      items: [
+        {
+          name: tSub('plans'),
+          href: '/subscriptions/plans',
+          icon: CreditCard,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
+        },
+        {
+          name: tSub('features'),
+          href: '/subscriptions/features',
+          icon: Sparkles,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
+        },
+        {
+          name: tSub('transactions'),
+          href: '/subscriptions/transactions',
+          icon: FileCode,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
+        },
+        {
+          name: tSub('statistics'),
+          href: '/subscriptions/statistics',
+          icon: BarChart3,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
         },
       ],
     },

@@ -12,7 +12,7 @@ import {
   validateTestcaseFileContent,
 } from '@/lib/utils/testcase-file-validations';
 import { cn } from '@/lib/utils';
-import type { CreateProblemFormValues } from '@/components/problem-create-form';
+import type { CreateProblemFormValues } from '@/components/problems/problem-create-form';
 import { useTranslations } from 'next-intl';
 import { ProblemsService } from '@/services/problems-service';
 import { useDialog } from '@/components/providers/dialog-provider';

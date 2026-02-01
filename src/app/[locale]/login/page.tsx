@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import clientApi from '@/lib/apis/axios-client';
 import { ForgotPasswordDialog } from '@/components/auth/forgot-password-dialog';
-import LanguageSwitcher from '@/components/language-switcher';
+import LanguageSwitcher from '@/components/layout/language-switcher';
 import { toastService } from '@/services/toasts-service';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';

@@ -10,8 +10,8 @@ interface DataTablePaginationProps {
         page: number;
         limit: number;
         total: number;
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
+        hasPreviousPage?: boolean;
+        hasNextPage?: boolean;
     };
     entityName?: string; // e.g., "problems", "tags", "topics"
 }

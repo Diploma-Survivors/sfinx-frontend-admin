@@ -1,6 +1,6 @@
 'use client';
 
-import SubmissionDetail from '@/components/submission-detail';
+import SubmissionDetail from '@/components/submissions/submission-detail';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -36,7 +36,6 @@ export function RecentSubmissionsWidget({
                     sortOrder: SortOrder.DESC,
                 });
                 setSubmissions(response.data.data.data);
-                console.log(response.data.data.data);
             } catch (error) {
                 console.error('Failed to fetch recent submissions:', error);
             }

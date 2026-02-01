@@ -9,7 +9,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import ProblemTable, { ProblemTableMode } from '@/components/problem-table';
+import ProblemTable, { ProblemTableMode } from '@/components/problems/problem-table';
 import ProblemFilter from '@/components/problem-filters/problem-filter';
 import useProblems from '@/hooks/use-problems';
 import {

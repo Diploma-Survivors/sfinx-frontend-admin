@@ -4,6 +4,7 @@ import type {
   CreateTestcaseResponse,
   SampleTestCase,
 } from '@/types/testcases';
+import { toastService } from './toasts-service';
 
 export class TestcasesService {
   // Create test cases from array (returns testcase ID)
@@ -81,16 +82,14 @@ export class TestcasesService {
       const cachedResponse = TestcasesService.getTestcaseFromCache(cacheKey);
 
       if (cachedResponse) {
-        console.log('Using cached testcase response:', cachedResponse);
         return cachedResponse.id;
       }
       // Upload new testcase and cache the result
       const testcaseResponse = await TestcasesService.createTestcaseFile(file);
       TestcasesService.saveTestcaseToCache(cacheKey, testcaseResponse);
-      console.log('Testcase uploaded and cached:', testcaseResponse);
       return testcaseResponse.id;
     } catch (error) {
-      console.error('Error in complete testcase creation:', error);
+      toastService.error('Failed to create testcase');
       throw error;
     }
   }

@@ -94,10 +94,6 @@ async function createProblem(
       'Content-Type': 'multipart/form-data',
     },
   });
-  
-  // Mock API call
-  // console.log('Mock creating problem:', problemRequest);
-  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   // // Mock response data
   // const mockProblem: Problem = {

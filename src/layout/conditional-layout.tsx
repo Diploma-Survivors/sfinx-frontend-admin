@@ -1,12 +1,12 @@
 'use client';
 
-import Breadcrumbs from '@/components/breadcrumbs';
-import Sidebar from '@/components/sidebar';
+import Breadcrumbs from '@/components/layout/breadcrumbs';
+import Sidebar from '@/components/layout/sidebar';
 import { useApp } from '@/contexts/app-context';
 import { SidebarProvider, useSidebar } from '@/contexts/sidebar-context';
 import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
-import LanguageSwitcher from '@/components/language-switcher';
+import LanguageSwitcher from '@/components/layout/language-switcher';
 import { useLocale } from 'next-intl';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {

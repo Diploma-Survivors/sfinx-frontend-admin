@@ -59,6 +59,11 @@ export function AppProvider({
   );
 
   useEffect(() => {
+    // Don't fetch user data if on login page
+    if (shouldHideNavigation) {
+      return;
+    }
+
     if (decodedAccessToken) {
       setIsLoading(true);
 
@@ -77,7 +82,7 @@ export function AppProvider({
           setIsLoading(false);
         });
     }
-  }, [decodedAccessToken]);
+  }, [decodedAccessToken, shouldHideNavigation]);
 
   const value: AppContextType = {
     user,

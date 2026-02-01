@@ -988,5 +988,51 @@
     "Loading": {
         "title": "Đang tải ứng dụng...",
         "description": "Vui lòng chờ trong khi chúng tôi khởi tạo hệ thống"
+    },
+    "UserTable": {
+        "noUsersFound": "Không tìm thấy người dùng nào",
+        "banSuccess": "Người dùng {username} đã bị cấm thành công",
+        "unbanSuccess": "Người dùng {username} đã được bỏ cấm thành công",
+        "actionError": "Thực hiện hành động thất bại. Vui lòng thử lại."
+    },
+    "Subscription": {
+        "title": "Quản lý Gói đăng ký",
+        "plans": "Gói dịch vụ",
+        "features": "Tính năng",
+        "transactions": "Lịch sử giao dịch",
+        "statistics": "Thống kê doanh thu",
+        "plansDescription": "Quản lý các gói đăng ký và giá cả.",
+        "transactionsDescription": "Xem lịch sử thanh toán và chi tiết giao dịch.",
+        "statsDescription": "Theo dõi doanh thu và tăng trưởng thuê bao.",
+        "table": {
+            "id": "ID",
+            "name": "Tên gói",
+            "price": "Giá (USD)",
+            "duration": "Thời hạn (Tháng)",
+            "status": "Trạng thái",
+            "actions": "Hành động",
+            "user": "Người dùng",
+            "amount": "Số tiền",
+            "provider": "Cổng thanh toán",
+            "date": "Ngày giao dịch",
+            "txnId": "Mã giao dịch"
+        },
+        "stats": {
+            "totalRevenue": "Tổng doanh thu",
+            "monthlyRevenue": "Doanh thu tháng này",
+            "activeSubscribers": "Thuê bao hoạt động",
+            "churnRate": "Tỷ lệ rời bỏ",
+            "revenueOverTime": "Biểu đồ doanh thu",
+            "subsByPlan": "Phân bố theo gói"
+        },
+        "status": {
+            "success": "Thành công",
+            "pending": "Đang xử lý",
+            "failed": "Thất bại",
+            "active": "Hoạt động",
+            "inactive": "Tạm ngưng"
+        },
+        "editPlan": "Chỉnh sửa gói",
+        "updateSuccess": "Cập nhật gói thành công"
     }
 }

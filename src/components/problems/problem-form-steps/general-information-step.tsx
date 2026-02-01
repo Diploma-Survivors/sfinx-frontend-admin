@@ -11,13 +11,13 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { Badge } from '@/components/ui/badge';
-import { SelectProblemsModal } from '@/components/related-problems-modal';
+import { SelectProblemsModal } from '@/components/problems/related-problems-modal';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DIFFICULTY_OPTIONS } from '@/types/problems';
 import type { Topic } from '@/types/topics';
 import type { Tag } from '@/types/tags';
-import type { CreateProblemFormValues } from '@/components/problem-create-form';
+import type { CreateProblemFormValues } from '@/components/problems/problem-create-form';
 import { useTranslations } from 'next-intl';
 
 interface GeneralInformationStepProps {

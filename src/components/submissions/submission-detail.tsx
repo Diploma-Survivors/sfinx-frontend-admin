@@ -32,9 +32,6 @@ interface SubmissionDetailProps {
 }
 
 export default function SubmissionDetail({ submission, isLoading, error }: SubmissionDetailProps) {
-
-    console.log(submission)
-    console.log(submission?.user)
     const { languages } = useAppSelector((state) => state.metadata);
     const t = useTranslations('SubmissionDetail');
 
