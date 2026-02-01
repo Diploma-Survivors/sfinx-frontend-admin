@@ -35,7 +35,7 @@ export function Stepper({
                 isCurrent
                   ? hasError
                     ? 'border-red-500'
-                    : 'border-green-600'
+                    : 'border-primary'
                   : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-900'
               )}
               onClick={() => isClickable && onStepClick && onStepClick(index)}
@@ -46,7 +46,7 @@ export function Stepper({
                   isCurrent
                     ? hasError
                       ? 'bg-red-500 text-white'
-                      : 'bg-green-600 text-white'
+                      : 'bg-primary text-primary-foreground'
                     : hasError
                       ? 'bg-white border border-red-500 text-red-500 dark:bg-slate-900'
                       : 'bg-white border border-slate-300 text-slate-500 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400'
@@ -60,7 +60,7 @@ export function Stepper({
                   isCurrent
                     ? hasError
                       ? 'text-red-500'
-                      : 'text-green-600 dark:text-green-500'
+                      : 'text-primary'
                     : hasError
                       ? 'text-red-500'
                       : 'text-slate-500 dark:text-slate-400'

@@ -1,4 +1,7 @@
 {
+    "Common": {
+        "app_name": "SfinX"
+    },
     "HomePage": {
         "title": "Welcome to Sol Vibe",
         "about": "About"

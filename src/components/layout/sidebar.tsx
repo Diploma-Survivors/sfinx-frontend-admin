@@ -29,6 +29,7 @@ import {
   CreditCard,
   BarChart3,
 } from 'lucide-react';
+import Image from 'next/image';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
@@ -44,6 +45,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('Sidebar');
+  const tCommon = useTranslations('Common');
   const tSub = useTranslations('Subscription');
 
   const { user, hasPermission } = useApp();
@@ -252,21 +254,15 @@ export default function Sidebar({ onLogout }: SideBarProps) {
       >
         {/* Header / Logo */}
         <div className="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 shrink-0 justify-between">
-          <Link href="/" className="flex items-center gap-3 overflow-hidden">
-            <div className="w-8 h-8 min-w-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-              {/* Placeholder logo icon if image fails or for design consistency */}
-              <div className="w-4 h-4 bg-emerald-500 rounded-sm" />
-            </div>
-            <motion.span
-              animate={{
-                opacity: isOpen ? 1 : 0,
-                display: isOpen ? 'block' : 'none',
-              }}
-              className="text-xl font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap"
-            >
-              SolVibe
-            </motion.span>
+
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
+            <span className="text-xl font-bold tracking-tight text-primary">
+              {tCommon('app_name')}
+            </span>
           </Link>
+
+
 
           {/* Desktop Collapse Toggle */}
           {!isMobile && (
@@ -319,7 +315,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       className={cn(
                         'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all relative group',
                         isActive
-                          ? 'bg-emerald-50 text-green-600 dark:bg-emerald-900/20 dark:text-emerald-400 font-medium'
+                          ? 'bg-primary/10 text-primary font-medium'
                           : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
                       )}
                     >
@@ -327,7 +323,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                         className={cn(
                           'w-5 h-5 min-w-5',
                           isActive
-                            ? 'text-emerald-600 dark:text-emerald-400'
+                            ? 'text-primary'
                             : 'text-slate-500 dark:text-slate-500'
                         )}
                       />

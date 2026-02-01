@@ -74,7 +74,7 @@ export function DataTablePagination({
                         size="sm"
                         onClick={() => onPageChange(page)}
                         className={`h-8 w-8 p-0 rounded-lg ${page === currentPage
-                            ? 'bg-green-600 hover:bg-green-700 text-white border-transparent'
+                            ? 'bg-primary hover:bg-primary/90 text-primary-foreground border-transparent'
                             : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
                             }`}
                     >
