@@ -1,17 +1,10 @@
 import clientApi from '@/lib/apis/axios-client';
 import { ApiResponse, PaginatedResponse } from '@/types/api';
+import { SubscriptionFeature } from '@/types/subscription-feature';
 
 export enum SubscriptionType {
     MONTHLY = 'MONTHLY',
     YEARLY = 'YEARLY',
-}
-
-export interface SubscriptionFeature {
-    id: number;
-    key: string;
-    name: string;
-    description?: string;
-    isActive: boolean;
 }
 
 export interface SubscriptionPlan {
@@ -31,8 +24,6 @@ export interface SubscriptionPlan {
     createdAt?: string;
     updatedAt?: string;
 }
-
-
 
 export interface CreatePlanDto {
     type: SubscriptionType;
@@ -57,25 +48,6 @@ export interface UpdatePlanDto {
         description: string;
     }[];
     featureIds?: number[];
-}
-
-export interface CreateFeatureDto {
-    key: string;
-    isActive?: boolean;
-    translations: {
-        languageCode: string;
-        name: string;
-        description?: string;
-    }[];
-}
-
-export interface UpdateFeatureDto {
-    isActive?: boolean;
-    translations?: {
-        languageCode: string;
-        name: string;
-        description?: string;
-    }[];
 }
 
 export const subscriptionService = {
@@ -116,38 +88,4 @@ export const subscriptionService = {
     async deletePlan(id: number): Promise<void> {
         await clientApi.delete(`/subscription-plans/${id}`);
     },
-
-    // ==================== SUBSCRIPTION FEATURES ====================
-
-    async getAllFeatures(lang: string = 'en'): Promise<ApiResponse<SubscriptionFeature[]>> {
-        const response = await clientApi.get<ApiResponse<SubscriptionFeature[]>>(
-            '/subscription-features/all',
-            { params: { lang } }
-        );
-        return response.data;
-    },
-
-    async createFeature(data: CreateFeatureDto): Promise<ApiResponse<SubscriptionFeature>> {
-        const response = await clientApi.post<ApiResponse<SubscriptionFeature>>(
-            '/subscription-features',
-            data
-        );
-        return response.data;
-    },
-
-    async updateFeature(id: number, data: UpdateFeatureDto): Promise<ApiResponse<SubscriptionFeature>> {
-        const response = await clientApi.put<ApiResponse<SubscriptionFeature>>(
-            `/subscription-features/${id}`,
-            data
-        );
-        return response.data;
-    },
-
-    async deleteFeature(id: number): Promise<void> {
-        await clientApi.delete(`/subscription-features/${id}`);
-    },
-
-
-
-
 };
