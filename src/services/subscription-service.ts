@@ -1,5 +1,5 @@
 import clientApi from '@/lib/apis/axios-client';
-import { ApiResponse } from '@/types/api';
+import { ApiResponse, PaginatedResponse } from '@/types/api';
 
 export enum SubscriptionType {
     MONTHLY = 'MONTHLY',
@@ -32,57 +32,7 @@ export interface SubscriptionPlan {
     updatedAt?: string;
 }
 
-export enum PaymentStatus {
-    PENDING = 'PENDING',
-    SUCCESS = 'SUCCESS',
-    FAILED = 'FAILED',
-}
 
-export interface PaymentTransaction {
-    id: number;
-    userId: number;
-    username: string;
-    planId: number;
-    planName: string;
-    amount: number;
-    amountVnd: number;
-    currency: string;
-    provider: string;
-    transactionId: string;
-    status: PaymentStatus;
-    paymentDate: string;
-    createdAt: string;
-}
-
-export interface TransactionFilter {
-    page?: number;
-    limit?: number;
-    status?: PaymentStatus;
-    search?: string;
-    startDate?: string;
-    endDate?: string;
-    sortOrder?: 'ASC' | 'DESC';
-}
-
-export interface PaginatedResponse<T> {
-    data: T[];
-    meta: {
-        page: number;
-        limit: number;
-        total: number;
-        totalPages: number;
-        hasNextPage?: boolean;
-        hasPreviousPage?: boolean;
-    };
-}
-
-export interface RevenueStats {
-    totalRevenue: number;
-    activeSubscribers: number;
-    churnRate: number;
-    revenueByMonth: { month: string; amount: number }[];
-    subscriptionsByPlan: { plan: string; count: number }[];
-}
 
 export interface CreatePlanDto {
     type: SubscriptionType;
@@ -197,23 +147,7 @@ export const subscriptionService = {
         await clientApi.delete(`/subscription-features/${id}`);
     },
 
-    // ==================== TRANSACTIONS ====================
 
-    async getTransactions(filter: TransactionFilter = {}): Promise<ApiResponse<PaginatedResponse<PaymentTransaction>>> {
-        const response = await clientApi.get<ApiResponse<PaginatedResponse<PaymentTransaction>>>(
-            '/payments/transactions',
-            { params: filter }
-        );
-        return response.data;
-    },
 
-    // ==================== STATISTICS ====================
 
-    async getRevenueStats(query?: { startDate?: string; endDate?: string }): Promise<ApiResponse<RevenueStats>> {
-        const response = await clientApi.get<ApiResponse<RevenueStats>>(
-            '/payments/stats',
-            { params: query }
-        );
-        return response.data;
-    },
 };

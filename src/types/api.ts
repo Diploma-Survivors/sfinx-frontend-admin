@@ -5,6 +5,18 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNextPage?: boolean;
+    hasPreviousPage?: boolean;
+  };
+}
+
 export enum HttpStatus {
   CONTINUE = 'CONTINUE',
   SWITCHING_PROTOCOLS = 'SWITCHING_PROTOCOLS',
