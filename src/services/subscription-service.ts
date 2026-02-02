@@ -1,8 +1,17 @@
 import clientApi from '@/lib/apis/axios-client';
 import { ApiResponse, PaginatedResponse } from '@/types/api';
-import { SubscriptionPlan, CreatePlanDto, UpdatePlanDto } from '@/types/subscription-plan';
+import { SubscriptionPlan, CreatePlanDto, UpdatePlanDto, RevenueStats } from '@/types/subscription-plan';
+
+export type { RevenueStats };
 
 export const subscriptionService = {
+
+    async getRevenueStats(params: { startDate: string; endDate: string; groupBy?: 'day' | 'week' | 'month' | 'year' }): Promise<ApiResponse<RevenueStats>> {
+        const response = await clientApi.get<ApiResponse<RevenueStats>>('/payments/stats', {
+            params
+        });
+        return response.data;
+    },
 
     async getAllPlans(lang: string = 'en'): Promise<ApiResponse<SubscriptionPlan[]>> {
         const response = await clientApi.get<ApiResponse<SubscriptionPlan[]>>(

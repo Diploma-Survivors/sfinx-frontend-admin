@@ -1,5 +1,5 @@
 {
-    "Common": {
+    "General": {
         "app_name": "SfinX"
     },
     "HomePage": {
@@ -53,6 +53,16 @@
         "logout": "Đăng xuất",
         "noEmail": "Không có email",
         "rolesAndPermissions": "Vai trò & Quyền hạn"
+    },
+    "StatisticsPage": {
+        "title": "Thống kê doanh thu",
+        "description": "Tổng quan về doanh thu và đăng ký",
+        "thisWeek": "Tuần này",
+        "thisMonth": "Tháng này",
+        "thisYear": "Năm nay",
+        "revenue": "Tổng doanh thu",
+        "subscribers": "Người đăng ký",
+        "churnRate": "Tỷ lệ rời bỏ"
     },
     "ContestsPage": {
         "title": "Danh sách cuộc thi",

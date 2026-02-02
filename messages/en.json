@@ -1,5 +1,5 @@
 {
-    "Common": {
+    "General": {
         "app_name": "SfinX"
     },
     "HomePage": {
@@ -53,6 +53,16 @@
         "logout": "Logout",
         "noEmail": "No email",
         "rolesAndPermissions": "Roles & Permissions"
+    },
+    "StatisticsPage": {
+        "title": "Revenue Statistics",
+        "description": "Overview of your revenue and subscriptions",
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "thisYear": "This Year",
+        "revenue": "Total Revenue",
+        "subscribers": "Active Subscribers",
+        "churnRate": "Churn Rate"
     },
     "ContestsPage": {
         "title": "Contest List",

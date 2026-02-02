@@ -45,7 +45,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('Sidebar');
-  const tCommon = useTranslations('Common');
+  const tCommon = useTranslations('General');
   const tSub = useTranslations('Subscription');
 
   const { user, hasPermission } = useApp();

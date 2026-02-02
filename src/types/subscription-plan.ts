@@ -47,3 +47,26 @@ export interface UpdatePlanDto {
     }[];
     featureIds?: number[];
 }
+
+export interface RevenueChartItem {
+    month: string;
+    amount: number;
+    [key: string]: any;
+}
+
+export interface SubscriptionPlanStats {
+    plan: string;
+    count: number;
+    [key: string]: any;
+}
+
+export interface RevenueStats {
+    totalRevenue: number;
+    currentPeriodRevenue: number;
+    activeSubscribers: number;
+    revenueGrowth: number;
+    subscriberGrowth: number;
+    churnRate: number;
+    revenueByMonth: RevenueChartItem[];
+    subscriptionsByPlan: SubscriptionPlanStats[];
+}
