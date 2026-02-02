@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
 import LanguageSwitcher from '@/components/layout/language-switcher';
 import { useLocale } from 'next-intl';
+import GlobalLoader from '@/components/ui/global-loader';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { isOpen, isMobile } = useSidebar();
@@ -48,7 +49,11 @@ export default function ConditionalLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { shouldHideNavigation } = useApp();
+  const { shouldHideNavigation, isLoading } = useApp();
+
+  if (isLoading) {
+    return <GlobalLoader />;
+  }
 
   if (shouldHideNavigation) {
     return <main className="min-h-screen">{children}</main>;

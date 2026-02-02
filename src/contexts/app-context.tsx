@@ -41,7 +41,7 @@ export function AppProvider({
 }: AppProviderProps) {
   const [user, setUser] = useState<UserProfile>();
   const [permissions, setPermissions] = useState<Permission[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!decodedAccessToken);
 
   const pathname = usePathname();
   const shouldHideNavigation = pathname === '/login';
@@ -75,7 +75,10 @@ export function AppProvider({
         .then(([userResponse, permissionsResponse]) => {
           setUser(userResponse.data.data);
           setPermissions(permissionsResponse);
-          setIsLoading(false);
+
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
         })
         .catch((error) => {
           console.error('Failed to fetch user data or permissions:', error);

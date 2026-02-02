@@ -1,14 +1,10 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
-export default function HomePage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace('/dashboard');
-  }, [router]);
-
-  return null;
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  redirect(`/${locale}/dashboard`);
 }
