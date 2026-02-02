@@ -56,13 +56,20 @@
     },
     "StatisticsPage": {
         "title": "Thống kê doanh thu",
-        "description": "Tổng quan về doanh thu và đăng ký",
+        "description": "Tổng quan doanh thu theo giai đoạn",
         "thisWeek": "Tuần này",
         "thisMonth": "Tháng này",
         "thisYear": "Năm nay",
         "revenue": "Tổng doanh thu",
         "subscribers": "Người đăng ký",
-        "churnRate": "Tỷ lệ rời bỏ"
+        "churnRate": "Tỷ lệ rời bỏ",
+        "last": "Gần nhất",
+        "refresh": "Làm mới",
+        "period": {
+            "day": "Ngày",
+            "month": "Tháng",
+            "year": "Năm"
+        }
     },
     "ContestsPage": {
         "title": "Danh sách cuộc thi",
@@ -1036,7 +1043,20 @@
             "activeSubscribers": "Thuê bao hoạt động",
             "churnRate": "Tỷ lệ rời bỏ",
             "revenueOverTime": "Biểu đồ doanh thu",
-            "subsByPlan": "Phân bố theo gói"
+            "subsByPlan": "Phân bố theo gói",
+            "currentDayRevenue": "Doanh thu ngày hiện tại",
+            "currentMonthRevenue": "Doanh thu tháng hiện tại",
+            "currentYearRevenue": "Doanh thu năm hiện tại",
+            "currentRevenue": "Doanh thu hiện tại",
+            "latestDay": "Ngày cuối trong biểu đồ",
+            "latestMonth": "Tháng cuối trong biểu đồ",
+            "latestYear": "Năm cuối trong biểu đồ",
+            "latestPeriod": "Kỳ cuối trong biểu đồ",
+            "totalRevenueNote": "Tổng doanh thu trong kỳ đã chọn",
+            "revenueGrowth": "Tăng trưởng doanh thu",
+            "subscriberGrowth": "Tăng trưởng người đăng ký",
+            "vsLastPeriod": "so với kỳ trước",
+            "distributionDescription": "Phân bố các gói đăng ký đang hoạt động"
         },
         "status": {
             "success": "Thành công",

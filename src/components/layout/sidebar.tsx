@@ -28,6 +28,7 @@ import {
   X,
   CreditCard,
   BarChart3,
+  Layers,
 } from 'lucide-react';
 import Image from 'next/image';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
@@ -160,7 +161,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         {
           name: tSub('features'),
           href: '/subscriptions/features',
-          icon: Sparkles,
+          icon: Layers,
           permissions: [PermissionEnum.ADMIN_ACCESS]
         },
         {
@@ -248,12 +249,15 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         variants={sidebarVariants}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
         className={cn(
-          'fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xl',
+          'fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xl group',
           isMobile ? 'w-64' : ''
         )}
       >
         {/* Header / Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 shrink-0 justify-between">
+        <div className={cn(
+          "h-16 flex items-center border-b border-slate-200 dark:border-slate-800 shrink-0",
+          isOpen ? "px-6 justify-between" : "justify-center px-0 relative"
+        )}>
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
@@ -263,18 +267,6 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           </Link>
 
 
-
-          {/* Desktop Collapse Toggle */}
-          {!isMobile && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-slate-400 hover:text-slate-600"
-              onClick={toggle}
-            >
-              {isOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-            </Button>
-          )}
 
           {/* Mobile Close Button */}
           {isMobile && (
@@ -293,6 +285,10 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         <nav className="flex-1 py-6 px-3 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-700">
           {filteredNavSections.map((section, index) => (
             <div key={index}>
+              {/* Divider for collapsed state */}
+              {!isOpen && index > 0 && (
+                <div className="h-px bg-slate-200 dark:bg-slate-800 mx-3 my-2" />
+              )}
               {/* Section Header */}
               <motion.div
                 animate={{
@@ -313,7 +309,8 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       key={item.name}
                       href={item.href}
                       className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all relative group',
+                        'flex items-center gap-3 py-2.5 rounded-lg transition-all relative group',
+                        isOpen ? 'px-3' : 'justify-center px-2',
                         isActive
                           ? 'bg-primary/10 text-primary font-medium'
                           : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
@@ -338,11 +335,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       </motion.span>
 
                       {/* Tooltip for collapsed state */}
-                      {!isOpen && !isMobile && (
-                        <div className="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
-                          {item.name}
-                        </div>
-                      )}
+
                     </Link>
                   );
                 })}
@@ -400,6 +393,20 @@ export default function Sidebar({ onLogout }: SideBarProps) {
             </Button>
           </motion.div>
         </div>
+        {/* Desktop Collapse Toggle - Centered vertically on sidebar edge */}
+        {!isMobile && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full border bg-white dark:bg-slate-900 shadow-md z-50 hover:bg-slate-100 dark:hover:bg-slate-800",
+              isOpen ? "hidden group-hover:flex" : "flex"
+            )}
+            onClick={toggle}
+          >
+            {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+          </Button>
+        )}
       </motion.aside>
     </>
   );

@@ -24,7 +24,7 @@ export function StatisticsHeader({ period, setPeriod, limit, setLimit, isLoading
             </div>
             <div className="flex items-center gap-3 w-full sm:w-auto">
                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium whitespace-nowrap">Last</span>
+                    <span className="text-sm font-medium whitespace-nowrap">{t('last')}</span>
                     <Select value={limit.toString()} onValueChange={(val) => setLimit(Number(val))}>
                         <SelectTrigger className="w-[70px]">
                             <SelectValue placeholder="5" />
@@ -40,17 +40,17 @@ export function StatisticsHeader({ period, setPeriod, limit, setLimit, isLoading
                 <Select value={period} onValueChange={(val) => setPeriod(val as 'day' | 'month' | 'year')}>
                     <SelectTrigger className="w-[140px]">
                         <Calendar className="w-4 h-4 mr-2" />
-                        <SelectValue placeholder="Select period" />
+                        <SelectValue placeholder={t('period.day')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="day">Days</SelectItem>
-                        <SelectItem value="month">Months</SelectItem>
-                        <SelectItem value="year">Years</SelectItem>
+                        <SelectItem value="day">{t('period.day')}</SelectItem>
+                        <SelectItem value="month">{t('period.month')}</SelectItem>
+                        <SelectItem value="year">{t('period.year')}</SelectItem>
                     </SelectContent>
                 </Select>
                 <Button onClick={onRefresh} variant="outline" disabled={isLoading}>
                     <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                    Refresh
+                    {t('refresh')}
                 </Button>
             </div>
         </div>

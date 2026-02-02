@@ -16,7 +16,7 @@ export function PlanDistributionChart({ data }: PlanDistributionChartProps) {
         <Card className="col-span-1">
             <CardHeader>
                 <CardTitle>{t('stats.subsByPlan')}</CardTitle>
-                <CardDescription>Distribution of active subscriptions</CardDescription>
+                <CardDescription>{t('stats.distributionDescription')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="h-[300px]">

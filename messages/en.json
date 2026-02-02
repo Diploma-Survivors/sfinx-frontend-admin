@@ -56,13 +56,20 @@
     },
     "StatisticsPage": {
         "title": "Revenue Statistics",
-        "description": "Overview of your revenue and subscriptions",
+        "description": "Revenue Overview by Period",
         "thisWeek": "This Week",
         "thisMonth": "This Month",
         "thisYear": "This Year",
         "revenue": "Total Revenue",
         "subscribers": "Active Subscribers",
-        "churnRate": "Churn Rate"
+        "churnRate": "Churn Rate",
+        "last": "Last",
+        "refresh": "Refresh",
+        "period": {
+            "day": "Days",
+            "month": "Months",
+            "year": "Years"
+        }
     },
     "ContestsPage": {
         "title": "Contest List",
@@ -1040,7 +1047,20 @@
             "activeSubscribers": "Active Subscribers",
             "churnRate": "Churn Rate",
             "revenueOverTime": "Revenue Over Time",
-            "subsByPlan": "Subscriptions by Plan"
+            "subsByPlan": "Subscriptions by Plan",
+            "currentDayRevenue": "Current Day Revenue",
+            "currentMonthRevenue": "Current Month Revenue",
+            "currentYearRevenue": "Current Year Revenue",
+            "currentRevenue": "Current Revenue",
+            "latestDay": "Latest day in chart",
+            "latestMonth": "Latest month in chart",
+            "latestYear": "Latest year in chart",
+            "latestPeriod": "Latest period in chart",
+            "totalRevenueNote": "Total revenue in selected period",
+            "revenueGrowth": "Revenue Growth",
+            "subscriberGrowth": "Subscriber Growth",
+            "vsLastPeriod": "vs last period",
+            "distributionDescription": "Distribution of active subscriptions"
         },
         "status": {
             "success": "Success",
