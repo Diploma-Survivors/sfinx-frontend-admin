@@ -81,6 +81,7 @@ export default function PlansPage() {
                 plans={plans}
                 onEdit={handleEdit}
                 onDelete={handleDeleteClick}
+                isLoading={isLoading}
             />
 
             <PlanCreateDialog

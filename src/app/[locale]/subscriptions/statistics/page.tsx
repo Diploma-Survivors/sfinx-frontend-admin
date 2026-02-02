@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { RevenueStats, subscriptionService } from '@/services/subscription-service';
-import { RefreshCw } from 'lucide-react';
+
 import { toastService } from '@/services/toasts-service';
 import { StatisticsHeader } from '@/components/subscriptions/statistics/statistics-header';
 import { StatisticsMetrics } from '@/components/subscriptions/statistics/statistics-metrics';
@@ -11,6 +11,8 @@ import { RevenueChart } from '@/components/subscriptions/statistics/revenue-char
 import { PlanDistributionChart } from '@/components/subscriptions/statistics/plan-distribution-chart';
 
 import { subDays, subMonths, subYears } from 'date-fns';
+
+import { StatisticsSkeleton } from '@/components/subscriptions/statistics/statistics-skeleton';
 
 export default function StatisticsPage() {
     const [stats, setStats] = useState<RevenueStats | null>(null);
@@ -62,11 +64,7 @@ export default function StatisticsPage() {
     };
 
     if (isLoading) {
-        return (
-            <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[400px]">
-                <RefreshCw className="h-8 w-8 animate-spin text-slate-400" />
-            </div>
-        );
+        return <StatisticsSkeleton />;
     }
 
     if (!stats) return null;

@@ -26,31 +26,23 @@ export default function TransactionsPage() {
     } | null>(null);
 
 
+    const [debouncedSearch, setDebouncedSearch] = useState('');
+
     // Debounce search term
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            setPage(1); // Reset to page 1 on search change
-            fetchTransactions();
+            setDebouncedSearch(search);
+            if (search !== debouncedSearch && page !== 1) {
+                setPage(1);
+            }
         }, 500);
         return () => clearTimeout(timeoutId);
     }, [search]);
 
-    // Auto-fetch on filter changes
-    useEffect(() => {
-        setPage(1); // Reset to page 1 on filter change
-        fetchTransactions();
-    }, [statusFilter, startDate, endDate]);
-
-    // Fetch on page change
+    // Master fetch effect
     useEffect(() => {
         fetchTransactions();
-    }, [page]);
-
-    // Initial fetch
-    useEffect(() => {
-        fetchTransactions();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [page, debouncedSearch, statusFilter, startDate, endDate]);
 
     const fetchTransactions = async () => {
         setIsLoading(true);
@@ -58,7 +50,7 @@ export default function TransactionsPage() {
             const response = await paymentService.getTransactions({
                 page,
                 limit: 10,
-                search: search || undefined,
+                search: debouncedSearch || undefined,
                 status: statusFilter === 'ALL' ? undefined : statusFilter,
                 startDate: startDate || undefined,
                 endDate: endDate || undefined
@@ -88,9 +80,15 @@ export default function TransactionsPage() {
                     setPage(1);
                 }}
                 startDate={startDate}
-                setStartDate={setStartDate}
+                setStartDate={(val) => {
+                    setStartDate(val);
+                    setPage(1);
+                }}
                 endDate={endDate}
-                setEndDate={setEndDate}
+                setEndDate={(val) => {
+                    setEndDate(val);
+                    setPage(1);
+                }}
             />
 
             <TransactionTable

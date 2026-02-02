@@ -18,7 +18,13 @@ interface TransactionTableProps {
     onPageChange: (page: number) => void;
 }
 
+import { TransactionTableSkeleton } from './transaction-table-skeleton';
+
 export function TransactionTable({ transactions, isLoading, meta, onPageChange }: TransactionTableProps) {
+    if (isLoading) {
+        return <TransactionTableSkeleton />;
+    }
+
     const t = useTranslations('Subscription');
 
     const getStatusBadgeVariant = (status: PaymentStatus) => {
@@ -54,13 +60,7 @@ export function TransactionTable({ transactions, isLoading, meta, onPageChange }
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {isLoading && transactions.length === 0 ? (
-                        Array.from({ length: 5 }).map((_, i) => (
-                            <TableRow key={i}>
-                                <TableCell colSpan={7} className="h-16 text-center text-slate-500">Loading...</TableCell>
-                            </TableRow>
-                        ))
-                    ) : transactions.length === 0 ? (
+                    {transactions.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={7} className="h-32 text-center text-slate-500">
                                 No transactions found

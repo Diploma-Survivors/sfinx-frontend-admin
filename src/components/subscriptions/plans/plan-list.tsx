@@ -4,15 +4,21 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Check, Edit, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { PlanListSkeleton } from './plan-list-skeleton';
 
 interface PlanListProps {
     plans: SubscriptionPlan[];
     onEdit: (plan: SubscriptionPlan) => void;
     onDelete: (plan: SubscriptionPlan) => void;
+    isLoading?: boolean;
 }
 
-export function PlanList({ plans, onEdit, onDelete }: PlanListProps) {
+export function PlanList({ plans, onEdit, onDelete, isLoading }: PlanListProps) {
     const t = useTranslations('Subscription');
+
+    if (isLoading) {
+        return <PlanListSkeleton />;
+    }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

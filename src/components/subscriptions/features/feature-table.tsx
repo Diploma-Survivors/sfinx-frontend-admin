@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Edit, Trash2 } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
+import { FeatureTableSkeleton } from './feature-table-skeleton';
 
 interface FeatureTableProps {
     features: any[];
@@ -12,6 +13,10 @@ interface FeatureTableProps {
 }
 
 export function FeatureTable({ features, isLoading, onEdit, onDelete }: FeatureTableProps) {
+    if (isLoading) {
+        return <FeatureTableSkeleton />;
+    }
+
     const getFeatureName = (feature: any) => {
         const enTranslation = feature.translations?.find((t: any) => t.languageCode === 'en');
         return enTranslation?.name || feature.key;
@@ -40,13 +45,7 @@ export function FeatureTable({ features, isLoading, onEdit, onDelete }: FeatureT
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {isLoading ? (
-                            <TableRow>
-                                <TableCell colSpan={5} className="text-center py-8">
-                                    <RefreshCw className="h-6 w-6 animate-spin mx-auto text-slate-400" />
-                                </TableCell>
-                            </TableRow>
-                        ) : features.length === 0 ? (
+                        {features.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={5} className="text-center py-8 text-slate-500">
                                     No features found
