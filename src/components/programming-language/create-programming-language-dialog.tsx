@@ -35,7 +35,6 @@ export function CreateProgrammingLanguageDialog({ onSuccess }: CreateProgramming
         name: z.string().min(1, t('nameRequired')),
         judge0Id: z.string().optional(),
         monacoLanguage: z.string().optional(),
-        orderIndex: z.string().optional(),
         starterCode: z.string().min(1, t('starterCodeRequired')),
     });
 
@@ -47,7 +46,6 @@ export function CreateProgrammingLanguageDialog({ onSuccess }: CreateProgramming
             name: '',
             judge0Id: '',
             monacoLanguage: '',
-            orderIndex: '1',
             starterCode: '',
         },
     });
@@ -59,7 +57,6 @@ export function CreateProgrammingLanguageDialog({ onSuccess }: CreateProgramming
                 name: values.name,
                 judge0Id: values.judge0Id ? Number(values.judge0Id) : undefined,
                 monacoLanguage: values.monacoLanguage,
-                orderIndex: values.orderIndex ? Number(values.orderIndex) : undefined,
                 starterCode: values.starterCode,
                 isActive: true, // Default to active
             });
@@ -78,12 +75,15 @@ export function CreateProgrammingLanguageDialog({ onSuccess }: CreateProgramming
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="bg-green-600 hover:bg-green-700 text-white shadow-sm">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
                     <Plus className="mr-2 h-4 w-4" />
                     {t('create')}
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[550px] data-[state=open]:slide-in-from-top-0">
+            <DialogContent
+                className="sm:max-w-[550px] data-[state=open]:slide-in-from-top-0"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+            >
                 <DialogHeader>
                     <DialogTitle>{t('title')}</DialogTitle>
                     <DialogDescription>
@@ -113,25 +113,14 @@ export function CreateProgrammingLanguageDialog({ onSuccess }: CreateProgramming
                                 {...form.register('monacoLanguage')}
                             />
                         </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
+                        <div className="space-y-2 col-span-2">
                             <Label htmlFor="judge0Id">{t('judge0IdLabel')}</Label>
                             <Input
                                 id="judge0Id"
                                 type="number"
                                 placeholder={t('judge0IdPlaceholder')}
                                 {...form.register('judge0Id')}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="orderIndex">{t('orderIndexLabel')}</Label>
-                            <Input
-                                id="orderIndex"
-                                type="number"
-                                placeholder={t('orderIndexPlaceholder')}
-                                {...form.register('orderIndex')}
                             />
                         </div>
                     </div>
@@ -175,6 +164,6 @@ export function CreateProgrammingLanguageDialog({ onSuccess }: CreateProgramming
                     </DialogFooter>
                 </form>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 }

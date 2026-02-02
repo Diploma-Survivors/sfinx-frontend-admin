@@ -89,6 +89,8 @@ export function useProgrammingLanguages({ initialParams }: UseProgrammingLanguag
         setPage: handlePageChange,
         setLimit: handleLimitChange,
         setFilters: handleFilterChange,
+
+        setLanguages,
         refresh,
     };
 }

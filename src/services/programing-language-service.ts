@@ -85,4 +85,10 @@ export const ProgrammingLanguageService = {
         const response = await axiosInstance.patch(`/programming-languages/${id}/deactivate`);
         return response.data.data;
     },
+    /**
+     * Reorder programming languages (Admin only)
+     */
+    reorderProgrammingLanguages: async (ids: number[]): Promise<void> => {
+        await axiosInstance.patch('/programming-languages/reorder', { ids });
+    },
 };

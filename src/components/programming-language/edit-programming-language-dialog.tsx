@@ -40,7 +40,6 @@ export function EditProgrammingLanguageDialog({
         name: z.string().min(1, t('nameRequired')),
         judge0Id: z.string().optional(),
         monacoLanguage: z.string().optional(),
-        orderIndex: z.string().optional(),
         starterCode: z.string().min(1, t('starterCodeRequired')),
     });
 
@@ -52,7 +51,6 @@ export function EditProgrammingLanguageDialog({
             name: '',
             judge0Id: '',
             monacoLanguage: '',
-            orderIndex: '1',
             starterCode: '',
         },
     });
@@ -63,7 +61,6 @@ export function EditProgrammingLanguageDialog({
                 name: language.name,
                 judge0Id: language.judge0Id?.toString() || '',
                 monacoLanguage: language.monacoLanguage || '',
-                orderIndex: language.orderIndex?.toString() || '',
                 starterCode: language.starterCode || '',
             });
         }
@@ -78,7 +75,6 @@ export function EditProgrammingLanguageDialog({
                 name: values.name,
                 judge0Id: values.judge0Id ? Number(values.judge0Id) : undefined,
                 monacoLanguage: values.monacoLanguage,
-                orderIndex: values.orderIndex ? Number(values.orderIndex) : undefined,
                 starterCode: values.starterCode,
                 // We typically don't update isActive here unless explicitly asked, keeping existing value or ignoring it if backend doesn't require it for update
             });
@@ -95,7 +91,10 @@ export function EditProgrammingLanguageDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[550px] data-[state=open]:slide-in-from-top-0">
+            <DialogContent
+                className="sm:max-w-[550px] data-[state=open]:slide-in-from-top-0"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+            >
                 <DialogHeader>
                     <DialogTitle>{t('title')}</DialogTitle>
                     <DialogDescription>
@@ -127,25 +126,14 @@ export function EditProgrammingLanguageDialog({
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="judge0Id">{t('judge0IdLabel')}</Label>
-                            <Input
-                                id="judge0Id"
-                                type="number"
-                                placeholder={t('judge0IdPlaceholder')}
-                                {...form.register('judge0Id')}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="orderIndex">{t('orderIndexLabel')}</Label>
-                            <Input
-                                id="orderIndex"
-                                type="number"
-                                placeholder={t('orderIndexPlaceholder')}
-                                {...form.register('orderIndex')}
-                            />
-                        </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="judge0Id">{t('judge0IdLabel')}</Label>
+                        <Input
+                            id="judge0Id"
+                            type="number"
+                            placeholder={t('judge0IdPlaceholder')}
+                            {...form.register('judge0Id')}
+                        />
                     </div>
 
                     <div className="space-y-2">
