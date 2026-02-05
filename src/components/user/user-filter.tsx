@@ -32,10 +32,10 @@ export default function UserFilter({
     onSearchChange('');
   };
 
-  const hasActiveFilters = 
-    searchQuery !== '' || 
-    filters.isActive !== undefined || 
-    filters.isPremium !== undefined || 
+  const hasActiveFilters =
+    searchQuery !== '' ||
+    filters.isActive !== undefined ||
+    filters.isPremium !== undefined ||
     filters.emailVerified !== undefined;
 
   return (
@@ -67,20 +67,19 @@ export default function UserFilter({
             </Label>
             <Select
               value={
-                filters.isActive === undefined
+                filters.status === undefined
                   ? 'all'
-                  : filters.isActive
-                  ? 'active'
-                  : 'banned'
+                  : filters.status
               }
               onValueChange={(value) => {
                 if (value === 'all') {
-                  const { isActive, ...rest } = filters;
+                  const { status, ...rest } = filters;
                   onFiltersChange(rest);
                 } else {
                   onFiltersChange({
                     ...filters,
-                    isActive: value === 'active',
+                    status: value as 'active' | 'banned' | 'not_verified',
+                    isActive: undefined, // Clear legacy isActive filter if present
                   });
                 }
               }}
@@ -92,6 +91,7 @@ export default function UserFilter({
                 <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
                 <SelectItem value="banned">Banned</SelectItem>
+                <SelectItem value="not_verified">Not Verified</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -106,8 +106,8 @@ export default function UserFilter({
                 filters.isPremium === undefined
                   ? 'all'
                   : filters.isPremium
-                  ? 'premium'
-                  : 'free'
+                    ? 'premium'
+                    : 'free'
               }
               onValueChange={(value) => {
                 if (value === 'all') {
@@ -142,8 +142,8 @@ export default function UserFilter({
                 filters.emailVerified === undefined
                   ? 'all'
                   : filters.emailVerified
-                  ? 'verified'
-                  : 'unverified'
+                    ? 'verified'
+                    : 'unverified'
               }
               onValueChange={(value) => {
                 if (value === 'all') {

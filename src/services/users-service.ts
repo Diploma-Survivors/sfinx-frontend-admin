@@ -155,6 +155,7 @@ export const usersService = {
     isActive?: boolean;
     isPremium?: boolean;
     emailVerified?: boolean;
+    status?: 'active' | 'banned' | 'not_verified';
   }): Promise<ApiResponse<{ data: UserProfile[]; meta: any }>> {
     const response = await clientApi.get('/users', {
       params

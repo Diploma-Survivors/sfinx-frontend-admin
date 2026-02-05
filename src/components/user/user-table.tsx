@@ -17,11 +17,8 @@ import {
   ChevronRight,
   Crown,
   Eye,
-  Mail,
-  MailCheck,
   MoreHorizontal,
   ShieldAlert,
-  UserCheck,
   UserX,
 } from 'lucide-react';
 import {
@@ -154,16 +151,16 @@ export default function UserTable({
                 <TableHead className="font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
                   User
                 </TableHead>
-                <TableHead className="font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
+                <TableHead className="w-64 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
                   Email
                 </TableHead>
                 <TableHead className="w-32 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
                   Status
                 </TableHead>
                 <TableHead className="w-32 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  Stats
+                  Plan
                 </TableHead>
-                <TableHead className="w-40 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
+                <TableHead className="w-56 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
                   Last Login
                 </TableHead>
                 <TableHead className="w-24 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider text-right">
@@ -194,7 +191,7 @@ export default function UserTable({
                       <Skeleton className="h-6 w-16 rounded-full" />
                     </TableCell>
                     <TableCell>
-                      <Skeleton className="h-4 w-20" />
+                      <Skeleton className="h-6 w-20 rounded-full" />
                     </TableCell>
                     <TableCell>
                       <Skeleton className="h-4 w-32" />
@@ -228,74 +225,58 @@ export default function UserTable({
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
-                          <div className="flex items-center gap-2">
-                            <span className="font-semibold text-slate-800 dark:text-slate-200">
-                              {user.fullName}
-                            </span>
-                            {user.isPremium && (
-                              <Crown className="h-4 w-4 text-yellow-500" />
-                            )}
-                          </div>
+                          <span className="font-semibold text-slate-800 dark:text-slate-200">
+                            {user.fullName}
+                          </span>
+
                           <span className="text-xs text-slate-500">@{user.username}</span>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-slate-700 dark:text-slate-300">
-                          {user.email}
-                        </span>
-                        {user.emailVerified ? (
-                          <MailCheck className="h-4 w-4 text-green-500" />
+                      <span className="text-sm text-slate-700 dark:text-slate-300">
+                        {user.email}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={!user.isActive ? 'outline' : user.isBanned ? 'secondary' : 'default'}
+                        className={`${!user.isActive
+                          ? 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700'
+                          : user.isBanned
+                            ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 border-0'
+                            : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 border-0'
+                          } w-fit`}
+                      >
+                        {!user.isActive ? (
+                          'Not Verified'
+                        ) : user.isBanned ? (
+                          <>
+                            <UserX className="h-3 w-3 mr-1" />
+                            Banned
+                          </>
                         ) : (
-                          <Mail className="h-4 w-4 text-slate-400" />
+                          'Active'
                         )}
-                      </div>
+                      </Badge>
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col gap-1">
+                      {user.isPremium ? (
                         <Badge
-                          variant={user.isActive ? 'default' : 'secondary'}
-                          className={`${user.isActive
-                            ? 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400'
-                            : 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
-                            } border-0 w-fit`}
+                          variant="secondary"
+                          className="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 border-0 w-fit"
                         >
-                          {user.isActive ? (
-                            <>
-                              <UserCheck className="h-3 w-3 mr-1" />
-                              Active
-                            </>
-                          ) : (
-                            <>
-                              <UserX className="h-3 w-3 mr-1" />
-                              Banned
-                            </>
-                          )}
+                          <Crown className="h-3 w-3 mr-1" />
+                          Premium
                         </Badge>
-                        {user.isPremium && (
-                          <Badge
-                            variant="secondary"
-                            className="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 border-0 w-fit"
-                          >
-                            <Crown className="h-3 w-3 mr-1" />
-                            Premium
-                          </Badge>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-col gap-1 text-xs">
-                        <span className="text-slate-600 dark:text-slate-400">
-                          <span className="font-semibold text-green-600">
-                            {user.solvedEasy + user.solvedMedium + user.solvedHard}
-                          </span>{' '}
-                          solved
-                        </span>
-                        <span className="text-slate-500">
-                          Rank #{user.rank}
-                        </span>
-                      </div>
+                      ) : (
+                        <Badge
+                          variant="secondary"
+                          className="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400 border-0 w-fit"
+                        >
+                          Free Plan
+                        </Badge>
+                      )}
                     </TableCell>
                     <TableCell>
                       <span className="text-sm text-slate-600 dark:text-slate-400">
@@ -325,7 +306,7 @@ export default function UserTable({
 
                           <DropdownMenuSeparator />
 
-                          {user.isActive ? (
+                          {!user.isBanned ? (
                             <DropdownMenuItem
                               className="text-red-600 focus:text-red-600"
                               onSelect={() => {
@@ -365,7 +346,7 @@ export default function UserTable({
           meta={meta || undefined}
           entityName="users"
         />
-      </div>
+      </div >
 
       {/* View Details Dialog */}
       {/* View Details Dialog */}
@@ -450,8 +431,9 @@ export default function UserTable({
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-sm">Account Status</span>
-                        <Badge variant={selectedUser.isActive ? 'default' : 'secondary'}>
-                          {selectedUser.isActive ? 'Active' : 'Banned'}
+                        <span className="text-sm">Account Status</span>
+                        <Badge variant={!selectedUser.isActive ? 'outline' : selectedUser.isBanned ? 'secondary' : 'default'}>
+                          {!selectedUser.isActive ? 'Not Verified' : selectedUser.isBanned ? 'Banned' : 'Active'}
                         </Badge>
                       </div>
                       <div className="flex items-center justify-between">
