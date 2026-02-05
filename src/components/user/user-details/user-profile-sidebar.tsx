@@ -25,12 +25,8 @@ export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
                 <div className="relative">
                     <Avatar className="w-32 h-32 rounded-xl border-4 border-background shadow-md">
                         <AvatarImage src={user.avatarUrl} className="object-cover" />
-                        <AvatarFallback className="rounded-xl">
-                            <img
-                                src="/avatars/placeholder.png"
-                                alt={user.username}
-                                className="w-full h-full object-cover"
-                            />
+                        <AvatarFallback className="rounded-xl bg-primary text-primary-foreground text-4xl font-bold">
+                            {user.fullName?.[0] || user.username?.[0] || 'U'}
                         </AvatarFallback>
                     </Avatar>
                 </div>
@@ -48,7 +44,7 @@ export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
                 </div>
                 <Badge
                     variant="secondary"
-                    className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200 px-3 py-1"
+                    className="bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1"
                 >
                     <Trophy className="w-3 h-3 mr-1" />
                     Rank {user.rank}

@@ -212,7 +212,7 @@ export default function UserTable({
                       <div className="flex items-center gap-3">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src={user.avatarUrl} alt={user.username} />
-                          <AvatarFallback className="bg-gradient-to-br from-green-400 to-blue-500 text-white">
+                          <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                             {getInitials(user.fullName)}
                           </AvatarFallback>
                         </Avatar>
@@ -237,7 +237,7 @@ export default function UserTable({
                           ? 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700'
                           : user.isBanned
                             ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 border-0'
-                            : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 border-0'
+                            : 'bg-primary/10 text-primary hover:bg-primary/20 border-primary/20'
                           } w-fit`}
                       >
                         {!user.isActive ? (
@@ -307,7 +307,7 @@ export default function UserTable({
                             </DropdownMenuItem>
                           ) : (
                             <DropdownMenuItem
-                              className="text-green-600 focus:text-green-600"
+                              className="text-primary focus:text-primary"
                               onSelect={() => {
                                 setTimeout(() => handleAction(user, 'unban'), 0);
                               }}
@@ -340,7 +340,7 @@ export default function UserTable({
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <ShieldAlert className={`h-5 w-5 ${actionType === 'ban' ? 'text-red-500' : 'text-green-500'}`} />
+                <ShieldAlert className={`h-5 w-5 ${actionType === 'ban' ? 'text-red-500' : 'text-primary'}`} />
                 {actionType === 'ban' ? 'Ban User' : 'Unban User'}
               </DialogTitle>
               <DialogDescription>
