@@ -29,6 +29,7 @@ export interface UserProfile {
 
   premiumStartedAt: string;   // ISO datetime
   premiumExpiresAt: string;   // ISO datetime
+  createdAt: string;          // ISO datetime
   lastLoginAt: string;        // ISO datetime
   lastActiveAt: string;       // ISO datetime
 }

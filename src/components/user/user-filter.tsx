@@ -14,6 +14,8 @@ import { Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { UserFilters } from '@/types/user';
 
+import React, { useState, useEffect } from 'react';
+
 interface UserFilterProps {
   filters: UserFilters;
   onFiltersChange: (filters: UserFilters) => void;
@@ -27,24 +29,31 @@ export default function UserFilter({
   searchQuery,
   onSearchChange,
 }: UserFilterProps) {
-  const handleClearFilters = () => {
-    onFiltersChange({});
-    onSearchChange('');
-  };
+  const [localSearch, setLocalSearch] = useState(searchQuery);
 
-  const hasActiveFilters =
-    searchQuery !== '' ||
-    filters.isActive !== undefined ||
-    filters.isPremium !== undefined ||
-    filters.emailVerified !== undefined;
+  // Sync local state when prop changes (e.g. from clear filters or initial load)
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
+  // Debounce logic
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (localSearch !== searchQuery) {
+        onSearchChange(localSearch);
+      }
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timer);
+  }, [localSearch, onSearchChange, searchQuery]);
 
   return (
     <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Search */}
           <div className="lg:col-span-2">
-            <Label htmlFor="search" className="text-sm font-medium mb-2 block">
+            <Label htmlFor="search" className="text-sm font-medium mb-1 block">
               Search Users
             </Label>
             <div className="relative">
@@ -53,16 +62,16 @@ export default function UserFilter({
                 id="search"
                 type="text"
                 placeholder="Search by name, username, or email..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-10"
+                value={localSearch}
+                onChange={(e) => setLocalSearch(e.target.value)}
+                className="pl-10 h-9"
               />
             </div>
           </div>
 
           {/* Account Status Filter */}
           <div>
-            <Label htmlFor="status" className="text-sm font-medium mb-2 block">
+            <Label htmlFor="status" className="text-sm font-medium mb-1 block">
               Account Status
             </Label>
             <Select
@@ -84,7 +93,7 @@ export default function UserFilter({
                 }
               }}
             >
-              <SelectTrigger id="status">
+              <SelectTrigger id="status" className="h-9">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
@@ -98,7 +107,7 @@ export default function UserFilter({
 
           {/* Premium Status Filter */}
           <div>
-            <Label htmlFor="premium" className="text-sm font-medium mb-2 block">
+            <Label htmlFor="premium" className="text-sm font-medium mb-1 block">
               Premium Status
             </Label>
             <Select
@@ -121,7 +130,7 @@ export default function UserFilter({
                 }
               }}
             >
-              <SelectTrigger id="premium">
+              <SelectTrigger id="premium" className="h-9">
                 <SelectValue placeholder="All Users" />
               </SelectTrigger>
               <SelectContent>
@@ -132,57 +141,8 @@ export default function UserFilter({
             </Select>
           </div>
 
-          {/* Email Verification Filter */}
-          <div>
-            <Label htmlFor="email-verified" className="text-sm font-medium mb-2 block">
-              Email Status
-            </Label>
-            <Select
-              value={
-                filters.emailVerified === undefined
-                  ? 'all'
-                  : filters.emailVerified
-                    ? 'verified'
-                    : 'unverified'
-              }
-              onValueChange={(value) => {
-                if (value === 'all') {
-                  const { emailVerified, ...rest } = filters;
-                  onFiltersChange(rest);
-                } else {
-                  onFiltersChange({
-                    ...filters,
-                    emailVerified: value === 'verified',
-                  });
-                }
-              }}
-            >
-              <SelectTrigger id="email-verified">
-                <SelectValue placeholder="All Emails" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Emails</SelectItem>
-                <SelectItem value="verified">Verified</SelectItem>
-                <SelectItem value="unverified">Unverified</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
 
-        {/* Clear Filters Button */}
-        {hasActiveFilters && (
-          <div className="mt-4 flex justify-end">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleClearFilters}
-              className="text-slate-600 dark:text-slate-400"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Clear Filters
-            </Button>
-          </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );

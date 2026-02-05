@@ -13,8 +13,6 @@ import type { UserProfile } from '@/types/user';
 import {
   Ban,
   CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
   Crown,
   Eye,
   MoreHorizontal,
@@ -45,6 +43,7 @@ import {
 } from '@/components/ui/dialog';
 import { usersService } from '@/services/users-service';
 import { toastService } from '@/services/toasts-service';
+import { useRouter } from 'next/navigation';
 
 interface UserTableMeta {
   page: number;
@@ -71,20 +70,22 @@ export default function UserTable({
   onRefresh,
 }: UserTableProps) {
   const t = useTranslations('UserTable');
+  const router = useRouter();
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
-  const [actionType, setActionType] = useState<'ban' | 'unban' | 'view' | null>(null);
+  const [actionType, setActionType] = useState<'ban' | 'unban' | null>(null);
   const [isActionLoading, setIsActionLoading] = useState(false);
 
   const currentPage = meta?.page || 1;
   const totalPages = meta?.totalPages || 1;
 
-  const handleAction = (user: UserProfile, action: 'ban' | 'unban' | 'view') => {
+  const handleAction = (user: UserProfile, action: 'ban' | 'unban') => {
     setSelectedUser(user);
     setActionType(action);
   };
 
   const closeDialog = () => {
     setActionType(null);
+    setSelectedUser(null);
   };
 
   const confirmAction = async () => {
@@ -116,15 +117,6 @@ export default function UserTable({
       .join('')
       .toUpperCase()
       .slice(0, 2);
-  };
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
   };
 
   const formatDateTime = (dateString: string) => {
@@ -295,10 +287,7 @@ export default function UserTable({
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
                           <DropdownMenuItem
-                            onSelect={() => {
-                              // Use setTimeout to allow dropdown to close before opening dialog
-                              setTimeout(() => handleAction(user, 'view'), 0);
-                            }}
+                            onClick={() => router.push(`/users/${user.id}`)}
                           >
                             <Eye className="mr-2 h-4 w-4" />
                             View Details
@@ -310,7 +299,6 @@ export default function UserTable({
                             <DropdownMenuItem
                               className="text-red-600 focus:text-red-600"
                               onSelect={() => {
-                                // Use setTimeout to allow dropdown to close before opening dialog
                                 setTimeout(() => handleAction(user, 'ban'), 0);
                               }}
                             >
@@ -321,7 +309,6 @@ export default function UserTable({
                             <DropdownMenuItem
                               className="text-green-600 focus:text-green-600"
                               onSelect={() => {
-                                // Use setTimeout to allow dropdown to close before opening dialog
                                 setTimeout(() => handleAction(user, 'unban'), 0);
                               }}
                             >
@@ -346,179 +333,48 @@ export default function UserTable({
           meta={meta || undefined}
           entityName="users"
         />
-      </div >
+      </div>
 
-      {/* View Details Dialog */}
-      {/* View Details Dialog */}
-      {/* Action Dialog */}
       <Dialog open={!!actionType} onOpenChange={(open) => !open && closeDialog()}>
         {selectedUser && (
-          <DialogContent className={actionType === 'view' ? "max-w-2xl max-h-[90vh] overflow-y-auto" : ""}>
-            {actionType === 'view' ? (
-              <>
-                <DialogHeader>
-                  <DialogTitle>User Details</DialogTitle>
-                  <DialogDescription>
-                    Detailed information about {selectedUser.fullName}
-                  </DialogDescription>
-                </DialogHeader>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <ShieldAlert className={`h-5 w-5 ${actionType === 'ban' ? 'text-red-500' : 'text-green-500'}`} />
+                {actionType === 'ban' ? 'Ban User' : 'Unban User'}
+              </DialogTitle>
+              <DialogDescription>
+                {actionType === 'ban'
+                  ? 'Are you sure you want to ban this user? They will not be able to access their account.'
+                  : 'Are you sure you want to unban this user? They will regain access to their account.'}
+              </DialogDescription>
+            </DialogHeader>
 
-                <div className="space-y-6">
-                  {/* Profile Section */}
-                  <div className="flex items-start gap-4">
-                    <Avatar className="h-20 w-20">
-                      <AvatarImage src={selectedUser.avatarUrl} alt={selectedUser.username} />
-                      <AvatarFallback className="bg-gradient-to-br from-green-400 to-blue-500 text-white text-2xl">
-                        {getInitials(selectedUser.fullName)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-xl font-bold">{selectedUser.fullName}</h3>
-                        {selectedUser.isPremium && <Crown className="h-5 w-5 text-yellow-500" />}
-                      </div>
-                      <p className="text-slate-600 dark:text-slate-400">@{selectedUser.username}</p>
-                      <p className="text-sm text-slate-500 mt-2">{selectedUser.bio}</p>
-                    </div>
-                  </div>
-
-                  {/* Contact Info */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-500 mb-1">Email</h4>
-                      <p className="text-sm">{selectedUser.email}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-500 mb-1">Phone</h4>
-                      <p className="text-sm">{selectedUser.phone}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-500 mb-1">Address</h4>
-                      <p className="text-sm">{selectedUser.address}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-500 mb-1">GitHub</h4>
-                      <p className="text-sm">{selectedUser.githubUsername || 'N/A'}</p>
-                    </div>
-                  </div>
-
-                  {/* Stats */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-slate-500 mb-2">Problem Solving Stats</h4>
-                    <div className="grid grid-cols-4 gap-4">
-                      <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
-                        <p className="text-xs text-slate-500">Rank</p>
-                        <p className="text-lg font-bold">#{selectedUser.rank}</p>
-                      </div>
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                        <p className="text-xs text-slate-500">Easy</p>
-                        <p className="text-lg font-bold text-green-600">{selectedUser.solvedEasy}</p>
-                      </div>
-                      <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg">
-                        <p className="text-xs text-slate-500">Medium</p>
-                        <p className="text-lg font-bold text-yellow-600">{selectedUser.solvedMedium}</p>
-                      </div>
-                      <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
-                        <p className="text-xs text-slate-500">Hard</p>
-                        <p className="text-lg font-bold text-red-600">{selectedUser.solvedHard}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Account Status */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-slate-500 mb-2">Account Status</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Account Status</span>
-                        <span className="text-sm">Account Status</span>
-                        <Badge variant={!selectedUser.isActive ? 'outline' : selectedUser.isBanned ? 'secondary' : 'default'}>
-                          {!selectedUser.isActive ? 'Not Verified' : selectedUser.isBanned ? 'Banned' : 'Active'}
-                        </Badge>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Email Verified</span>
-                        <Badge variant={selectedUser.emailVerified ? 'default' : 'secondary'}>
-                          {selectedUser.emailVerified ? 'Verified' : 'Not Verified'}
-                        </Badge>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Premium Member</span>
-                        <Badge variant={selectedUser.isPremium ? 'default' : 'secondary'}>
-                          {selectedUser.isPremium ? 'Yes' : 'No'}
-                        </Badge>
-                      </div>
-                      {selectedUser.isPremium && (
-                        <div className="text-xs text-slate-500 mt-2">
-                          Premium expires: {formatDate(selectedUser.premiumExpiresAt)}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Activity */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-slate-500 mb-2">Activity</h4>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <span className="text-slate-500">Last Login:</span>
-                        <p className="font-medium">{formatDateTime(selectedUser.lastLoginAt)}</p>
-                      </div>
-                      <div>
-                        <span className="text-slate-500">Last Active:</span>
-                        <p className="font-medium">{formatDateTime(selectedUser.lastActiveAt)}</p>
-                      </div>
-                    </div>
-                  </div>
+            <div className="py-4">
+              <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                <Avatar className="h-12 w-12">
+                  <AvatarImage src={selectedUser.avatarUrl} alt={selectedUser.username} />
+                  <AvatarFallback>{getInitials(selectedUser.fullName)}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-semibold">{selectedUser.fullName}</p>
+                  <p className="text-sm text-slate-500">@{selectedUser.username}</p>
                 </div>
+              </div>
+            </div>
 
-                <DialogFooter>
-                  <Button variant="outline" onClick={closeDialog}>
-                    Close
-                  </Button>
-                </DialogFooter>
-              </>
-            ) : (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="flex items-center gap-2">
-                    <ShieldAlert className={`h-5 w-5 ${actionType === 'ban' ? 'text-red-500' : 'text-green-500'}`} />
-                    {actionType === 'ban' ? 'Ban User' : 'Unban User'}
-                  </DialogTitle>
-                  <DialogDescription>
-                    {actionType === 'ban'
-                      ? 'Are you sure you want to ban this user? They will not be able to access their account.'
-                      : 'Are you sure you want to unban this user? They will regain access to their account.'}
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="py-4">
-                  <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src={selectedUser.avatarUrl} alt={selectedUser.username} />
-                      <AvatarFallback>{getInitials(selectedUser.fullName)}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold">{selectedUser.fullName}</p>
-                      <p className="text-sm text-slate-500">@{selectedUser.username}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <DialogFooter>
-                  <Button variant="outline" onClick={closeDialog} disabled={isActionLoading}>
-                    Cancel
-                  </Button>
-                  <Button
-                    variant={actionType === 'ban' ? 'destructive' : 'default'}
-                    onClick={confirmAction}
-                    disabled={isActionLoading}
-                  >
-                    {isActionLoading ? 'Processing...' : actionType === 'ban' ? 'Ban User' : 'Unban User'}
-                  </Button>
-                </DialogFooter>
-              </>
-            )}
+            <DialogFooter>
+              <Button variant="outline" onClick={closeDialog} disabled={isActionLoading}>
+                Cancel
+              </Button>
+              <Button
+                variant={actionType === 'ban' ? 'destructive' : 'default'}
+                onClick={confirmAction}
+                disabled={isActionLoading}
+              >
+                {isActionLoading ? 'Processing...' : actionType === 'ban' ? 'Ban User' : 'Unban User'}
+              </Button>
+            </DialogFooter>
           </DialogContent>
         )}
       </Dialog>

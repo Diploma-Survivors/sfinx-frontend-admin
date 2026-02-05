@@ -146,6 +146,19 @@ export const usersService = {
   },
 
   /**
+   * Get user solutions
+   */
+  async getUserSolutions(
+    userId: number,
+    params?: { page: number; limit: number; sortBy: string }
+  ): Promise<ApiResponse<any>> {
+    const response = await clientApi.get(`/solutions/user/${userId}`, {
+      params,
+    });
+    return response.data;
+  },
+
+  /**
    * Get all users (admin function)
    */
   async getAllUsers(params?: {

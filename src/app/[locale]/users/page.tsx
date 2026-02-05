@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Users, RefreshCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import UserTable from '@/components/user/user-table';
 import UserFilter from '@/components/user/user-filter';
+import { UserStats } from '@/components/user/user-stats';
+import { UserHeader } from '@/components/user/user-header';
 import type { UserProfile, UserFilters } from '@/types/user';
 import { usersService, SystemUserStatistics } from '@/services/users-service';
 import { toastService } from '@/services/toasts-service';
@@ -80,97 +80,9 @@ export default function UsersPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div>
-                <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
-                  User Management
-                </h1>
-                <p className="text-slate-600 dark:text-slate-400 mt-1">
-                  Manage and monitor platform users
-                </p>
-              </div>
-            </div>
-            <Button
-              onClick={handleRefresh}
-              variant="outline"
-              disabled={isLoading}
-              className="flex items-center gap-2"
-            >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-              Refresh
-            </Button>
-          </div>
-        </div>
+        <UserHeader onRefresh={handleRefresh} isLoading={isLoading} />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                  Total Users
-                </p>
-                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-1">
-                  {systemStats.total}
-                </p>
-              </div>
-              <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                <Users className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                  Active Users
-                </p>
-                <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
-                  {systemStats.active}
-                </p>
-              </div>
-              <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                <Users className="h-6 w-6 text-green-600 dark:text-green-400" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                  Premium Users
-                </p>
-                <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mt-1">
-                  {systemStats.premium}
-                </p>
-              </div>
-              <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
-                <Users className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                  Banned Users
-                </p>
-                <p className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">
-                  {systemStats.banned}
-                </p>
-              </div>
-              <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
-                <Users className="h-6 w-6 text-red-600 dark:text-red-400" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <UserStats stats={systemStats} />
 
         {/* Filters */}
         <div className="mb-6">
