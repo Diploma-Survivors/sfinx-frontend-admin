@@ -52,7 +52,10 @@
         "generalSettings": "Cài đặt chung",
         "logout": "Đăng xuất",
         "noEmail": "Không có email",
-        "rolesAndPermissions": "Vai trò & Quyền hạn"
+        "rolesAndPermissions": "Vai trò & Quyền hạn",
+        "logoutConfirmTitle": "Xác nhận đăng xuất",
+        "logoutConfirmMessage": "Bạn có chắc chắn muốn đăng xuất không?",
+        "cancel": "Hủy"
     },
     "StatisticsPage": {
         "title": "Thống kê doanh thu",

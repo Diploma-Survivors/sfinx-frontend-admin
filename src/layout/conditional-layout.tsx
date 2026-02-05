@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
 import LanguageSwitcher from '@/components/layout/language-switcher';
 import { useLocale } from 'next-intl';
+import { useState } from 'react';
 import GlobalLoader from '@/components/ui/global-loader';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
@@ -15,13 +16,20 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const { clearUserData, user } = useApp();
   const locale = useLocale();
 
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const handleLogout = async () => {
+    setIsLoggingOut(true);
     clearUserData();
     await signOut({
       callbackUrl: `/${locale}/login`, // Where to go after logout
       redirect: true,
     });
   };
+
+  if (isLoggingOut) {
+    return <GlobalLoader />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">

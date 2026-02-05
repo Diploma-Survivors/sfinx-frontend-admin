@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button';
 import { useApp } from '@/contexts/app-context';
 import { useSidebar } from '@/contexts/sidebar-context';
 import { cn } from '@/lib/utils';
+
+
+import LogoutConfirmationDialog from './logout-confirmation-dialog';
 import { motion } from 'framer-motion';
 import {
   Bot,
@@ -44,6 +47,7 @@ interface SideBarProps {
 
 export default function Sidebar({ onLogout }: SideBarProps) {
   const { isOpen, setIsOpen, toggle, isMobile } = useSidebar();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('Sidebar');
@@ -390,7 +394,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
             <Button
               variant="outline"
               className="w-full justify-center gap-2 text-slate-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 dark:hover:bg-red-900/20"
-              onClick={onLogout}
+              onClick={() => setShowLogoutConfirm(true)}
             >
               <LogOut size={16} />
               <span>{t('logout')}</span>
@@ -412,6 +416,13 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           </Button>
         )}
       </motion.aside>
+
+      {/* Logout Confirmation Dialog */}
+      <LogoutConfirmationDialog
+        open={showLogoutConfirm}
+        onOpenChange={setShowLogoutConfirm}
+        onConfirm={onLogout}
+      />
     </>
   );
 }

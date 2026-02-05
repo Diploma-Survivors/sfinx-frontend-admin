@@ -52,7 +52,10 @@
         "generalSettings": "General Settings",
         "logout": "Logout",
         "noEmail": "No email",
-        "rolesAndPermissions": "Roles & Permissions"
+        "rolesAndPermissions": "Roles & Permissions",
+        "logoutConfirmTitle": "Confirm Logout",
+        "logoutConfirmMessage": "Are you sure you want to logout?",
+        "cancel": "Cancel"
     },
     "StatisticsPage": {
         "title": "Revenue Statistics",
