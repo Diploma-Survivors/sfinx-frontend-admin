@@ -73,7 +73,24 @@ export function AppProvider({
         getAllCurrentUserPermission(decodedAccessToken.sub)
       ])
         .then(([userResponse, permissionsResponse]) => {
-          setUser(userResponse.data.data);
+          const rawUser = userResponse.data.data;
+          const DEFAULT_AVATAR = 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png';
+
+          let avatarUrl = DEFAULT_AVATAR;
+
+          if (rawUser.avatarKey) {
+            if (rawUser.avatarKey.startsWith('http')) {
+              avatarUrl = rawUser.avatarKey;
+            } else {
+              avatarUrl = `${process.env.NEXT_PUBLIC_S3_URL || 'https://d2q27bhg0k9x68.cloudfront.net'}/${rawUser.avatarKey}`;
+            }
+          }
+
+          const mappedUser = {
+            ...rawUser,
+            avatarUrl,
+          };
+          setUser(mappedUser);
           setPermissions(permissionsResponse);
 
           setTimeout(() => {

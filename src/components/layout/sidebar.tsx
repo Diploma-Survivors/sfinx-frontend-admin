@@ -1,5 +1,6 @@
 'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/contexts/app-context';
 import { useSidebar } from '@/contexts/sidebar-context';
@@ -352,9 +353,12 @@ export default function Sidebar({ onLogout }: SideBarProps) {
               !isOpen && !isMobile ? 'justify-center' : ''
             )}
           >
-            <div className="w-10 h-10 min-w-10 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 font-bold">
-              {user?.fullName?.[0] || user?.username?.[0] || 'U'}
-            </div>
+            <Avatar className="w-10 h-10 min-w-10 border border-amber-200">
+              <AvatarImage src={user?.avatarUrl} alt={user?.username || 'User'} className="object-cover" />
+              <AvatarFallback className="bg-amber-100 text-amber-700 font-bold">
+                {user?.fullName?.[0] || user?.username?.[0] || 'U'}
+              </AvatarFallback>
+            </Avatar>
 
             <motion.div
               animate={{
