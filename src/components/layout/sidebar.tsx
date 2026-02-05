@@ -132,7 +132,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           name: t('userList'),
           href: '/users',
           icon: Users,
-          permissions: [PermissionEnum.USER_READ]
+          permissions: [PermissionEnum.USER_READ, PermissionEnum.ADMIN_ACCESS]
         },
         {
           name: t('feedbackReports'),

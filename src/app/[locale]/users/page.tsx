@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import UserTable from '@/components/user/user-table';
 import UserFilter from '@/components/user/user-filter';
 import type { UserProfile, UserFilters } from '@/types/user';
-import { usersService } from '@/services/users-service';
+import { usersService, SystemUserStatistics } from '@/services/users-service';
 import { toastService } from '@/services/toasts-service';
 
 export default function UsersPage() {
@@ -24,18 +24,29 @@ export default function UsersPage() {
     hasPreviousPage: boolean;
   } | null>(null);
 
+  const [systemStats, setSystemStats] = useState<SystemUserStatistics>({
+    total: 0,
+    active: 0,
+    premium: 0,
+    banned: 0,
+  });
+
   const fetchUsers = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await usersService.getAllUsers({
-        page,
-        limit: 10,
-        search: searchQuery,
-        ...filters,
-      });
+      const [usersResponse, stats] = await Promise.all([
+        usersService.getAllUsers({
+          page,
+          limit: 10,
+          search: searchQuery,
+          ...filters,
+        }),
+        usersService.getSystemStatistics(),
+      ]);
 
-      setUsers(response.data.data);
-      setMeta(response.data.meta);
+      setUsers(usersResponse.data.data);
+      setMeta(usersResponse.data.meta);
+      setSystemStats(stats);
     } catch (error) {
       toastService.error('Failed to fetch users');
       console.error('Error fetching users:', error);
@@ -103,7 +114,7 @@ export default function UsersPage() {
                   Total Users
                 </p>
                 <p className="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-1">
-                  {meta?.total || 0}
+                  {systemStats.total}
                 </p>
               </div>
               <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
@@ -119,7 +130,7 @@ export default function UsersPage() {
                   Active Users
                 </p>
                 <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
-                  {users.filter(u => u.isActive).length}
+                  {systemStats.active}
                 </p>
               </div>
               <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
@@ -135,7 +146,7 @@ export default function UsersPage() {
                   Premium Users
                 </p>
                 <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mt-1">
-                  {users.filter(u => u.isPremium).length}
+                  {systemStats.premium}
                 </p>
               </div>
               <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
@@ -151,7 +162,7 @@ export default function UsersPage() {
                   Banned Users
                 </p>
                 <p className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">
-                  {users.filter(u => !u.isActive).length}
+                  {systemStats.banned}
                 </p>
               </div>
               <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
