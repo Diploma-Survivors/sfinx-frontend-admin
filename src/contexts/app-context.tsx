@@ -41,7 +41,7 @@ export function AppProvider({
 }: AppProviderProps) {
   const [user, setUser] = useState<UserProfile>();
   const [permissions, setPermissions] = useState<Permission[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!decodedAccessToken);
 
   const pathname = usePathname();
   const shouldHideNavigation = pathname === '/login';
@@ -59,6 +59,11 @@ export function AppProvider({
   );
 
   useEffect(() => {
+    // Don't fetch user data if on login page
+    if (shouldHideNavigation) {
+      return;
+    }
+
     if (decodedAccessToken) {
       setIsLoading(true);
 
@@ -68,16 +73,36 @@ export function AppProvider({
         getAllCurrentUserPermission(decodedAccessToken.sub)
       ])
         .then(([userResponse, permissionsResponse]) => {
-          setUser(userResponse.data.data);
+          const rawUser = userResponse.data.data;
+          const DEFAULT_AVATAR = 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png';
+
+          let avatarUrl = DEFAULT_AVATAR;
+
+          if (rawUser.avatarKey) {
+            if (rawUser.avatarKey.startsWith('http')) {
+              avatarUrl = rawUser.avatarKey;
+            } else {
+              avatarUrl = `${process.env.NEXT_PUBLIC_S3_URL || 'https://d2q27bhg0k9x68.cloudfront.net'}/${rawUser.avatarKey}`;
+            }
+          }
+
+          const mappedUser = {
+            ...rawUser,
+            avatarUrl,
+          };
+          setUser(mappedUser);
           setPermissions(permissionsResponse);
-          setIsLoading(false);
+
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
         })
         .catch((error) => {
           console.error('Failed to fetch user data or permissions:', error);
           setIsLoading(false);
         });
     }
-  }, [decodedAccessToken]);
+  }, [decodedAccessToken, shouldHideNavigation]);
 
   const value: AppContextType = {
     user,

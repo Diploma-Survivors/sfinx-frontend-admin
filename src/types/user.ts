@@ -24,10 +24,12 @@ export interface UserProfile {
   googleId: string;
   emailVerified: boolean;
   isActive: boolean;
+  isBanned: boolean;
   isPremium: boolean;
 
   premiumStartedAt: string;   // ISO datetime
   premiumExpiresAt: string;   // ISO datetime
+  createdAt: string;          // ISO datetime
   lastLoginAt: string;        // ISO datetime
   lastActiveAt: string;       // ISO datetime
 }
@@ -42,5 +44,6 @@ export interface UserFilters {
   isActive?: boolean;
   isPremium?: boolean;
   emailVerified?: boolean;
+  status?: 'active' | 'banned' | 'not_verified';
 }
 

@@ -25,43 +25,45 @@ interface UseUsersResult {
 
 // Mock data for users
 const MOCK_USERS: UserProfile[] = Array.from({ length: 50 }, (_, i) => {
-  const id = i + 1;
-  const isPremium = id % 5 === 0;
-  const now = new Date().toISOString();
+    const id = i + 1;
+    const isPremium = id % 5 === 0;
+    const now = new Date().toISOString();
 
-  return {
-    id,
-    email: `user${id}@example.com`,
-    username: `user${id}`,
-    fullName: `User ${id}`,
-    avatarUrl: `https://cdn.example.com/avatars/${id}/1735500000.jpg`,
-    bio: `This is bio of user ${id}`,
-    address: `${id} Example Street, City`,
-    phone: `0900000${String(id).padStart(3, "0")}`,
+    return {
+        id,
+        email: `user${id}@example.com`,
+        username: `user${id}`,
+        fullName: `User ${id}`,
+        avatarUrl: `https://cdn.example.com/avatars/${id}/1735500000.jpg`,
+        bio: `This is bio of user ${id}`,
+        address: `${id} Example Street, City`,
+        phone: `0900000${String(id).padStart(3, "0")}`,
 
-    rank: id,
-    globalScore: Math.floor(Math.random() * 5000),
-    solvedEasy: Math.floor(Math.random() * 100),
-    solvedMedium: Math.floor(Math.random() * 50),
-    solvedHard: Math.floor(Math.random() * 20),
+        rank: id,
+        globalScore: Math.floor(Math.random() * 5000),
+        solvedEasy: Math.floor(Math.random() * 100),
+        solvedMedium: Math.floor(Math.random() * 50),
+        solvedHard: Math.floor(Math.random() * 20),
 
-    lastSolveAt: {},
+        lastSolveAt: {},
 
-    websiteUrl: `https://user${id}.example.com`,
-    githubUsername: `github-user-${id}`,
-    linkedinUrl: `https://linkedin.com/in/user${id}`,
-    preferredLanguage: "en",
+        websiteUrl: `https://user${id}.example.com`,
+        githubUsername: `github-user-${id}`,
+        linkedinUrl: `https://linkedin.com/in/user${id}`,
+        preferredLanguage: "en",
 
-    googleId: `google-id-${id}`,
-    emailVerified: true,
-    isActive: true,
-    isPremium,
+        googleId: `google-id-${id}`,
+        emailVerified: true,
+        isActive: true,
+        isBanned: false,
+        isPremium,
 
-    premiumStartedAt: isPremium ? now : "",
-    premiumExpiresAt: isPremium ? now : "",
-    lastLoginAt: now,
-    lastActiveAt: now,
-  };
+        premiumStartedAt: isPremium ? now : "",
+        premiumExpiresAt: isPremium ? now : "",
+        createdAt: now,
+        lastLoginAt: now,
+        lastActiveAt: now,
+    };
 });
 
 
@@ -151,7 +153,7 @@ export default function useUsers(): UseUsersResult {
     const total = MOCK_USERS.filter((user) => {
         const matchesKeyword = user.username.toLowerCase().includes(keyword.toLowerCase()) ||
             user.fullName.toLowerCase().includes(keyword.toLowerCase());
-        
+
         const matchesActive = filters.isActive === undefined || user.isActive === filters.isActive;
         const matchesPremium = filters.isPremium === undefined || user.isPremium === filters.isPremium;
         const matchesEmail = filters.emailVerified === undefined || user.emailVerified === filters.emailVerified;

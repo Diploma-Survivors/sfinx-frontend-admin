@@ -1,26 +1,35 @@
 'use client';
 
-import Breadcrumbs from '@/components/breadcrumbs';
-import Sidebar from '@/components/sidebar';
+import Breadcrumbs from '@/components/layout/breadcrumbs';
+import Sidebar from '@/components/layout/sidebar';
 import { useApp } from '@/contexts/app-context';
 import { SidebarProvider, useSidebar } from '@/contexts/sidebar-context';
 import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
-import LanguageSwitcher from '@/components/language-switcher';
+import LanguageSwitcher from '@/components/layout/language-switcher';
 import { useLocale } from 'next-intl';
+import { useState } from 'react';
+import GlobalLoader from '@/components/ui/global-loader';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { isOpen, isMobile } = useSidebar();
   const { clearUserData, user } = useApp();
   const locale = useLocale();
 
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const handleLogout = async () => {
+    setIsLoggingOut(true);
     clearUserData();
     await signOut({
       callbackUrl: `/${locale}/login`, // Where to go after logout
       redirect: true,
     });
   };
+
+  if (isLoggingOut) {
+    return <GlobalLoader />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -32,7 +41,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         )}
       >
         <div className="container mx-auto p-6">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-1">
             <Breadcrumbs />
             <LanguageSwitcher />
           </div>
@@ -51,14 +60,7 @@ export default function ConditionalLayout({
   const { shouldHideNavigation, isLoading } = useApp();
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500 mx-auto mb-4" />
-          <p className="text-slate-500 dark:text-slate-400">Loading...</p>
-        </div>
-      </div>
-    );
+    return <GlobalLoader />;
   }
 
   if (shouldHideNavigation) {

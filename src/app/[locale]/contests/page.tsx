@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import useContest from '@/hooks/use-contest';
 import ContestFilter from '@/components/contest-filters/contest-filter';
-import ContestTable from '@/components/contest-table';
+import ContestTable from '@/components/contests/contest-table';
 import { useDialog } from '@/components/providers/dialog-provider';
 import { toastService } from '@/services/toasts-service';
 import { Contest, ContestStatus } from '@/types/contest';

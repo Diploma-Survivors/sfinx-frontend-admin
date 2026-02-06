@@ -77,16 +77,16 @@ export default function useProblems(
     async (requestParams: GetProblemListRequest) => {
       try {
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
-        
+
         const response = await ProblemsService.getProblemList(
           requestParams,
         );
         setState((prev) => ({
-            ...prev,
-            problems: response?.data?.data?.data,
-            meta: response?.data?.data?.meta,
-            isLoading: false,
-          }));
+          ...prev,
+          problems: response?.data?.data?.data,
+          meta: response?.data?.data?.meta,
+          isLoading: false,
+        }));
       } catch (err) {
         console.error('Error fetching problems:', err);
         setState((prev) => ({
@@ -129,14 +129,17 @@ export default function useProblems(
   // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateRequest({
-        search: keyword.trim() || undefined,
-        page: 1,
-      });
+      const trimmedKeyword = keyword.trim() || undefined;
+      if (trimmedKeyword !== request.search) {
+        updateRequest({
+          search: trimmedKeyword,
+          page: 1,
+        });
+      }
     }, 500); // 500ms debounce
 
     return () => clearTimeout(timer);
-  }, [keyword, updateRequest]);
+  }, [keyword, request.search, updateRequest]);
 
   // handle sorting changes
   const handleSortByChange = useCallback(

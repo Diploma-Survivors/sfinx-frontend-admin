@@ -36,7 +36,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Pagination } from '@/components/ui/pagination';
 import { cn } from '@/lib/utils';
-import { DataTablePagination } from './ui/data-table-pagination';
+import { DataTablePagination } from '@/components/ui/data-table-pagination';
 import { getLanguageName, getStatusColor, getStatusLabel } from '@/services/submissions-service';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';

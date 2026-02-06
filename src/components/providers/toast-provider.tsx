@@ -38,7 +38,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       type: ToastType = ToastType.INFO,
       duration = 5000
     ) => {
-      const id = Date.now();
+      const id = Date.now() + Math.random();
       const newToast = { id, message, type };
 
       setToasts((prev) => [...prev, newToast]);
@@ -76,8 +76,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={toast.id}
             className={`
               flex min-w-[300px] items-center justify-between rounded-lg p-4 shadow-lg transition-all animate-in slide-in-from-right-full
-              ${toast.type === 'success' ? 'bg-green-500 text-white' : ''}
-              ${toast.type === 'error' ? 'bg-red-500 text-white' : ''}
+              ${toast.type === 'success' ? 'bg-primary text-primary-foreground' : ''}
+              ${toast.type === 'error' ? 'bg-destructive text-destructive-foreground' : ''}
               ${toast.type === 'info' ? 'bg-blue-500 text-white' : ''}
               ${toast.type === 'warning' ? 'bg-orange-500 text-white' : ''}
             `}

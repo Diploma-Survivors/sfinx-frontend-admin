@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { CreateProblemFormValues } from '@/components/problem-create-form';
+import type { CreateProblemFormValues } from '@/components/problems/problem-create-form';
 import { ProblemDifficulty } from '@/types/problems';
 
 const STORAGE_KEY = 'create_problem_draft';

@@ -127,14 +127,17 @@ export default function useTopics(): UseTopicsReturn {
   // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateRequest({
-        search: keyword.trim() || undefined,
-        page: 1,
-      });
+      const trimmedKeyword = keyword.trim() || undefined;
+      if (trimmedKeyword !== request.search) {
+        updateRequest({
+          search: trimmedKeyword,
+          page: 1,
+        });
+      }
     }, 500); // 500ms debounce
 
     return () => clearTimeout(timer);
-  }, [keyword, updateRequest]);
+  }, [keyword, request.search, updateRequest]);
 
   // handle sorting changes
   const handleSortByChange = useCallback(

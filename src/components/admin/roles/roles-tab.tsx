@@ -98,7 +98,7 @@ export default function RolesTab() {
                         className="pl-10"
                     />
                 </div>
-                {hasPermission(PermissionEnum.ROLE_CREATE) && (
+                {hasPermission(PermissionEnum.ADMIN_ROLES) && (
                     <Button onClick={() => setIsCreateDialogOpen(true)} className="w-full md:w-auto">
                         <Plus className="mr-2 h-4 w-4" />
                         {t('addNewRole')}
@@ -171,7 +171,7 @@ export default function RolesTab() {
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <div className="flex justify-end gap-2">
-                                            {hasPermission(PermissionEnum.ROLE_UPDATE) && (
+                                            {hasPermission(PermissionEnum.ADMIN_ROLES) && (
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
@@ -186,7 +186,7 @@ export default function RolesTab() {
                                                     )}
                                                 </Button>
                                             )}
-                                            {hasPermission(PermissionEnum.ROLE_DELETE) && !role.isSystemRole && (
+                                            {hasPermission(PermissionEnum.ADMIN_ROLES) && !role.isSystemRole && (
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"

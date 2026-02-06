@@ -3,7 +3,7 @@
 import { useAppSelector } from '@/store/hooks';
 import useSubmissions from '@/hooks/use-submissions';
 import SubmissionFilter from '@/components/submission-filters/submission-filter';
-import SubmissionTable from '@/components/submission-table';
+import SubmissionTable from '@/components/submissions/submission-table';
 import { useTranslations } from 'next-intl';
 
 export default function SubmissionsPage() {

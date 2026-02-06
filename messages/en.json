@@ -1,4 +1,7 @@
 {
+    "General": {
+        "app_name": "SfinX"
+    },
     "HomePage": {
         "title": "Welcome to Sol Vibe",
         "about": "About"
@@ -40,6 +43,7 @@
         "createNewContest": "Create New Contest",
         "submissionManagement": "SUBMISSION MANAGEMENT",
         "manageSubmissions": "Manage Submissions",
+        "programmingLanguages": "Programming Languages",
         "userManagement": "USER MANAGEMENT",
         "userList": "User List",
         "feedbackReports": "Feedback & Reports",
@@ -48,7 +52,27 @@
         "generalSettings": "General Settings",
         "logout": "Logout",
         "noEmail": "No email",
-        "rolesAndPermissions": "Roles & Permissions"
+        "rolesAndPermissions": "Roles & Permissions",
+        "logoutConfirmTitle": "Confirm Logout",
+        "logoutConfirmMessage": "Are you sure you want to logout?",
+        "cancel": "Cancel"
+    },
+    "StatisticsPage": {
+        "title": "Revenue Statistics",
+        "description": "Revenue Overview by Period",
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "thisYear": "This Year",
+        "revenue": "Total Revenue",
+        "subscribers": "Active Subscribers",
+        "churnRate": "Churn Rate",
+        "last": "Last",
+        "refresh": "Refresh",
+        "period": {
+            "day": "Days",
+            "month": "Months",
+            "year": "Years"
+        }
     },
     "ContestsPage": {
         "title": "Contest List",
@@ -296,6 +320,92 @@
         "deactivateTopicSuccess": "Topic deactivated successfully",
         "activateTopicError": "Failed to activate topic",
         "deactivateTopicError": "Failed to deactivate topic"
+    },
+    "ProgrammingLanguagePage": {
+        "title": "Programming Languages",
+        "description": "Manage programming languages supported by the system.",
+        "createLanguage": "Add Language",
+        "searchPlaceholder": "Search languages...",
+        "allStatuses": "All Statuses",
+        "active": "Active",
+        "inactive": "Inactive",
+        "sortBy": "Sort by:",
+        "id": "ID",
+        "createdAt": "Created At",
+        "resetFilters": "Reset Filters",
+        "confirmDeleteTitle": "Confirm Delete",
+        "confirmDeleteMessage": "Are you sure you want to delete the language \"{name}\"? This action cannot be undone.",
+        "deleteSuccess": "Language deleted successfully",
+        "deleteError": "Failed to delete language",
+        "activateSuccess": "Language activated successfully",
+        "activateError": "Failed to activate language",
+        "deactivateSuccess": "Language deactivated successfully",
+        "deactivateError": "Failed to deactivate language",
+        "confirmActivateTitle": "Confirm Activate",
+        "confirmDeactivateTitle": "Confirm Deactivate",
+        "confirmActivateMessage": "Are you sure you want to activate programming language \"{name}\"?",
+        "confirmDeactivateMessage": "Are you sure you want to deactivate programming language \"{name}\"?",
+        "activate": "Activate",
+        "deactivate": "Deactivate",
+        "delete": "Delete",
+        "cancel": "Cancel"
+    },
+    "ProgrammingLanguageTable": {
+        "id": "ID",
+        "name": "NAME",
+        "slug": "SLUG",
+        "judge0Id": "JUDGE0 ID",
+        "monacoLanguage": "MONACO LANG",
+        "orderIndex": "ORDER",
+        "status": "STATUS",
+        "actions": "ACTIONS",
+        "nodata": "No programming languages found.",
+        "active": "Active",
+        "inactive": "Inactive",
+        "edit": "Edit",
+        "delete": "Delete",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+    },
+    "CreateProgrammingLanguageDialog": {
+        "title": "Create Programming Language",
+        "description": "Add a new programming language to the system.",
+        "nameLabel": "Name",
+        "namePlaceholder": "e.g. C++",
+        "judge0IdLabel": "Judge0 ID",
+        "judge0IdPlaceholder": "e.g. 54",
+        "monacoLanguageLabel": "Monaco Language",
+        "monacoLanguagePlaceholder": "e.g. cpp",
+        "orderIndexLabel": "Order Index",
+        "orderIndexPlaceholder": "e.g. 1",
+        "starterCodeLabel": "Starter Code",
+        "starterCodePlaceholder": "Enter starter code...",
+        "nameRequired": "Name is required",
+        "starterCodeRequired": "Starter code is required",
+        "create": "Create",
+        "creating": "Creating...",
+        "createSuccess": "Language created successfully",
+        "createError": "Failed to create language"
+    },
+    "EditProgrammingLanguageDialog": {
+        "title": "Edit Programming Language",
+        "description": "Update the programming language details.",
+        "nameLabel": "Name",
+        "namePlaceholder": "e.g. C++",
+        "judge0IdLabel": "Judge0 ID",
+        "judge0IdPlaceholder": "e.g. 54",
+        "monacoLanguageLabel": "Monaco Language",
+        "monacoLanguagePlaceholder": "e.g. cpp",
+        "orderIndexLabel": "Order Index",
+        "orderIndexPlaceholder": "e.g. 1",
+        "starterCodeLabel": "Starter Code",
+        "starterCodePlaceholder": "Enter starter code...",
+        "nameRequired": "Name is required",
+        "starterCodeRequired": "Starter code is required",
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "updateSuccess": "Language updated successfully",
+        "updateError": "Failed to update language"
     },
     "CreateTagDialog": {
         "tagNameRequired": "Tag name is required",
@@ -905,5 +1015,64 @@
     "Loading": {
         "title": "Loading application...",
         "description": "Please wait while we initialize the system"
+    },
+    "UserTable": {
+        "noUsersFound": "No users found",
+        "banSuccess": "User {username} has been banned successfully",
+        "unbanSuccess": "User {username} has been unbanned successfully",
+        "actionError": "Failed to perform action. Please try again."
+    },
+    "Subscription": {
+        "title": "Subscription Management",
+        "plans": "Plans",
+        "features": "Features",
+        "transactions": "Transactions",
+        "statistics": "Statistics",
+        "plansDescription": "Manage subscription plans and pricing.",
+        "transactionsDescription": "View payment history and transaction details.",
+        "statsDescription": "Monitor revenue and subscriber growth.",
+        "table": {
+            "id": "ID",
+            "name": "Name",
+            "price": "Price (USD)",
+            "duration": "Duration (Months)",
+            "status": "Status",
+            "actions": "Actions",
+            "user": "User",
+            "amount": "Amount",
+            "provider": "Provider",
+            "date": "Date",
+            "txnId": "Transaction ID"
+        },
+        "stats": {
+            "totalRevenue": "Total Revenue",
+            "monthlyRevenue": "Monthly Revenue",
+            "activeSubscribers": "Active Subscribers",
+            "churnRate": "Churn Rate",
+            "revenueOverTime": "Revenue Over Time",
+            "subsByPlan": "Subscriptions by Plan",
+            "currentDayRevenue": "Current Day Revenue",
+            "currentMonthRevenue": "Current Month Revenue",
+            "currentYearRevenue": "Current Year Revenue",
+            "currentRevenue": "Current Revenue",
+            "latestDay": "Latest day in chart",
+            "latestMonth": "Latest month in chart",
+            "latestYear": "Latest year in chart",
+            "latestPeriod": "Latest period in chart",
+            "totalRevenueNote": "Total revenue in selected period",
+            "revenueGrowth": "Revenue Growth",
+            "subscriberGrowth": "Subscriber Growth",
+            "vsLastPeriod": "vs last period",
+            "distributionDescription": "Distribution of active subscriptions"
+        },
+        "status": {
+            "success": "Success",
+            "pending": "Pending",
+            "failed": "Failed",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "editPlan": "Edit Plan",
+        "updateSuccess": "Plan updated successfully"
     }
 }

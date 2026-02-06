@@ -7,7 +7,7 @@ import { SubmissionsService } from '@/services/submissions-service';
 import { Submission } from '@/types/submissions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchLanguages } from '@/store/slices/metadata-slice';
-import SubmissionDetail from '@/components/submission-detail';
+import SubmissionDetail from '@/components/submissions/submission-detail';
 
 export default function SubmissionDetailPage() {
     const params = useParams();

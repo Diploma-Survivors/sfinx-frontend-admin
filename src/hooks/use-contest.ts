@@ -73,11 +73,11 @@ export default function useContest(): UseContestReturn {
     async (requestParams: GetContestListRequest) => {
       try {
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
-        
+
         const response = await ContestsService.getContests(requestParams);
         const data = response.data.data.data;
         const meta = response.data.data.meta;
-        
+
         setState((prev) => ({
           ...prev,
           contests: data,
@@ -129,14 +129,17 @@ export default function useContest(): UseContestReturn {
   // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateRequest({
-        search: keyword.trim() || undefined,
-        page: 1,
-      });
+      const trimmedKeyword = keyword.trim() || undefined;
+      if (trimmedKeyword !== request.search) {
+        updateRequest({
+          search: trimmedKeyword,
+          page: 1,
+        });
+      }
     }, 500); // 500ms debounce
 
     return () => clearTimeout(timer);
-  }, [keyword, updateRequest]);
+  }, [keyword, request.search, updateRequest]);
 
   // handle sorting changes
   const handleSortByChange = useCallback(

@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import { ContestSchema, ContestFormValues } from './schema';
 import { GeneralInfoSection } from './general-info-section';
 import { SelectedProblem, ProblemSelectionSection } from './problem-selection-section';
+import { toastService } from '@/services/toasts-service';
 
 interface EditContestFormProps {
     initialData: Contest;
@@ -85,7 +86,7 @@ export default function EditContestForm({
     };
 
     const onError = (errors: any) => {
-        console.log('Form errors:', errors);
+        toastService.error('Failed to update contest');
     };
 
     return (

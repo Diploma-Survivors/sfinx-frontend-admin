@@ -1,9 +1,13 @@
 'use client';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/contexts/app-context';
 import { useSidebar } from '@/contexts/sidebar-context';
 import { cn } from '@/lib/utils';
+
+
+import LogoutConfirmationDialog from './logout-confirmation-dialog';
 import { motion } from 'framer-motion';
 import {
   Bot,
@@ -26,11 +30,15 @@ import {
   Trophy,
   Users,
   X,
+  CreditCard,
+  BarChart3,
+  Layers,
 } from 'lucide-react';
+import Image from 'next/image';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { UserSettingsDialog } from './user/user-settings-dialog';
+import { UserSettingsDialog } from '@/components/user/user-settings-dialog';
 import { PermissionEnum } from '@/types/permission';
 
 interface SideBarProps {
@@ -39,9 +47,12 @@ interface SideBarProps {
 
 export default function Sidebar({ onLogout }: SideBarProps) {
   const { isOpen, setIsOpen, toggle, isMobile } = useSidebar();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('Sidebar');
+  const tCommon = useTranslations('General');
+  const tSub = useTranslations('Subscription');
 
   const { user, hasPermission } = useApp();
 
@@ -111,6 +122,12 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           icon: CheckSquare,
           permissions: [PermissionEnum.SUBMISSION_READ]
         },
+        {
+          name: t('programmingLanguages'),
+          href: '/programing-language',
+          icon: Code,
+          permissions: [PermissionEnum.LANGUAGE_READ]
+        },
       ],
     },
     {
@@ -120,7 +137,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           name: t('userList'),
           href: '/users',
           icon: Users,
-          permissions: [PermissionEnum.USER_READ]
+          permissions: [PermissionEnum.USER_READ, PermissionEnum.ADMIN_ACCESS]
         },
         {
           name: t('feedbackReports'),
@@ -132,7 +149,37 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           name: t('rolesAndPermissions'),
           href: '/roles',
           icon: Shield,
-          permissions: [PermissionEnum.ROLE_READ]
+          permissions: [PermissionEnum.ADMIN_ROLES]
+        },
+      ],
+    },
+    {
+      // Subscription Management Section
+      title: tSub('title'),
+      items: [
+        {
+          name: tSub('plans'),
+          href: '/subscriptions/plans',
+          icon: CreditCard,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
+        },
+        {
+          name: tSub('features'),
+          href: '/subscriptions/features',
+          icon: Layers,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
+        },
+        {
+          name: tSub('transactions'),
+          href: '/subscriptions/transactions',
+          icon: FileCode,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
+        },
+        {
+          name: tSub('statistics'),
+          href: '/subscriptions/statistics',
+          icon: BarChart3,
+          permissions: [PermissionEnum.ADMIN_ACCESS]
         },
       ],
     },
@@ -207,39 +254,24 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         variants={sidebarVariants}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
         className={cn(
-          'fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xl',
+          'fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xl group',
           isMobile ? 'w-64' : ''
         )}
       >
         {/* Header / Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 shrink-0 justify-between">
-          <Link href="/" className="flex items-center gap-3 overflow-hidden">
-            <div className="w-8 h-8 min-w-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-              {/* Placeholder logo icon if image fails or for design consistency */}
-              <div className="w-4 h-4 bg-emerald-500 rounded-sm" />
-            </div>
-            <motion.span
-              animate={{
-                opacity: isOpen ? 1 : 0,
-                display: isOpen ? 'block' : 'none',
-              }}
-              className="text-xl font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap"
-            >
-              SolVibe
-            </motion.span>
+        <div className={cn(
+          "h-16 flex items-center border-b border-slate-200 dark:border-slate-800 shrink-0",
+          isOpen ? "px-6 justify-between" : "justify-center px-0 relative"
+        )}>
+
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
+            <span className="text-xl font-bold tracking-tight text-primary">
+              {tCommon('app_name')}
+            </span>
           </Link>
 
-          {/* Desktop Collapse Toggle */}
-          {!isMobile && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-slate-400 hover:text-slate-600"
-              onClick={toggle}
-            >
-              {isOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-            </Button>
-          )}
+
 
           {/* Mobile Close Button */}
           {isMobile && (
@@ -258,6 +290,10 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         <nav className="flex-1 py-6 px-3 space-y-6 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-700">
           {filteredNavSections.map((section, index) => (
             <div key={index}>
+              {/* Divider for collapsed state */}
+              {!isOpen && index > 0 && (
+                <div className="h-px bg-slate-200 dark:bg-slate-800 mx-3 my-2" />
+              )}
               {/* Section Header */}
               <motion.div
                 animate={{
@@ -278,9 +314,10 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       key={item.name}
                       href={item.href}
                       className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all relative group',
+                        'flex items-center gap-3 py-2.5 rounded-lg transition-all relative group',
+                        isOpen ? 'px-3' : 'justify-center px-2',
                         isActive
-                          ? 'bg-emerald-50 text-green-600 dark:bg-emerald-900/20 dark:text-emerald-400 font-medium'
+                          ? 'bg-primary/10 text-primary font-medium'
                           : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
                       )}
                     >
@@ -288,7 +325,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                         className={cn(
                           'w-5 h-5 min-w-5',
                           isActive
-                            ? 'text-emerald-600 dark:text-emerald-400'
+                            ? 'text-primary'
                             : 'text-slate-500 dark:text-slate-500'
                         )}
                       />
@@ -303,11 +340,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       </motion.span>
 
                       {/* Tooltip for collapsed state */}
-                      {!isOpen && !isMobile && (
-                        <div className="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
-                          {item.name}
-                        </div>
-                      )}
+
                     </Link>
                   );
                 })}
@@ -324,9 +357,12 @@ export default function Sidebar({ onLogout }: SideBarProps) {
               !isOpen && !isMobile ? 'justify-center' : ''
             )}
           >
-            <div className="w-10 h-10 min-w-10 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 font-bold">
-              {user?.fullName?.[0] || user?.username?.[0] || 'U'}
-            </div>
+            <Avatar className="w-10 h-10 min-w-10 border border-amber-200">
+              <AvatarImage src={user?.avatarUrl} alt={user?.username || 'User'} className="object-cover" />
+              <AvatarFallback className="bg-amber-100 text-amber-700 font-bold">
+                {user?.fullName?.[0] || user?.username?.[0] || 'U'}
+              </AvatarFallback>
+            </Avatar>
 
             <motion.div
               animate={{
@@ -358,14 +394,35 @@ export default function Sidebar({ onLogout }: SideBarProps) {
             <Button
               variant="outline"
               className="w-full justify-center gap-2 text-slate-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 dark:hover:bg-red-900/20"
-              onClick={onLogout}
+              onClick={() => setShowLogoutConfirm(true)}
             >
               <LogOut size={16} />
               <span>{t('logout')}</span>
             </Button>
           </motion.div>
         </div>
+        {/* Desktop Collapse Toggle - Centered vertically on sidebar edge */}
+        {!isMobile && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full border bg-white dark:bg-slate-900 shadow-md z-50 hover:bg-slate-100 dark:hover:bg-slate-800",
+              isOpen ? "hidden group-hover:flex" : "flex"
+            )}
+            onClick={toggle}
+          >
+            {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+          </Button>
+        )}
       </motion.aside>
+
+      {/* Logout Confirmation Dialog */}
+      <LogoutConfirmationDialog
+        open={showLogoutConfirm}
+        onOpenChange={setShowLogoutConfirm}
+        onConfirm={onLogout}
+      />
     </>
   );
 }

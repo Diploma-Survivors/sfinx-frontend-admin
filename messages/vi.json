@@ -1,4 +1,7 @@
 {
+    "General": {
+        "app_name": "SfinX"
+    },
     "HomePage": {
         "title": "Chào mừng đến với Sol Vibe",
         "about": "Giới thiệu"
@@ -40,6 +43,7 @@
         "createNewContest": "Tạo cuộc thi mới",
         "submissionManagement": "QUẢN LÝ BÀI NỘP",
         "manageSubmissions": "Quản lý bài nộp",
+        "programmingLanguages": "Ngôn ngữ lập trình",
         "userManagement": "QUẢN LÝ NGƯỜI DÙNG",
         "userList": "Danh sách người dùng",
         "feedbackReports": "Phản hồi & Báo cáo",
@@ -48,7 +52,27 @@
         "generalSettings": "Cài đặt chung",
         "logout": "Đăng xuất",
         "noEmail": "Không có email",
-        "rolesAndPermissions": "Vai trò & Quyền hạn"
+        "rolesAndPermissions": "Vai trò & Quyền hạn",
+        "logoutConfirmTitle": "Xác nhận đăng xuất",
+        "logoutConfirmMessage": "Bạn có chắc chắn muốn đăng xuất không?",
+        "cancel": "Hủy"
+    },
+    "StatisticsPage": {
+        "title": "Thống kê doanh thu",
+        "description": "Tổng quan doanh thu theo giai đoạn",
+        "thisWeek": "Tuần này",
+        "thisMonth": "Tháng này",
+        "thisYear": "Năm nay",
+        "revenue": "Tổng doanh thu",
+        "subscribers": "Người đăng ký",
+        "churnRate": "Tỷ lệ rời bỏ",
+        "last": "Gần nhất",
+        "refresh": "Làm mới",
+        "period": {
+            "day": "Ngày",
+            "month": "Tháng",
+            "year": "Năm"
+        }
     },
     "ContestsPage": {
         "title": "Danh sách cuộc thi",
@@ -296,6 +320,92 @@
         "deactivateTopicSuccess": "Hủy kích hoạt chủ đề thành công",
         "activateTopicError": "Kích hoạt chủ đề thất bại",
         "deactivateTopicError": "Hủy kích hoạt chủ đề thất bại"
+    },
+    "ProgrammingLanguagePage": {
+        "title": "Ngôn ngữ lập trình",
+        "description": "Quản lý các ngôn ngữ lập trình được hỗ trợ bởi hệ thống.",
+        "createLanguage": "Thêm ngôn ngữ",
+        "searchPlaceholder": "Tìm kiếm ngôn ngữ...",
+        "allStatuses": "Tất cả trạng thái",
+        "active": "Hoạt động",
+        "inactive": "Không hoạt động",
+        "sortBy": "Sắp xếp theo:",
+        "id": "ID",
+        "createdAt": "Ngày tạo",
+        "resetFilters": "Đặt lại bộ lọc",
+        "deleteConfirmTitle": "Xác nhận xóa",
+        "deleteConfirmMessage": "Bạn có chắc chắn muốn xóa ngôn ngữ \"{name}\"? Hành động này không thể hoàn tác.",
+        "deleteSuccess": "Xóa ngôn ngữ thành công",
+        "deleteError": "Xóa ngôn ngữ thất bại",
+        "activateSuccess": "Kích hoạt ngôn ngữ thành công",
+        "activateError": "Kích hoạt ngôn ngữ thất bại",
+        "deactivateSuccess": "Hủy kích hoạt ngôn ngữ thành công",
+        "deactivateError": "Hủy kích hoạt ngôn ngữ thất bại",
+        "confirmActivateTitle": "Xác nhận kích hoạt",
+        "confirmDeactivateTitle": "Xác nhận hủy kích hoạt",
+        "confirmActivateMessage": "Bạn có chắc chắn muốn kích hoạt ngôn ngữ lập trình \"{name}\"?",
+        "confirmDeactivateMessage": "Bạn có chắc chắn muốn hủy kích hoạt ngôn ngữ lập trình \"{name}\"?",
+        "activate": "Kích hoạt",
+        "deactivate": "Hủy kích hoạt",
+        "delete": "Xóa",
+        "cancel": "Hủy"
+    },
+    "ProgrammingLanguageTable": {
+        "id": "ID",
+        "name": "TÊN",
+        "slug": "SLUG",
+        "judge0Id": "JUDGE0 ID",
+        "monacoLanguage": "MONACO LANG",
+        "orderIndex": "THỨ TỰ",
+        "status": "TRẠNG THÁI",
+        "actions": "HÀNH ĐỘNG",
+        "nodata": "Không tìm thấy ngôn ngữ lập trình nào.",
+        "active": "Hoạt động",
+        "inactive": "Không hoạt động",
+        "edit": "Sửa",
+        "delete": "Xóa",
+        "activate": "Kích hoạt",
+        "deactivate": "Hủy kích hoạt"
+    },
+    "CreateProgrammingLanguageDialog": {
+        "title": "Thêm ngôn ngữ lập trình",
+        "description": "Thêm một ngôn ngữ lập trình mới vào hệ thống.",
+        "nameLabel": "Tên",
+        "namePlaceholder": "Ví dụ: C++",
+        "judge0IdLabel": "Judge0 ID",
+        "judge0IdPlaceholder": "Ví dụ: 54",
+        "monacoLanguageLabel": "Monaco Language",
+        "monacoLanguagePlaceholder": "Ví dụ: cpp",
+        "orderIndexLabel": "Thứ tự hiển thị",
+        "orderIndexPlaceholder": "Ví dụ: 1",
+        "starterCodeLabel": "Mã khởi đầu",
+        "starterCodePlaceholder": "Nhập mã khởi đầu...",
+        "nameRequired": "Tên là bắt buộc",
+        "starterCodeRequired": "Mã khởi đầu là bắt buộc",
+        "create": "Tạo",
+        "creating": "Đang tạo...",
+        "createSuccess": "Tạo ngôn ngữ thành công",
+        "createError": "Tạo ngôn ngữ thất bại"
+    },
+    "EditProgrammingLanguageDialog": {
+        "title": "Chỉnh sửa ngôn ngữ lập trình",
+        "description": "Cập nhật thông tin ngôn ngữ lập trình.",
+        "nameLabel": "Tên",
+        "namePlaceholder": "Ví dụ: C++",
+        "judge0IdLabel": "Judge0 ID",
+        "judge0IdPlaceholder": "Ví dụ: 54",
+        "monacoLanguageLabel": "Monaco Language",
+        "monacoLanguagePlaceholder": "Ví dụ: cpp",
+        "orderIndexLabel": "Thứ tự hiển thị",
+        "orderIndexPlaceholder": "Ví dụ: 1",
+        "starterCodeLabel": "Mã khởi đầu",
+        "starterCodePlaceholder": "Nhập mã khởi đầu...",
+        "nameRequired": "Tên là bắt buộc",
+        "starterCodeRequired": "Mã khởi đầu là bắt buộc",
+        "save": "Lưu thay đổi",
+        "saving": "Đang lưu...",
+        "updateSuccess": "Cập nhật ngôn ngữ thành công",
+        "updateError": "Cập nhật ngôn ngữ thất bại"
     },
     "CreateTagDialog": {
         "tagNameRequired": "Tên thẻ là bắt buộc",
@@ -901,5 +1011,64 @@
     "Loading": {
         "title": "Đang tải ứng dụng...",
         "description": "Vui lòng chờ trong khi chúng tôi khởi tạo hệ thống"
+    },
+    "UserTable": {
+        "noUsersFound": "Không tìm thấy người dùng nào",
+        "banSuccess": "Người dùng {username} đã bị cấm thành công",
+        "unbanSuccess": "Người dùng {username} đã được bỏ cấm thành công",
+        "actionError": "Thực hiện hành động thất bại. Vui lòng thử lại."
+    },
+    "Subscription": {
+        "title": "Quản lý Gói đăng ký",
+        "plans": "Gói dịch vụ",
+        "features": "Tính năng",
+        "transactions": "Lịch sử giao dịch",
+        "statistics": "Thống kê doanh thu",
+        "plansDescription": "Quản lý các gói đăng ký và giá cả.",
+        "transactionsDescription": "Xem lịch sử thanh toán và chi tiết giao dịch.",
+        "statsDescription": "Theo dõi doanh thu và tăng trưởng thuê bao.",
+        "table": {
+            "id": "ID",
+            "name": "Tên gói",
+            "price": "Giá (USD)",
+            "duration": "Thời hạn (Tháng)",
+            "status": "Trạng thái",
+            "actions": "Hành động",
+            "user": "Người dùng",
+            "amount": "Số tiền",
+            "provider": "Cổng thanh toán",
+            "date": "Ngày giao dịch",
+            "txnId": "Mã giao dịch"
+        },
+        "stats": {
+            "totalRevenue": "Tổng doanh thu",
+            "monthlyRevenue": "Doanh thu tháng này",
+            "activeSubscribers": "Thuê bao hoạt động",
+            "churnRate": "Tỷ lệ rời bỏ",
+            "revenueOverTime": "Biểu đồ doanh thu",
+            "subsByPlan": "Phân bố theo gói",
+            "currentDayRevenue": "Doanh thu ngày hiện tại",
+            "currentMonthRevenue": "Doanh thu tháng hiện tại",
+            "currentYearRevenue": "Doanh thu năm hiện tại",
+            "currentRevenue": "Doanh thu hiện tại",
+            "latestDay": "Ngày cuối trong biểu đồ",
+            "latestMonth": "Tháng cuối trong biểu đồ",
+            "latestYear": "Năm cuối trong biểu đồ",
+            "latestPeriod": "Kỳ cuối trong biểu đồ",
+            "totalRevenueNote": "Tổng doanh thu trong kỳ đã chọn",
+            "revenueGrowth": "Tăng trưởng doanh thu",
+            "subscriberGrowth": "Tăng trưởng người đăng ký",
+            "vsLastPeriod": "so với kỳ trước",
+            "distributionDescription": "Phân bố các gói đăng ký đang hoạt động"
+        },
+        "status": {
+            "success": "Thành công",
+            "pending": "Đang xử lý",
+            "failed": "Thất bại",
+            "active": "Hoạt động",
+            "inactive": "Tạm ngưng"
+        },
+        "editPlan": "Chỉnh sửa gói",
+        "updateSuccess": "Cập nhật gói thành công"
     }
 }

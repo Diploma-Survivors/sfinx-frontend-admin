@@ -26,7 +26,7 @@ import { Submission, SubmissionSortBy, SubmissionStatus } from '@/types/submissi
 import { getLanguageName, getStatusColor, getStatusLabel, SubmissionsService } from '@/services/submissions-service';
 import { ContestsService } from '@/services/contests-service';
 import { ExternalLink, Trophy, Code2, Clock, AlertCircle, CheckCircle2, XCircle } from 'lucide-react';
-import SubmissionDetail from '@/components/submission-detail';
+import SubmissionDetail from '@/components/submissions/submission-detail';
 import { SortOrder } from '@/types/problems';
 import { cn } from '@/lib/utils';
 import { useAppSelector } from '@/store/hooks';

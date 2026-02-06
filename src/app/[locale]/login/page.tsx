@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import clientApi from '@/lib/apis/axios-client';
 import { ForgotPasswordDialog } from '@/components/auth/forgot-password-dialog';
-import LanguageSwitcher from '@/components/language-switcher';
+import LanguageSwitcher from '@/components/layout/language-switcher';
 import { toastService } from '@/services/toasts-service';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -114,7 +114,7 @@ export default function LoginPage() {
       </div>
       <Card className="w-full max-w-lg shadow-lg">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight text-green-600">
+          <CardTitle className="text-2xl font-bold tracking-tight text-primary">
             {t('welcome')}
           </CardTitle>
           <CardDescription>
@@ -221,7 +221,7 @@ export default function LoginPage() {
 
             {/* 6. Change type to "submit" to allow Enter key submission */}
             <Button
-              className="w-full bg-green-600 hover:bg-green-700 text-white"
+              className="w-full"
               type="submit"
             >
               {isSignUp ? t('signUp') : t('login')}

@@ -1,6 +1,6 @@
 'use client';
 
-import ProblemCreateForm from '@/components/problem-create-form';
+import ProblemCreateForm from '@/components/problems/problem-create-form';
 import { useTranslations } from 'next-intl';
 
 export default function CreateProblemPage() {

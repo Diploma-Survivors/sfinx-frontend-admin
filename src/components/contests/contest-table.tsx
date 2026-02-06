@@ -40,7 +40,7 @@ import {
 import { DataTablePagination } from '@/components/ui/data-table-pagination';
 import { format } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tooltip } from './ui/tooltip';
+import { Tooltip } from '@/components/ui/tooltip';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 

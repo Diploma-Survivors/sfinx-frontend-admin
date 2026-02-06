@@ -1,5 +1,5 @@
 'use client'
-import ProblemEditForm from '@/components/problem-edit-form';
+import ProblemEditForm from '@/components/problems/problem-edit-form';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
