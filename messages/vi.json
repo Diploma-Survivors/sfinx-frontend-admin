@@ -41,6 +41,9 @@
         "contestManagement": "QUẢN LÝ CUỘC THI",
         "contestList": "Danh sách cuộc thi",
         "createNewContest": "Tạo cuộc thi mới",
+        "ranking": "Bảng xếp hạng",
+        "discussions": "Thảo luận",
+        "solutionList": "Lời giải",
         "submissionManagement": "QUẢN LÝ BÀI NỘP",
         "manageSubmissions": "Quản lý bài nộp",
         "programmingLanguages": "Ngôn ngữ lập trình",
@@ -49,6 +52,7 @@
         "feedbackReports": "Phản hồi & Báo cáo",
         "systemAi": "HỆ THỐNG & AI",
         "manageAiPrompts": "Quản lý Prompt AI",
+        "systemConfig": "Cấu hình hệ thống",
         "generalSettings": "Cài đặt chung",
         "logout": "Đăng xuất",
         "noEmail": "Không có email",
@@ -174,6 +178,7 @@
         "edit": "Chỉnh sửa",
         "statistics": "Thống kê",
         "viewSubmissions": "Xem bài nộp",
+        "viewSolutions": "Xem lời giải",
         "deactivate": "Hủy kích hoạt",
         "activate": "Kích hoạt",
         "delete": "Xóa",
@@ -1070,5 +1075,271 @@
         },
         "editPlan": "Chỉnh sửa gói",
         "updateSuccess": "Cập nhật gói thành công"
+    },
+    "SystemConfig": {
+        "page": {
+            "title": "Cấu hình hệ thống",
+            "description": "Quản lý các tham số cấu hình toàn hệ thống.",
+            "createButton": "Thêm cấu hình",
+            "successTitle": "Thành công",
+            "errorTitle": "Lỗi",
+            "createSuccess": "Tạo cấu hình thành công",
+            "updateSuccess": "Cập nhật cấu hình thành công",
+            "deleteSuccess": "Xóa cấu hình thành công",
+            "updateError": "Cập nhật cấu hình thất bại",
+            "deleteError": "Xóa cấu hình thất bại",
+            "deleteConfirm": "Bạn có chắc chắn muốn xóa cấu hình \"{key}\"?"
+        },
+        "table": {
+            "key": "Khóa",
+            "value": "Giá trị",
+            "description": "Mô tả",
+            "actions": "Hành động",
+            "edit": "Sửa",
+            "delete": "Xóa",
+            "noResults": "Không tìm thấy cấu hình hệ thống nào."
+        },
+        "dialog": {
+            "createTitle": "Tạo cấu hình",
+            "editTitle": "Sửa cấu hình",
+            "createDescription": "Thêm một tham số cấu hình hệ thống mới.",
+            "editDescription": "Cập nhật tham số cấu hình hệ thống.",
+            "keyLabel": "Khóa",
+            "keyDescription": "Khóa duy nhất cho cấu hình (ví dụ: SYSTEM_MAINTENANCE_MODE)",
+            "valueLabel": "Giá trị",
+            "descriptionLabel": "Mô tả",
+            "cancel": "Hủy",
+            "create": "Tạo",
+            "saveChanges": "Lưu thay đổi"
+        }
+    },
+    "Solutions": {
+        "title": "Lời giải",
+        "description": "Học hỏi từ những cách tiếp cận tốt nhất của cộng đồng cho các bài tập đầy thử thách.",
+        "searchPlaceholder": "Tìm kiếm theo tiêu đề bài tập...",
+        "sortBy": "Sắp xếp theo:",
+        "recent": "Mới nhất",
+        "mostVoted": "Bình chọn nhiều nhất",
+        "noSolutionsFound": "Không tìm thấy lời giải nào",
+        "noSolutionsDescription": "Hãy thử điều chỉnh tìm kiếm hoặc bộ lọc của bạn.",
+        "votes": "{count} bình chọn",
+        "comments": "{count} bình luận",
+        "posted": "Đã đăng {time}",
+        "backToSolutions": "Quay lại danh sách",
+        "code": "Mã nguồn lời giải",
+        "copy": "Sao chép",
+        "commentsTitle": "Bình luận ({count})",
+        "noComments": "Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ suy nghĩ của bạn!",
+        "problemDetails": "Chi tiết bài tập",
+        "viewProblem": "Xem đề bài",
+        "difficulty": "Độ khó",
+        "upvote": "Bình chọn",
+        "unvote": "Hủy bình chọn",
+        "loading": "Đang tải lời giải...",
+        "errorLoading": "Không thể tải chi tiết lời giải.",
+        "notFound": "Không tìm thấy lời giải"
+    },
+    "Discuss": {
+        "List": {
+            "searchExample": "Tìm kiếm thảo luận...",
+            "sortBy": "Sắp xếp theo",
+            "sortOptions": {
+                "newest": "Mới nhất",
+                "mostViewed": "Xem nhiều nhất",
+                "mostUpvoted": "Bình chọn nhiều nhất"
+            },
+            "status": {
+                "label": "Trạng thái",
+                "active": "Hoạt động",
+                "deletedAdmin": "Đã xóa (Admin)"
+            },
+            "table": {
+                "title": "Tiêu đề",
+                "author": "Tác giả",
+                "stats": "Thống kê",
+                "createdAt": "Ngày tạo"
+            },
+            "noDiscussions": "Không tìm thấy thảo luận nào.",
+            "badges": {
+                "deleted": "Đã xóa"
+            },
+            "actions": {
+                "viewDetails": "Xem chi tiết",
+                "delete": "Xóa"
+            },
+            "messages": {
+                "deleteSuccess": "Xóa bài viết thành công",
+                "deleteError": "Xóa bài viết thất bại"
+            }
+        },
+        "Detail": {
+            "notFound": "Không tìm thấy bài viết",
+            "notFoundDesc": "Bài viết bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.",
+            "backToDiscussions": "Quay lại Thảo luận",
+            "postedDate": "Đăng ngày {date}",
+            "views": "{count} Lượt xem",
+            "actions": {
+                "edit": "Sửa",
+                "delete": "Xóa",
+                "share": "Chia sẻ"
+            },
+            "deleteDialog": {
+                "title": "Xóa thảo luận?",
+                "description": "Hành động này không thể hoàn tác. Thảo luận và tất cả bình luận sẽ bị xóa vĩnh viễn.",
+                "confirm": "Xóa",
+                "cancel": "Hủy",
+                "deleting": "Đang xóa..."
+            },
+            "messages": {
+                "deleteSuccess": "Đã xóa bài viết",
+                "deleteError": "Xóa bài viết thất bại",
+                "fetchError": "Tải chi tiết thảo luận thất bại"
+            }
+        },
+        "Form": {
+            "createTitle": "Thảo luận mới",
+            "editTitle": "Sửa thảo luận",
+            "createDescription": "Bắt đầu một chủ đề thảo luận mới.",
+            "editDescription": "Cập nhật chi tiết bài thảo luận của bạn.",
+            "labels": {
+                "title": "Tiêu đề",
+                "tags": "Thẻ",
+                "content": "Nội dung"
+            },
+            "placeholders": {
+                "title": "Tiêu đề thảo luận",
+                "content": "Viết nội dung bài viết của bạn tại đây (Hỗ trợ Markdown)...",
+                "tags": "Chọn thẻ...",
+                "tagsSearch": "Tìm kiếm thẻ..."
+            },
+            "helpText": {
+                "multiSelectTags": "Giữ Ctrl/Cmd để chọn nhiều thẻ."
+            },
+            "buttons": {
+                "cancel": "Hủy",
+                "create": "Tạo thảo luận",
+                "update": "Cập nhật thảo luận",
+                "saving": "Đang lưu..."
+            },
+            "messages": {
+                "createSuccess": "Tạo thảo luận thành công",
+                "updateSuccess": "Cập nhật thảo luận thành công",
+                "createError": "Tạo thảo luận thất bại",
+                "updateError": "Cập nhật thảo luận thất bại",
+                "loadTagsError": "Tải danh sách thẻ thất bại"
+            }
+        },
+        "Comments": {
+            "title": "Bình luận",
+            "noComments": "Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ suy nghĩ của bạn!",
+            "loginToJoin": "Vui lòng <login>đăng nhập</login> để tham gia thảo luận.",
+            "best": "Hay nhất",
+            "actions": {
+                "reply": "Trả lời",
+                "edit": "Sửa",
+                "delete": "Xóa",
+                "save": "Lưu",
+                "cancel": "Hủy",
+                "posting": "Đang đăng...",
+                "post": "Bình luận",
+                "hideReplies": "Ẩn trả lời",
+                "showReplies": "Xem {count} trả lời"
+            },
+            "placeholders": {
+                "typeComment": "Viết bình luận tại đây...",
+                "replyTo": "Trả lời {name}...",
+                "edit": "Sửa bình luận của bạn..."
+            },
+            "messages": {
+                "deleteSuccess": "Đã xóa bình luận",
+                "deleteError": "Xóa bình luận thất bại",
+                "postSuccess": "Đăng bình luận thành công",
+                "postError": "Đăng bình luận thất bại. Vui lòng thử lại.",
+                "replySuccess": "Đã đăng câu trả lời",
+                "updateSuccess": "Đã cập nhật bình luận",
+                "voteError": "Bình chọn thất bại",
+                "loginToVote": "Vui lòng đăng nhập để bình chọn",
+                "missingContext": "Lỗi: Thiếu ngữ cảnh cha"
+            },
+            "item": {
+                "deleted": "Đã xóa",
+                "edited": "(đã sửa)",
+                "deletedContent": "Bình luận này đã bị xóa."
+            },
+            "deleteDialog": {
+                "title": "Bạn có chắc chắn không?",
+                "description": "Hành động này không thể hoàn tác. Bình luận của bạn sẽ bị xóa vĩnh viễn.",
+                "confirm": "Xóa",
+                "deleting": "Đang xóa...",
+                "cancel": "Hủy"
+            }
+        }
+    },
+    "MarkdownEditor": {
+        "write": "Viết",
+        "preview": "Xem trước",
+        "supportsMarkdown": "Hỗ trợ định dạng Markdown",
+        "nothingToPreview": "Không có gì để xem trước"
+    },
+    "CreateSolutionPage": {
+        "title": "Tạo Lời Giải",
+        "solutionTitle": "Tiêu đề lời giải",
+        "titlePlaceholder": "Nhập tiêu đề lời giải...",
+        "content": "Nội dung",
+        "contentPlaceholder": "Viết giải thích lời giải tại đây...",
+        "cancel": "Hủy",
+        "submit": "Gửi Lời Giải",
+        "submitting": "Đang gửi...",
+        "successTitle": "Thành công",
+        "successMessage": "Tạo lời giải thành công!",
+        "errorTitle": "Lỗi",
+        "errorMessage": "Tạo lời giải thất bại. Vui lòng thử lại."
+    },
+    "SolutionDetailPage": {
+        "notFound": "Không tìm thấy lời giải",
+        "comments": "Bình luận",
+        "commentsComingSoon": "Tính năng bình luận sắp ra mắt...",
+        "voteError": "Bình chọn thất bại. Vui lòng thử lại.",
+        "replySuccess": "Đăng trả lời thành công",
+        "replyError": "Đăng trả lời thất bại",
+        "deleteConfirm": "Bạn có chắc chắn muốn xóa bình luận này?",
+        "deleteSuccess": "Xóa bình luận thành công",
+        "deleteError": "Xóa bình luận thất bại",
+        "reply": "Trả lời",
+        "delete": "Xóa",
+        "replyPlaceholder": "Viết câu trả lời...",
+        "cancel": "Hủy",
+        "submitting": "Đang gửi...",
+        "postReply": "Đăng trả lời",
+        "viewReplies": "Xem {count} câu trả lời",
+        "hideReplies": "Ẩn câu trả lời",
+        "commentPlaceholder": "Viết bình luận...",
+        "postComment": "Đăng bình luận",
+        "postSuccess": "Đăng bình luận thành công",
+        "postError": "Đăng bình luận thất bại",
+        "pin": "Ghim",
+        "unpin": "Bỏ ghim",
+        "pinSuccess": "Ghim bình luận thành công",
+        "pinError": "Ghim bình luận thất bại",
+        "unpinSuccess": "Bỏ ghim bình luận thành công",
+        "unpinError": "Bỏ ghim bình luận thất bại",
+        "deleteSolution": "Xóa lời giải",
+        "deleteSolutionConfirm": "Bạn có chắc chắn muốn xóa lời giải này không? Hành động này không thể hoàn tác.",
+        "deleteSolutionSuccess": "Xóa lời giải thành công",
+        "deleteSolutionError": "Xóa lời giải thất bại"
+    },
+    "SolutionsPage": {
+        "solutionsList": "Danh sách lời giải",
+        "viewingSolutionsForProblem": "Đang xem lời giải cho bài tập #{problemId}",
+        "viewingAllSolutions": "Đang xem tất cả lời giải",
+        "createSolution": "Tạo Lời Giải"
+    },
+    "SolutionTable": {
+        "title": "Tiêu đề",
+        "author": "Tác giả",
+        "tags": "Thẻ",
+        "stats": "Thống kê",
+        "created": "Đã tạo",
+        "noSolutionsFound": "Không tìm thấy lời giải nào"
     }
 }
