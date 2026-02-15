@@ -1,11 +1,11 @@
 import clientApi from "@/lib/apis/axios-client";
+import { PaginatedResult } from "@/types/common";
 import type {
   Author,
   Comment,
   CreatePostDto,
   FilterPostDto,
   FilterTagDto,
-  PaginatedResult,
   Post,
   Tag,
   UpdatePostDto,
@@ -17,7 +17,6 @@ export type {
   CreatePostDto,
   FilterPostDto,
   FilterTagDto,
-  PaginatedResult,
   Post,
   Tag,
   UpdatePostDto,
