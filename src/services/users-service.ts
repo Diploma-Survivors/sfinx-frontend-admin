@@ -1,6 +1,6 @@
-import clientApi from '@/lib/apis/axios-client';
-import { ApiResponse } from '@/types/api';
-import type { UserProfile } from '@/types/user';
+import clientApi from "@/lib/apis/axios-client";
+import { ApiResponse } from "@/types/api";
+import type { UserProfile } from "@/types/user";
 
 export interface Permission {
   id: number;
@@ -69,8 +69,8 @@ export const usersService = {
    * Get user profile by userId
    */
   async getUserProfile(userId: number): Promise<ApiResponse<UserProfile>> {
-    const response = await clientApi.get('/users/profile', {
-      params: { userId }
+    const response = await clientApi.get("/users/profile", {
+      params: { userId },
     });
     return response.data;
   },
@@ -79,8 +79,8 @@ export const usersService = {
    * Get user permissions
    */
   async getUserPermissions(userId: number): Promise<Permission[]> {
-    const response = await clientApi.get('/users/permissions', {
-      params: { userId }
+    const response = await clientApi.get("/users/permissions", {
+      params: { userId },
     });
     // Ensure we handle the response correctly. If backend returns standard array, fine.
     // If wrapped in ApiResponse, we need to extract data.
@@ -111,9 +111,12 @@ export const usersService = {
   /**
    * Get activity calendar for a year
    */
-  async getActivityCalendar(userId: number, year?: number): Promise<ActivityCalendar> {
+  async getActivityCalendar(
+    userId: number,
+    year?: number,
+  ): Promise<ActivityCalendar> {
     const response = await clientApi.get(`/users/${userId}/activity-calendar`, {
-      params: { year }
+      params: { year },
     });
     return response.data.data || response.data;
   },
@@ -121,10 +124,16 @@ export const usersService = {
   /**
    * Get recent accepted problems
    */
-  async getRecentAcProblems(userId: number, limit = 15): Promise<RecentProblem[]> {
-    const response = await clientApi.get(`/users/${userId}/recent-ac-problems`, {
-      params: { limit }
-    });
+  async getRecentAcProblems(
+    userId: number,
+    limit = 15,
+  ): Promise<RecentProblem[]> {
+    const response = await clientApi.get(
+      `/users/${userId}/recent-ac-problems`,
+      {
+        params: { limit },
+      },
+    );
     return response.data.data || response.data;
   },
 
@@ -137,10 +146,10 @@ export const usersService = {
       page?: number;
       limit?: number;
       status?: string;
-    }
+    },
   ): Promise<PracticeHistory> {
     const response = await clientApi.get(`/users/${userId}/practice-history`, {
-      params
+      params,
     });
     return response.data.data || response.data;
   },
@@ -150,7 +159,7 @@ export const usersService = {
    */
   async getUserSolutions(
     userId: number,
-    params?: { page: number; limit: number; sortBy: string }
+    params?: { page: number; limit: number; sortBy: string },
   ): Promise<ApiResponse<any>> {
     const response = await clientApi.get(`/solutions/user/${userId}`, {
       params,
@@ -168,10 +177,12 @@ export const usersService = {
     isActive?: boolean;
     isPremium?: boolean;
     emailVerified?: boolean;
-    status?: 'active' | 'banned' | 'not_verified';
+    status?: "active" | "banned" | "not_verified";
+    sortBy?: string;
+    sortOrder?: "ASC" | "DESC";
   }): Promise<ApiResponse<{ data: UserProfile[]; meta: any }>> {
-    const response = await clientApi.get('/users', {
-      params
+    const response = await clientApi.get("/users", {
+      params,
     });
 
     // Map backend response to match UserProfile interface
@@ -179,26 +190,32 @@ export const usersService = {
     const usersArray = response.data.data.data;
 
     if (!Array.isArray(usersArray)) {
-      console.error("Expected array in response.data.data.data but got:", usersArray);
+      console.error(
+        "Expected array in response.data.data.data but got:",
+        usersArray,
+      );
       return response.data; // Return as is to avoid crash, though it might be empty
     }
 
     const mappedData = usersArray.map((user: any) => ({
       ...user,
       // Construct avatarUrl from avatarKey if present, otherwise null or empty
-      avatarUrl: user.avatarKey ? `${process.env.NEXT_PUBLIC_S3_URL || 'https://d2q27bhg0k9x68.cloudfront.net'}/${user.avatarKey}` : user.avatarUrl,
+      avatarUrl: user.avatarUrl,
       // Default missing stats to 0 to avoid NaN
-      solvedEasy: user.solvedEasy || 0,
-      solvedMedium: user.solvedMedium || 0,
-      solvedHard: user.solvedHard || 0,
+      solvedEasy: user.statistics?.solvedEasy || user.solvedEasy || 0,
+      solvedMedium: user.statistics?.solvedMedium || user.solvedMedium || 0,
+      solvedHard: user.statistics?.solvedHard || user.solvedHard || 0,
+      globalScore: user.statistics?.globalScore || user.globalScore || 0,
+      problemRank: user.problemRank || 0,
+      contestRank: user.contestRank || 0,
     }));
 
     return {
       ...response.data,
       data: {
         ...response.data.data,
-        data: mappedData
-      }
+        data: mappedData,
+      },
     };
   },
 
@@ -220,8 +237,38 @@ export const usersService = {
    * Get system wide statistics
    */
   async getSystemStatistics(): Promise<SystemUserStatistics> {
-    const response = await clientApi.get('/users/statistics');
+    const response = await clientApi.get("/users/statistics");
     // Return the data payload directly as expected by UsersPage
     return response.data.data;
-  }
+  },
+
+  /**
+   * Search users by username or email
+   */
+  async searchUsers(
+    query: string,
+    limit = 10,
+  ): Promise<
+    {
+      id: number;
+      username: string;
+      fullName: string | null;
+      avatarUrl?: string;
+    }[]
+  > {
+    const response = await clientApi.get("/users", {
+      params: { search: query, limit },
+    });
+
+    // Extract data similar to getAllUsers mapping
+    const usersArray = response.data.data?.data || [];
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return usersArray.map((user: any) => ({
+      id: user.id,
+      username: user.username,
+      fullName: user.fullName,
+      avatarUrl: user.avatarUrl,
+    }));
+  },
 };

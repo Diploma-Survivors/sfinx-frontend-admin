@@ -41,6 +41,9 @@
         "contestManagement": "CONTEST MANAGEMENT",
         "contestList": "Contest List",
         "createNewContest": "Create New Contest",
+        "ranking": "Ranking",
+        "discussions": "Discussions",
+        "solutionList": "Solutions",
         "submissionManagement": "SUBMISSION MANAGEMENT",
         "manageSubmissions": "Manage Submissions",
         "programmingLanguages": "Programming Languages",
@@ -49,6 +52,7 @@
         "feedbackReports": "Feedback & Reports",
         "systemAi": "SYSTEM & AI",
         "manageAiPrompts": "Manage AI Prompts",
+        "systemConfig": "System Configuration",
         "generalSettings": "General Settings",
         "logout": "Logout",
         "noEmail": "No email",
@@ -174,11 +178,49 @@
         "edit": "Edit",
         "statistics": "Statistics",
         "viewSubmissions": "View Submissions",
+        "viewSolutions": "View Solutions",
         "deactivate": "Deactivate",
         "activate": "Activate",
         "delete": "Delete",
         "entityName": "problems",
         "premium": "Premium"
+    },
+    "SolutionsPage": {
+        "solutionsList": "Solutions List",
+        "viewingSolutionsForProblem": "Viewing solutions for problem #{problemId}",
+        "viewingAllSolutions": "Viewing all solutions",
+        "createSolution": "Create Solution"
+    },
+    "SolutionTable": {
+        "title": "Title",
+        "author": "Author",
+        "tags": "Tags",
+        "stats": "Stats",
+        "created": "Created",
+        "noSolutionsFound": "No solutions found"
+    },
+    "RankingPage": {
+        "title": "Global Ranking",
+        "description": "Top competitive programmers based on contest performance.",
+        "buttons": {
+            "rebuildProblems": "Rebuild Problems",
+            "rebuildContests": "Rebuild Contests",
+            "rebuildAll": "Rebuild All"
+        },
+        "leaderboard": {
+            "title": "Leaderboard",
+            "rank": "Rank",
+            "user": "User",
+            "rating": "Rating",
+            "contests": "Contests",
+            "loading": "Loading leaderboard...",
+            "noData": "No ranking data available.",
+            "page": "Page {page} of {totalPages}"
+        },
+        "messages": {
+            "rebuildSuccess": "Ranking rebuild ({type}) initiated successfully.",
+            "rebuildError": "Failed to initiate ranking rebuild."
+        }
     },
     "SubmissionTable": {
         "id": "ID",
@@ -1074,5 +1116,258 @@
         },
         "editPlan": "Edit Plan",
         "updateSuccess": "Plan updated successfully"
+    },
+    "SystemConfig": {
+        "page": {
+            "title": "System Configuration",
+            "description": "Manage system-wide configuration parameters.",
+            "createButton": "Add Config",
+            "successTitle": "Success",
+            "errorTitle": "Error",
+            "createSuccess": "Configuration created successfully",
+            "updateSuccess": "Configuration updated successfully",
+            "deleteSuccess": "Configuration deleted successfully",
+            "updateError": "Failed to update configuration",
+            "deleteError": "Failed to delete configuration",
+            "deleteConfirm": "Are you sure you want to delete configuration \"{key}\"?"
+        },
+        "table": {
+            "key": "Key",
+            "value": "Value",
+            "description": "Description",
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "noResults": "No system configurations found."
+        },
+        "dialog": {
+            "createTitle": "Create Configuration",
+            "editTitle": "Edit Configuration",
+            "createDescription": "Add a new system configuration parameter.",
+            "editDescription": "Update the system configuration parameter.",
+            "keyLabel": "Key",
+            "keyDescription": "Unique key for the configuration (e.g. SYSTEM_MAINTENANCE_MODE)",
+            "valueLabel": "Value",
+            "descriptionLabel": "Description",
+            "cancel": "Cancel",
+            "create": "Create",
+            "saveChanges": "Save Changes"
+        }
+    },
+    "Solutions": {
+        "title": "Solutions",
+        "description": "Learn from the community's best approaches to challenging problems.",
+        "searchPlaceholder": "Search by problem title...",
+        "sortBy": "Sort by:",
+        "recent": "Recent",
+        "mostVoted": "Most Voted",
+        "noSolutionsFound": "No solutions found",
+        "noSolutionsDescription": "Try adjusting your search or filters.",
+        "votes": "{count} votes",
+        "comments": "{count} comments",
+        "posted": "Posted {time}",
+        "backToSolutions": "Back to Solutions",
+        "code": "Solution Code",
+        "copy": "Copy",
+        "commentsTitle": "Comments ({count})",
+        "noComments": "No comments yet. Be the first to share your thoughts!",
+        "problemDetails": "Problem Details",
+        "viewProblem": "View Problem Statement",
+        "difficulty": "Difficulty",
+        "upvote": "Upvote",
+        "unvote": "Unvote",
+        "loading": "Loading solutions...",
+        "errorLoading": "Failed to load solution details.",
+        "notFound": "Solution not found"
+    },
+    "Discuss": {
+        "List": {
+            "searchExample": "Search discussions...",
+            "sortBy": "Sort by",
+            "sortOptions": {
+                "newest": "Newest",
+                "mostViewed": "Most Viewed",
+                "mostUpvoted": "Most Upvoted"
+            },
+            "status": {
+                "label": "Status",
+                "active": "Active",
+                "deletedAdmin": "Deleted (Admin)"
+            },
+            "table": {
+                "title": "Title",
+                "author": "Author",
+                "stats": "Stats",
+                "createdAt": "Created At"
+            },
+            "noDiscussions": "No discussions found.",
+            "badges": {
+                "deleted": "Deleted"
+            },
+            "actions": {
+                "viewDetails": "View Details",
+                "delete": "Delete"
+            },
+            "messages": {
+                "deleteSuccess": "Post deleted successfully",
+                "deleteError": "Failed to delete post",
+                "fetchError": "Failed to fetch discussions"
+            }
+        },
+        "Detail": {
+            "notFound": "Post not found",
+            "notFoundDesc": "The post you are looking for does not exist or has been removed.",
+            "backToDiscussions": "Back to Discussions",
+            "postedDate": "Posted {date}",
+            "views": "{count} Views",
+            "actions": {
+                "edit": "Edit",
+                "delete": "Delete",
+                "share": "Share"
+            },
+            "deleteDialog": {
+                "title": "Delete Discussion?",
+                "description": "This action cannot be undone. This will permanently delete the discussion post and all its comments.",
+                "confirm": "Delete",
+                "cancel": "Cancel",
+                "deleting": "Deleting..."
+            },
+            "messages": {
+                "deleteSuccess": "Post deleted",
+                "deleteError": "Failed to delete post",
+                "fetchError": "Failed to fetch discussion details"
+            }
+        },
+        "Form": {
+            "createTitle": "New Discussion",
+            "editTitle": "Edit Discussion",
+            "createDescription": "Start a new discussion topic.",
+            "editDescription": "Update your discussion post details.",
+            "labels": {
+                "title": "Title",
+                "tags": "Tags",
+                "content": "Content"
+            },
+            "placeholders": {
+                "title": "Discussion title",
+                "content": "Write your post content here (Markdown supported)...",
+                "tags": "Select tags...",
+                "tagsSearch": "Search tags..."
+            },
+            "helpText": {
+                "multiSelectTags": "Hold Ctrl/Cmd to select multiple tags."
+            },
+            "buttons": {
+                "cancel": "Cancel",
+                "create": "Create Discussion",
+                "update": "Update Discussion",
+                "saving": "Saving..."
+            },
+            "messages": {
+                "createSuccess": "Discussion created successfully",
+                "updateSuccess": "Discussion updated successfully",
+                "createError": "Failed to create discussion",
+                "updateError": "Failed to update discussion",
+                "loadTagsError": "Failed to load tags"
+            }
+        },
+        "Comments": {
+            "title": "Comments",
+            "noComments": "No comments yet. Be the first to share your thoughts!",
+            "loginToJoin": "Please <login>log in</login> to join the discussion.",
+            "best": "Best",
+            "actions": {
+                "reply": "Reply",
+                "edit": "Edit",
+                "delete": "Delete",
+                "save": "Save",
+                "cancel": "Cancel",
+                "posting": "Posting...",
+                "post": "Comment",
+                "hideReplies": "Hide Replies",
+                "showReplies": "Show {count} Replies"
+            },
+            "placeholders": {
+                "typeComment": "Type comment here...",
+                "replyTo": "Reply to {name}...",
+                "edit": "Edit your comment..."
+            },
+            "messages": {
+                "deleteSuccess": "Comment deleted",
+                "deleteError": "Failed to delete comment",
+                "postSuccess": "Comment posted successfully",
+                "postError": "Failed to post comment. Please try again.",
+                "replySuccess": "Reply posted",
+                "updateSuccess": "Comment updated",
+                "voteError": "Failed to vote",
+                "loginToVote": "Please login to vote",
+                "missingContext": "Error: Missing parent context"
+            },
+            "item": {
+                "deleted": "Deleted",
+                "edited": "(edited)",
+                "deletedContent": "This comment has been deleted."
+            },
+            "deleteDialog": {
+                "title": "Are you sure?",
+                "description": "This action cannot be undone. This will permanently delete your comment.",
+                "confirm": "Delete",
+                "deleting": "Deleting...",
+                "cancel": "Cancel"
+            }
+        }
+    },
+    "MarkdownEditor": {
+        "write": "Write",
+        "preview": "Preview",
+        "supportsMarkdown": "Supports Markdown formatting",
+        "nothingToPreview": "Nothing to preview"
+    },
+    "CreateSolutionPage": {
+        "title": "Create Solution",
+        "solutionTitle": "Solution Title",
+        "titlePlaceholder": "Enter your solution title...",
+        "content": "Content",
+        "contentPlaceholder": "Write your solution explanation here...",
+        "cancel": "Cancel",
+        "submit": "Submit Solution",
+        "submitting": "Submitting...",
+        "successTitle": "Success",
+        "successMessage": "Solution created successfully!",
+        "errorTitle": "Error",
+        "errorMessage": "Failed to create solution. Please try again."
+    },
+    "SolutionDetailPage": {
+        "notFound": "Solution not found",
+        "comments": "Comments",
+        "commentsComingSoon": "Comments section coming soon...",
+        "voteError": "Failed to vote. Please try again.",
+        "replySuccess": "Reply posted successfully",
+        "replyError": "Failed to post reply",
+        "deleteConfirm": "Are you sure you want to delete this comment?",
+        "deleteSuccess": "Comment deleted successfully",
+        "deleteError": "Failed to delete comment",
+        "reply": "Reply",
+        "delete": "Delete",
+        "replyPlaceholder": "Write a reply...",
+        "cancel": "Cancel",
+        "submitting": "Submitting...",
+        "postReply": "Post Reply",
+        "viewReplies": "View {count} replies",
+        "hideReplies": "Hide replies",
+        "commentPlaceholder": "Write a comment...",
+        "postComment": "Post Comment",
+        "postSuccess": "Comment posted successfully",
+        "postError": "Failed to post comment",
+        "pin": "Pin",
+        "unpin": "Unpin",
+        "pinSuccess": "Comment pinned successfully",
+        "pinError": "Failed to pin comment",
+        "unpinSuccess": "Comment unpinned successfully",
+        "unpinError": "Failed to unpin comment",
+        "deleteSolution": "Delete Solution",
+        "deleteSolutionConfirm": "Are you sure you want to delete this solution? This action cannot be undone.",
+        "deleteSolutionSuccess": "Solution deleted successfully",
+        "deleteSolutionError": "Failed to delete solution"
     }
 }

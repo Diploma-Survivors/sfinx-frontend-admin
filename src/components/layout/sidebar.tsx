@@ -1,14 +1,13 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { useApp } from '@/contexts/app-context';
-import { useSidebar } from '@/contexts/sidebar-context';
-import { cn } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useApp } from "@/contexts/app-context";
+import { useSidebar } from "@/contexts/sidebar-context";
+import { cn } from "@/lib/utils";
 
-
-import LogoutConfirmationDialog from './logout-confirmation-dialog';
-import { motion } from 'framer-motion';
+import LogoutConfirmationDialog from "./logout-confirmation-dialog";
+import { motion } from "framer-motion";
 import {
   Bot,
   CheckSquare,
@@ -33,13 +32,15 @@ import {
   CreditCard,
   BarChart3,
   Layers,
-} from 'lucide-react';
-import Image from 'next/image';
-import { Link, usePathname, useRouter } from '@/i18n/routing';
-import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { UserSettingsDialog } from '@/components/user/user-settings-dialog';
-import { PermissionEnum } from '@/types/permission';
+  Sliders,
+  MessageSquare,
+} from "lucide-react";
+import Image from "next/image";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { UserSettingsDialog } from "@/components/user/user-settings-dialog";
+import { PermissionEnum } from "@/types/permission";
 
 interface SideBarProps {
   onLogout: () => void;
@@ -50,9 +51,9 @@ export default function Sidebar({ onLogout }: SideBarProps) {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations('Sidebar');
-  const tCommon = useTranslations('General');
-  const tSub = useTranslations('Subscription');
+  const t = useTranslations("Sidebar");
+  const tCommon = useTranslations("General");
+  const tSub = useTranslations("Subscription");
 
   const { user, hasPermission } = useApp();
 
@@ -70,133 +71,153 @@ export default function Sidebar({ onLogout }: SideBarProps) {
 
   const navSections: NavSection[] = [
     {
-      title: t('overview'),
-      items: [{ name: t('dashboard'), href: '/dashboard', icon: LayoutDashboard }],
+      title: t("overview"),
+      items: [
+        { name: t("dashboard"), href: "/dashboard", icon: LayoutDashboard },
+      ],
     },
     {
-      title: t('problemManagement'),
+      title: t("problemManagement"),
       items: [
         {
-          name: t('problemList'),
-          href: '/problems',
+          name: t("problemList"),
+          href: "/problems",
           icon: FileCode,
-          permissions: [PermissionEnum.PROBLEM_READ]
+          permissions: [PermissionEnum.PROBLEM_READ],
         },
         {
-          name: t('createNewProblem'),
-          href: '/problems/create',
+          name: t("createNewProblem"),
+          href: "/problems/create",
           icon: PlusCircle,
-          permissions: [PermissionEnum.PROBLEM_CREATE]
+          permissions: [PermissionEnum.PROBLEM_CREATE],
         },
         {
-          name: t('manageTagsTopics'),
-          href: '/tags',
+          name: t("manageTagsTopics"),
+          href: "/tags",
           icon: Tag,
-          permissions: [PermissionEnum.PROBLEM_UPDATE] // Assumption: Editors can manage tags
+          permissions: [PermissionEnum.PROBLEM_UPDATE], // Assumption: Editors can manage tags
         },
       ],
     },
     {
-      title: t('contestManagement'),
+      title: t("contestManagement"),
       items: [
         {
-          name: t('contestList'),
-          href: '/contests',
+          name: t("contestList"),
+          href: "/contests",
           icon: Trophy,
-          permissions: [PermissionEnum.CONTEST_READ]
+          permissions: [PermissionEnum.CONTEST_READ],
         },
         {
-          name: t('createNewContest'),
-          href: '/contests/create',
+          name: t("createNewContest"),
+          href: "/contests/create",
           icon: Plus,
-          permissions: [PermissionEnum.CONTEST_CREATE]
+          permissions: [PermissionEnum.CONTEST_CREATE],
+        },
+        {
+          name: t("ranking"),
+          href: "/ranking",
+          icon: Trophy,
+          permissions: [], // Public or basic auth
+        },
+        {
+          name: t("discussions"),
+          href: "/discussions",
+          icon: MessageSquare,
+          permissions: [], // Public or basic auth
         },
       ],
     },
     {
-      title: t('submissionManagement'),
+      title: t("submissionManagement"),
       items: [
         {
-          name: t('manageSubmissions'),
-          href: '/submissions',
+          name: t("manageSubmissions"),
+          href: "/submissions",
           icon: CheckSquare,
-          permissions: [PermissionEnum.SUBMISSION_READ]
+          permissions: [PermissionEnum.SUBMISSION_READ],
         },
         {
-          name: t('programmingLanguages'),
-          href: '/programing-language',
+          name: t("programmingLanguages"),
+          href: "/programing-language",
           icon: Code,
-          permissions: [PermissionEnum.LANGUAGE_READ]
+          permissions: [PermissionEnum.LANGUAGE_READ],
         },
       ],
     },
     {
-      title: t('userManagement'),
+      title: t("userManagement"),
       items: [
         {
-          name: t('userList'),
-          href: '/users',
+          name: t("userList"),
+          href: "/users",
           icon: Users,
-          permissions: [PermissionEnum.USER_READ, PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.USER_READ, PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: t('feedbackReports'),
-          href: '/reports',
+          name: t("feedbackReports"),
+          href: "/reports",
           icon: Flag,
-          permissions: [PermissionEnum.COMMENT_REPORT_READ]
+          permissions: [PermissionEnum.COMMENT_REPORT_READ],
         },
         {
-          name: t('rolesAndPermissions'),
-          href: '/roles',
+          name: t("rolesAndPermissions"),
+          href: "/roles",
           icon: Shield,
-          permissions: [PermissionEnum.ADMIN_ROLES]
+          permissions: [PermissionEnum.ADMIN_ROLES],
         },
       ],
     },
     {
       // Subscription Management Section
-      title: tSub('title'),
+      title: tSub("title"),
       items: [
         {
-          name: tSub('plans'),
-          href: '/subscriptions/plans',
+          name: tSub("plans"),
+          href: "/subscriptions/plans",
           icon: CreditCard,
-          permissions: [PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: tSub('features'),
-          href: '/subscriptions/features',
+          name: tSub("features"),
+          href: "/subscriptions/features",
           icon: Layers,
-          permissions: [PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: tSub('transactions'),
-          href: '/subscriptions/transactions',
+          name: tSub("transactions"),
+          href: "/subscriptions/transactions",
           icon: FileCode,
-          permissions: [PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: tSub('statistics'),
-          href: '/subscriptions/statistics',
+          name: tSub("statistics"),
+          href: "/subscriptions/statistics",
           icon: BarChart3,
-          permissions: [PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.ADMIN_ACCESS],
         },
       ],
     },
     {
-      title: t('systemAi'),
+      title: t("systemAi"),
       items: [
         {
-          name: t('manageAiPrompts'),
-          href: '/ai-prompts',
+          name: t("manageAiPrompts"),
+          href: "/ai-prompts",
           icon: Sparkles,
-          permissions: [PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: t('generalSettings'),
-          href: '/settings',
+          name: t("systemConfig"),
+          href: "/system-config",
+          icon: Sliders,
+          permissions: [PermissionEnum.ADMIN_ACCESS],
+        },
+        {
+          name: t("generalSettings"),
+          href: "/settings",
           icon: Settings,
-          permissions: [PermissionEnum.ADMIN_ACCESS]
+          permissions: [PermissionEnum.ADMIN_ACCESS],
         },
       ],
     },
@@ -206,16 +227,19 @@ export default function Sidebar({ onLogout }: SideBarProps) {
     .map((section) => ({
       ...section,
       items: section.items.filter(
-        (item) => !item.permissions || item.permissions.length === 0 || item.permissions.some(hasPermission)
+        (item) =>
+          !item.permissions ||
+          item.permissions.length === 0 ||
+          item.permissions.some(hasPermission),
       ),
     }))
     .filter((section) => section.items.length > 0);
 
   const sidebarVariants = {
-    expanded: { width: '240px' },
-    collapsed: { width: '80px' },
-    mobileOpen: { width: '240px', x: 0 },
-    mobileClosed: { width: '240px', x: '-100%' },
+    expanded: { width: "240px" },
+    collapsed: { width: "80px" },
+    mobileOpen: { width: "240px", x: 0 },
+    mobileClosed: { width: "240px", x: "-100%" },
   };
 
   return (
@@ -241,37 +265,39 @@ export default function Sidebar({ onLogout }: SideBarProps) {
       )}
 
       <motion.aside
-        initial={isMobile ? 'mobileClosed' : 'expanded'}
+        initial={isMobile ? "mobileClosed" : "expanded"}
         animate={
           isMobile
             ? isOpen
-              ? 'mobileOpen'
-              : 'mobileClosed'
+              ? "mobileOpen"
+              : "mobileClosed"
             : isOpen
-              ? 'expanded'
-              : 'collapsed'
+              ? "expanded"
+              : "collapsed"
         }
         variants={sidebarVariants}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
+        transition={{ duration: 0.3, type: "spring", stiffness: 100 }}
         className={cn(
-          'fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xl group',
-          isMobile ? 'w-64' : ''
+          "fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xl group",
+          isMobile ? "w-64" : "",
         )}
       >
         {/* Header / Logo */}
-        <div className={cn(
-          "h-16 flex items-center border-b border-slate-200 dark:border-slate-800 shrink-0",
-          isOpen ? "px-6 justify-between" : "justify-center px-0 relative"
-        )}>
-
+        <div
+          className={cn(
+            "h-16 flex items-center border-b border-slate-200 dark:border-slate-800 shrink-0",
+            isOpen ? "px-6 justify-between" : "justify-center px-0 relative",
+          )}
+        >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
+          <Link
+            href="/"
+            className="flex items-center gap-2 transition-opacity hover:opacity-90"
+          >
             <span className="text-xl font-bold tracking-tight text-primary">
-              {tCommon('app_name')}
+              {tCommon("app_name")}
             </span>
           </Link>
-
-
 
           {/* Mobile Close Button */}
           {isMobile && (
@@ -298,7 +324,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
               <motion.div
                 animate={{
                   opacity: isOpen ? 1 : 0,
-                  display: isOpen ? 'block' : 'none',
+                  display: isOpen ? "block" : "none",
                 }}
                 className="px-3 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap"
               >
@@ -314,25 +340,25 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       key={item.name}
                       href={item.href}
                       className={cn(
-                        'flex items-center gap-3 py-2.5 rounded-lg transition-all relative group',
-                        isOpen ? 'px-3' : 'justify-center px-2',
+                        "flex items-center gap-3 py-2.5 rounded-lg transition-all relative group",
+                        isOpen ? "px-3" : "justify-center px-2",
                         isActive
-                          ? 'bg-primary/10 text-primary font-medium'
-                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
+                          ? "bg-primary/10 text-primary font-medium"
+                          : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200",
                       )}
                     >
                       <item.icon
                         className={cn(
-                          'w-5 h-5 min-w-5',
+                          "w-5 h-5 min-w-5",
                           isActive
-                            ? 'text-primary'
-                            : 'text-slate-500 dark:text-slate-500'
+                            ? "text-primary"
+                            : "text-slate-500 dark:text-slate-500",
                         )}
                       />
                       <motion.span
                         animate={{
                           opacity: isOpen ? 1 : 0,
-                          display: isOpen ? 'block' : 'none',
+                          display: isOpen ? "block" : "none",
                         }}
                         className="whitespace-nowrap text-sm"
                       >
@@ -340,7 +366,6 @@ export default function Sidebar({ onLogout }: SideBarProps) {
                       </motion.span>
 
                       {/* Tooltip for collapsed state */}
-
                     </Link>
                   );
                 })}
@@ -353,30 +378,34 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         <div className="p-4 border-t border-slate-200 dark:border-slate-800 shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
           <div
             className={cn(
-              'flex items-center gap-3',
-              !isOpen && !isMobile ? 'justify-center' : ''
+              "flex items-center gap-3",
+              !isOpen && !isMobile ? "justify-center" : "",
             )}
           >
             <Avatar className="w-10 h-10 min-w-10 border border-amber-200">
-              <AvatarImage src={user?.avatarUrl} alt={user?.username || 'User'} className="object-cover" />
+              <AvatarImage
+                src={user?.avatarUrl}
+                alt={user?.username || "User"}
+                className="object-cover"
+              />
               <AvatarFallback className="bg-amber-100 text-amber-700 font-bold">
-                {user?.fullName?.[0] || user?.username?.[0] || 'U'}
+                {user?.fullName?.[0] || user?.username?.[0] || "U"}
               </AvatarFallback>
             </Avatar>
 
             <motion.div
               animate={{
                 opacity: isOpen ? 1 : 0,
-                width: isOpen ? 'auto' : 0,
-                display: isOpen ? 'block' : 'none',
+                width: isOpen ? "auto" : 0,
+                display: isOpen ? "block" : "none",
               }}
               className="flex-1 overflow-hidden"
             >
               <p className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
-                {user?.fullName || user?.username || 'User'}
+                {user?.fullName || user?.username || "User"}
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                {user?.email || t('noEmail')}
+                {user?.email || t("noEmail")}
               </p>
             </motion.div>
 
@@ -386,9 +415,9 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           <motion.div
             animate={{
               opacity: isOpen ? 1 : 0,
-              height: isOpen ? 'auto' : 0,
+              height: isOpen ? "auto" : 0,
               marginTop: isOpen ? 12 : 0,
-              display: isOpen ? 'block' : 'none',
+              display: isOpen ? "block" : "none",
             }}
           >
             <Button
@@ -397,7 +426,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
               onClick={() => setShowLogoutConfirm(true)}
             >
               <LogOut size={16} />
-              <span>{t('logout')}</span>
+              <span>{t("logout")}</span>
             </Button>
           </motion.div>
         </div>
@@ -408,7 +437,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
             size="icon"
             className={cn(
               "absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full border bg-white dark:bg-slate-900 shadow-md z-50 hover:bg-slate-100 dark:hover:bg-slate-800",
-              isOpen ? "hidden group-hover:flex" : "flex"
+              isOpen ? "hidden group-hover:flex" : "flex",
             )}
             onClick={toggle}
           >

@@ -1,5 +1,5 @@
-'use client'
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -7,9 +7,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import type { Problem, ProblemMeta, SortBy, SortOrder } from '@/types/problems';
-import { getDifficultyColor, getDifficultyLabel } from '@/types/problems';
+} from "@/components/ui/table";
+import type { Problem, ProblemMeta, SortBy, SortOrder } from "@/types/problems";
+import { getDifficultyColor, getDifficultyLabel } from "@/types/problems";
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,7 +20,8 @@ import {
   Unlock,
   BarChart2,
   Crown,
-} from 'lucide-react';
+  FileCode2,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,23 +29,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Link } from '@/i18n/routing';
-import React, { useState } from 'react';
-import { FaList } from 'react-icons/fa6';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tooltip } from '@/components/ui/tooltip';
-import { Skeleton } from '@/components/ui/skeleton';
-import { DataTablePagination } from '@/components/ui/data-table-pagination';
-import { useTranslations } from 'next-intl';
-import { useApp } from '@/contexts/app-context';
-import { PermissionEnum } from '@/types/permission';
+} from "@/components/ui/dropdown-menu";
+import { Link } from "@/i18n/routing";
+import React, { useState } from "react";
+import { FaList } from "react-icons/fa6";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Tooltip } from "@/components/ui/tooltip";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataTablePagination } from "@/components/ui/data-table-pagination";
+import { useTranslations } from "next-intl";
+import { useApp } from "@/contexts/app-context";
+import { PermissionEnum } from "@/types/permission";
 
 export enum ProblemTableMode {
-  VIEW = 'view',
-  SELECT = 'select',
-  MULTIPLE_SELECT = 'multiple_select',
+  VIEW = "view",
+  SELECT = "select",
+  MULTIPLE_SELECT = "multiple_select",
 }
 
 interface ProblemTableProps {
@@ -82,14 +83,14 @@ export default function ProblemTable({
   onProblemView,
   onStatusChange,
 }: ProblemTableProps) {
-  const t = useTranslations('ProblemTable');
+  const t = useTranslations("ProblemTable");
   const { hasPermission } = useApp();
   const selectionMode =
     mode === ProblemTableMode.SELECT ||
     mode === ProblemTableMode.MULTIPLE_SELECT;
   const isMultipleSelect = mode === ProblemTableMode.MULTIPLE_SELECT;
   const [selectedProblemId, setSelectedProblemId] = useState<number | null>(
-    null
+    null,
   );
   const [selectedProblemsMap, setSelectedProblemsMap] = useState<
     Map<number, Problem>
@@ -98,7 +99,7 @@ export default function ProblemTable({
   const handleProblemClick = (problemId: number) => {
     if (selectionMode && onProblemView) {
       const selectedProblem = problems.find(
-        (problem) => problem.id === problemId
+        (problem) => problem.id === problemId,
       );
       if (selectedProblem) {
         onProblemView(selectedProblem);
@@ -131,7 +132,7 @@ export default function ProblemTable({
       }
     } else if (selectedProblemId && onProblemSelect) {
       const selectedProblem = problems.find(
-        (problem) => problem.id === selectedProblemId
+        (problem) => problem.id === selectedProblemId,
       );
       if (selectedProblem) {
         onProblemSelect(selectedProblem);
@@ -147,7 +148,6 @@ export default function ProblemTable({
   const currentPage = meta?.page || 1;
   const totalPages = meta?.totalPages || 1;
 
-
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
       {/* Table Header with Selection Actions */}
@@ -155,7 +155,7 @@ export default function ProblemTable({
         <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
-              {t('selectMultiple')}
+              {t("selectMultiple")}
             </h3>
             <Button
               type="button"
@@ -164,8 +164,8 @@ export default function ProblemTable({
               className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-all duration-200 shadow-sm"
             >
               {isMultipleSelect
-                ? t('selectCount', { count: selectedProblemsMap.size })
-                : t('selectProblem')}
+                ? t("selectCount", { count: selectedProblemsMap.size })
+                : t("selectProblem")}
             </Button>
           </div>
         </div>
@@ -176,32 +176,34 @@ export default function ProblemTable({
           <TableHeader>
             <TableRow className="bg-slate-50/50 dark:bg-slate-700/20 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 border-b border-slate-200 dark:border-slate-700">
               {selectionMode && (
-                <TableHead className="w-12 text-center">{t('select')}</TableHead>
+                <TableHead className="w-12 text-center">
+                  {t("select")}
+                </TableHead>
               )}
               <TableHead className="w-20 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('id')}
+                {t("id")}
               </TableHead>
               <TableHead className="font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('title')}
+                {t("title")}
               </TableHead>
               <TableHead className="w-32 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('difficulty')}
+                {t("difficulty")}
               </TableHead>
               <TableHead className="w-32 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('status')}
+                {t("status")}
               </TableHead>
               <TableHead className="w-48 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('acceptance')}
+                {t("acceptance")}
               </TableHead>
               <TableHead className="w-48 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('tags')}
+                {t("tags")}
               </TableHead>
               <TableHead className="w-48 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                {t('topics')}
+                {t("topics")}
               </TableHead>
               {!selectionMode && (
                 <TableHead className="w-24 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider text-right">
-                  {t('actions')}
+                  {t("actions")}
                 </TableHead>
               )}
             </TableRow>
@@ -265,7 +267,7 @@ export default function ProblemTable({
                   colSpan={selectionMode ? 9 : 8}
                   className="h-32 text-center text-slate-500"
                 >
-                  {t('noProblemsFound')}
+                  {t("noProblemsFound")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -276,15 +278,16 @@ export default function ProblemTable({
                 return (
                   <TableRow
                     key={problem.id}
-                    className={`group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors ${isInitialSelected
-                      ? 'bg-slate-50 dark:bg-slate-800 opacity-60'
-                      : ''
-                      }`}
+                    className={`group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors ${
+                      isInitialSelected
+                        ? "bg-slate-50 dark:bg-slate-800 opacity-60"
+                        : ""
+                    }`}
                   >
                     {selectionMode && (
                       <TableCell className="text-center">
                         <input
-                          type={isMultipleSelect ? 'checkbox' : 'radio'}
+                          type={isMultipleSelect ? "checkbox" : "radio"}
                           checked={
                             isMultipleSelect
                               ? selectedProblemsMap.has(problem.id)
@@ -314,16 +317,16 @@ export default function ProblemTable({
                               {problem.title}
                             </Link>
                             {problem.isPremium && (
-                              <Tooltip content={t('premium')}>
+                              <Tooltip content={t("premium")}>
                                 <Crown className="h-4 w-4 text-yellow-500" />
                               </Tooltip>
                             )}
                           </div>
                         )}
                         <span className="text-xs text-slate-500 mt-1">
-                          {t('lastUpdated')}{' '}
+                          {t("lastUpdated")}{" "}
                           {new Date(
-                            problem.updatedAt || ''
+                            problem.updatedAt || "",
                           ).toLocaleDateString()}
                         </span>
                       </div>
@@ -332,7 +335,7 @@ export default function ProblemTable({
                       <Badge
                         variant="secondary"
                         className={`${getDifficultyColor(
-                          problem.difficulty
+                          problem.difficulty,
                         )} border-0`}
                       >
                         {getDifficultyLabel(problem.difficulty)}
@@ -340,13 +343,14 @@ export default function ProblemTable({
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={problem.isActive ? 'default' : 'secondary'}
-                        className={`${problem.isActive
-                          ? 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400'
-                          } border-0`}
+                        variant={problem.isActive ? "default" : "secondary"}
+                        className={`${
+                          problem.isActive
+                            ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400"
+                        } border-0`}
                       >
-                        {problem.isActive ? t('active') : t('inactive')}
+                        {problem.isActive ? t("active") : t("inactive")}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -401,47 +405,64 @@ export default function ProblemTable({
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">{t('openMenu')}</span>
+                                <span className="sr-only">{t("openMenu")}</span>
                                 <MoreHorizontal className="h-4 w-4" />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
+                              <DropdownMenuLabel>
+                                {t("actions")}
+                              </DropdownMenuLabel>
 
                               {hasPermission(PermissionEnum.PROBLEM_UPDATE) && (
                                 <DropdownMenuItem asChild>
                                   <Link href={`/problems/${problem.id}/edit`}>
                                     <Edit className="mr-2 h-4 w-4" />
-                                    {t('edit')}
+                                    {t("edit")}
                                   </Link>
                                 </DropdownMenuItem>
                               )}
 
                               <DropdownMenuItem asChild>
-                                <Link href={`/problems/${problem.id}/statistics`}>
+                                <Link
+                                  href={`/problems/${problem.id}/statistics`}
+                                >
                                   <BarChart2 className="mr-2 h-4 w-4" />
-                                  {t('statistics')}
+                                  {t("statistics")}
                                 </Link>
                               </DropdownMenuItem>
 
                               <DropdownMenuItem asChild>
-                                <Link href={`/submissions?problemId=${problem.id}`}>
+                                <Link
+                                  href={`/submissions?problemId=${problem.id}`}
+                                >
                                   <FaList className="mr-2 h-4 w-4" />
-                                  {t('viewSubmissions')}
+                                  {t("viewSubmissions")}
+                                </Link>
+                              </DropdownMenuItem>
+
+                              <DropdownMenuItem asChild>
+                                <Link
+                                  href={`/solutions?problemId=${problem.id}`}
+                                >
+                                  <FileCode2 className="mr-2 h-4 w-4" />
+                                  {t("viewSolutions")}
                                 </Link>
                               </DropdownMenuItem>
 
                               {hasPermission(PermissionEnum.PROBLEM_UPDATE) && (
-                                <DropdownMenuItem onClick={() => onStatusChange?.(problem)}>
+                                <DropdownMenuItem
+                                  onClick={() => onStatusChange?.(problem)}
+                                >
                                   {problem.isActive ? (
                                     <>
                                       <Lock className="mr-2 h-4 w-4" />
-                                      {t('deactivate')}
+                                      {t("deactivate")}
                                     </>
                                   ) : (
                                     <>
                                       <Unlock className="mr-2 h-4 w-4" />
-                                      {t('activate')}
+                                      {t("activate")}
                                     </>
                                   )}
                                 </DropdownMenuItem>
@@ -452,7 +473,7 @@ export default function ProblemTable({
                               {hasPermission(PermissionEnum.PROBLEM_DELETE) && (
                                 <DropdownMenuItem className="text-red-600">
                                   <Trash2 className="mr-2 h-4 w-4" />
-                                  {t('delete')}
+                                  {t("delete")}
                                 </DropdownMenuItem>
                               )}
                             </DropdownMenuContent>
@@ -474,7 +495,7 @@ export default function ProblemTable({
         totalPages={totalPages}
         onPageChange={onPageChange}
         meta={meta || undefined}
-        entityName={t('entityName')}
+        entityName={t("entityName")}
       />
     </div>
   );
