@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Check, ChevronsUpDown, Loader2, X } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -70,11 +70,6 @@ export function ComboboxServer({
   // Ideally, the parent should pass the label or we fetch it separately.
   // For now, we rely on the options list which might filter it out if not in search.
   // A better approach for "server" combobox is initializing with the selected option if available.
-
-  const selectedOption = options.find((option) => option.value === value);
-  const displayLabel = selectedOption
-    ? selectedOption.label
-    : selectedLabel || (value ? "Selected (loading...)" : placeholder);
 
   // If value is present but not in options, we might want to fetch it specifically or rely on parent
   // Simplified for now: assume search finds it or user just selected it.

@@ -7,7 +7,6 @@ import { DiscussService, type Comment } from "@/services/discuss-service";
 import { useApp } from "@/contexts/app-context";
 import { cn } from "@/lib/utils";
 import {
-  MoreHorizontal,
   Pencil,
   Trash2,
   ArrowBigUp,
@@ -170,28 +169,9 @@ export function CommentItem({
     toastSuccess(t("messages.replySuccess"));
   };
 
-  // Helper to extract mentions and their links from the ORIGINAL content
-  const extractMentions = (text: string) => {
-    const mentions = new Map<string, string>();
-    const regex = /\[(@[^\]]+)\]\(([^)]+)\)/g;
-    let match;
-    while ((match = regex.exec(text)) !== null) {
-      if (match[1].startsWith("@")) {
-        mentions.set(match[1], match[2]);
-      }
-    }
-    return mentions;
-  };
-
   // Helper to simplify content for display in the textarea (remove links)
   const simplifyContent = (text: string) => {
     return text.replace(/\[(@[^\]]+)\]\(([^)]+)\)/g, "$1");
-  };
-
-  // Helper to restore links to mentions before saving
-  const restoreContent = (text: string, originalText: string) => {
-    // Simple restoration logic if needed, or just pass as is if we simplify implementation
-    return text;
   };
 
   const handleEdit = async (content: string) => {

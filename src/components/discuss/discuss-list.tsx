@@ -78,14 +78,7 @@ export function DiscussList() {
         setPosts(result.data || []);
         setTotalPages(result.meta.totalPages);
       } catch (err) {
-        error(t("messages.fetchError")); // Note: I didn't add fetchError to List messages, falling back to english or generic error? actually I should add it or use a hardcoded fallback for now if keys missing.
-        // Wait, I missed "fetchError" in List messages in my JSON. I'll use a generic error or add to JSON later.
-        // For now let's use a hardcoded string or better: generic error from General?
-        // Let's stick to "Failed to fetch discussions" for now or use the key if I added it (I didn't).
-        // I will use `t("messages.deleteError")` style but for fetch.
-        // Actually I'll just keep hardcoded english for log/toast if I didn't add the key, or use a key I added.
-        // I added deleteSuccess, deleteError, confirmDelete.
-        // Let's use hardcoded for now for fetch error to avoid breaking builds if key missing.
+        error(t("messages.fetchError"));
         console.error(err);
       } finally {
         setIsLoading(false);

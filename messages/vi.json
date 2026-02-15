@@ -1169,7 +1169,8 @@
             },
             "messages": {
                 "deleteSuccess": "Xóa bài viết thành công",
-                "deleteError": "Xóa bài viết thất bại"
+                "deleteError": "Xóa bài viết thất bại",
+                "fetchError": "Tải danh sách thảo luận thất bại"
             }
         },
         "Detail": {
@@ -1341,5 +1342,28 @@
         "stats": "Thống kê",
         "created": "Đã tạo",
         "noSolutionsFound": "Không tìm thấy lời giải nào"
+    },
+    "RankingPage": {
+        "title": "Bảng xếp hạng toàn cầu",
+        "description": "Top các lập trình viên thi đấu dựa trên thành tích.",
+        "buttons": {
+            "rebuildProblems": "Rebuild Bài tập",
+            "rebuildContests": "Rebuild Cuộc thi",
+            "rebuildAll": "Rebuild Tất cả"
+        },
+        "leaderboard": {
+            "title": "Bảng xếp hạng",
+            "rank": "Hạng",
+            "user": "Người dùng",
+            "rating": "Rating",
+            "contests": "Cuộc thi",
+            "loading": "Đang tải bảng xếp hạng...",
+            "noData": "Không có dữ liệu xếp hạng.",
+            "page": "Trang {page} trên {totalPages}"
+        },
+        "messages": {
+            "rebuildSuccess": "Đã bắt đầu rebuild ({type}) thành công.",
+            "rebuildError": "Khởi tạo rebuild thất bại."
+        }
     }
 }

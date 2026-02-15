@@ -199,6 +199,29 @@
         "created": "Created",
         "noSolutionsFound": "No solutions found"
     },
+    "RankingPage": {
+        "title": "Global Ranking",
+        "description": "Top competitive programmers based on contest performance.",
+        "buttons": {
+            "rebuildProblems": "Rebuild Problems",
+            "rebuildContests": "Rebuild Contests",
+            "rebuildAll": "Rebuild All"
+        },
+        "leaderboard": {
+            "title": "Leaderboard",
+            "rank": "Rank",
+            "user": "User",
+            "rating": "Rating",
+            "contests": "Contests",
+            "loading": "Loading leaderboard...",
+            "noData": "No ranking data available.",
+            "page": "Page {page} of {totalPages}"
+        },
+        "messages": {
+            "rebuildSuccess": "Ranking rebuild ({type}) initiated successfully.",
+            "rebuildError": "Failed to initiate ranking rebuild."
+        }
+    },
     "SubmissionTable": {
         "id": "ID",
         "user": "User",
@@ -1187,7 +1210,8 @@
             },
             "messages": {
                 "deleteSuccess": "Post deleted successfully",
-                "deleteError": "Failed to delete post"
+                "deleteError": "Failed to delete post",
+                "fetchError": "Failed to fetch discussions"
             }
         },
         "Detail": {

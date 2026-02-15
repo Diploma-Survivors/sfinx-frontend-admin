@@ -63,7 +63,7 @@ export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
           className="bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1"
         >
           <Trophy className="w-3 h-3 mr-1" />
-          Rank {user.problemRank}
+          Rank {user.problemRank ?? "N/A"}
         </Badge>
 
         <div className="w-full space-y-3 pt-4 text-left">

@@ -52,16 +52,6 @@ export interface Post {
   updatedAt: string;
 }
 
-export interface PaginatedResult<T> {
-  data: T[];
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  };
-}
-
 export interface CreatePostDto {
   title: string;
   content: string;

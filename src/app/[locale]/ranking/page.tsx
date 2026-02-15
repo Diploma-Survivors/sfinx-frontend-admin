@@ -25,9 +25,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useTranslations } from "next-intl";
 
 export default function RankingPage() {
   const router = useRouter();
+  const t = useTranslations("RankingPage");
   const [page, setPage] = useState(1);
   const limit = 50;
   const [isLoading, setIsLoading] = useState(true);
@@ -82,11 +84,11 @@ export default function RankingPage() {
       if (type === "all") await RankingService.rebuildAll();
       else if (type === "problems") await RankingService.rebuildProblems();
       else if (type === "contests") await RankingService.rebuildContests();
-      success(`Ranking rebuild (${type}) initiated successfully.`);
+      success(t("messages.rebuildSuccess", { type }));
       fetchRanking();
     } catch (error) {
       console.error("Failed to rebuild ranking:", error);
-      toastError("Failed to initiate ranking rebuild.");
+      toastError(t("messages.rebuildError"));
     } finally {
       setIsLoading(false);
     }
@@ -98,11 +100,9 @@ export default function RankingPage() {
         <div className="flex flex-col space-y-2">
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
             <Trophy className="h-8 w-8 text-primary" />
-            Global Ranking
+            {t("title")}
           </h1>
-          <p className="text-muted-foreground">
-            Top competitive programmers based on contest performance.
-          </p>
+          <p className="text-muted-foreground">{t("description")}</p>
         </div>
         <div className="flex gap-2">
           {/* TODO: Check for Admin permission here if possible, or leave it accessible as requested */}
@@ -111,41 +111,47 @@ export default function RankingPage() {
             size="sm"
             onClick={() => handleRebuild("problems")}
           >
-            Rebuild Problems
+            {t("buttons.rebuildProblems")}
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() => handleRebuild("contests")}
           >
-            Rebuild Contests
+            {t("buttons.rebuildContests")}
           </Button>
           <Button size="sm" onClick={() => handleRebuild("all")}>
-            Rebuild All
+            {t("buttons.rebuildAll")}
           </Button>
         </div>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Leaderboard</CardTitle>
+          <CardTitle>{t("leaderboard.title")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px] text-center">Rank</TableHead>
-                  <TableHead>User</TableHead>
-                  <TableHead className="text-right">Rating</TableHead>
-                  <TableHead className="text-right">Contests</TableHead>
+                  <TableHead className="w-[100px] text-center">
+                    {t("leaderboard.rank")}
+                  </TableHead>
+                  <TableHead>{t("leaderboard.user")}</TableHead>
+                  <TableHead className="text-right">
+                    {t("leaderboard.rating")}
+                  </TableHead>
+                  <TableHead className="text-right">
+                    {t("leaderboard.contests")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {isLoading ? (
                   <TableRow>
                     <TableCell colSpan={4} className="h-24 text-center">
-                      Loading leaderboard...
+                      {t("leaderboard.loading")}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -193,7 +199,7 @@ export default function RankingPage() {
                 {!isLoading && rankingData?.data.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={4} className="h-24 text-center">
-                      No ranking data available.
+                      {t("leaderboard.noData")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -218,7 +224,10 @@ export default function RankingPage() {
                   </PaginationItem>
                   <PaginationItem>
                     <span className="px-4 text-sm font-medium">
-                      Page {page} of {rankingData.meta.totalPages}
+                      {t("leaderboard.page", {
+                        page,
+                        totalPages: rankingData.meta.totalPages,
+                      })}
                     </span>
                   </PaginationItem>
                   <PaginationItem>

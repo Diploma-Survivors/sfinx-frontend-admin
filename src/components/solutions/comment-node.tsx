@@ -26,7 +26,7 @@ export default function CommentNode({
 }: CommentNodeProps) {
   const t = useTranslations("SolutionDetailPage");
   const replies = getReplies(comment.id);
-  const hasReplies = comment.replyCounts > 0 || replies.length > 0;
+  const hasReplies = comment.replyCount > 0 || replies.length > 0;
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Auto-expand if we just added a reply (handled by logic in parent usually, or locally here if we add simplistic state)
@@ -60,7 +60,7 @@ export default function CommentNode({
             >
               <ChevronDown className="w-4 h-4 mr-1" />
               {t("viewReplies", {
-                count: replies.length || comment.replyCounts,
+                count: replies.length || comment.replyCount,
               })}
             </Button>
           ) : (

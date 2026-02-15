@@ -1,4 +1,3 @@
-import { PaginatedResult } from "./common";
 import { Problem } from "./problems";
 import { Tag } from "./tags";
 
@@ -80,7 +79,6 @@ export interface SolutionComment {
   upvoteCount: number;
   downvoteCount: number;
   replyCount: number;
-  replyCounts: number;
   isPinned: boolean;
   isEdited: boolean;
   isDeleted: boolean;

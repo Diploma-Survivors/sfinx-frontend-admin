@@ -4,7 +4,6 @@ import {
   FilterSolutionDto,
   CreateSolutionDto,
   UpdateSolutionDto,
-  VoteDto,
   SolutionComment,
   SolutionCommentVoteType,
   SolutionVoteType,
