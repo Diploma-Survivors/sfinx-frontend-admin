@@ -8,7 +8,8 @@ export interface UserProfile {
   address: string;
   phone: string;
 
-  rank: number;
+  problemRank?: number;
+  contestRank?: number;
   globalScore: number;
   solvedEasy: number;
   solvedMedium: number;
@@ -27,23 +28,22 @@ export interface UserProfile {
   isBanned: boolean;
   isPremium: boolean;
 
-  premiumStartedAt: string;   // ISO datetime
-  premiumExpiresAt: string;   // ISO datetime
-  createdAt: string;          // ISO datetime
-  lastLoginAt: string;        // ISO datetime
-  lastActiveAt: string;       // ISO datetime
+  premiumStartedAt: string; // ISO datetime
+  premiumExpiresAt: string; // ISO datetime
+  createdAt: string; // ISO datetime
+  lastLoginAt: string; // ISO datetime
+  lastActiveAt: string; // ISO datetime
 }
 
 export enum UserSortBy {
-  ID = 'id',
-  RANK = 'rank',
-  GLOBAL_SCORE = 'globalScore',
+  ID = "id",
+  RANK = "rank",
+  GLOBAL_SCORE = "globalScore",
 }
 
 export interface UserFilters {
   isActive?: boolean;
   isPremium?: boolean;
   emailVerified?: boolean;
-  status?: 'active' | 'banned' | 'not_verified';
+  status?: "active" | "banned" | "not_verified";
 }
-
