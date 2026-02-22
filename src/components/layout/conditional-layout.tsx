@@ -10,6 +10,7 @@ import LanguageSwitcher from '@/components/layout/language-switcher';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import GlobalLoader from '@/components/ui/global-loader';
+import { NotificationBell } from '@/components/notifications/notification-bell';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { isOpen, isMobile } = useSidebar();
@@ -22,9 +23,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     setIsLoggingOut(true);
     clearUserData();
     await signOut({
-      callbackUrl: `/${locale}/login`, // Where to go after logout
-      redirect: true,
+      redirect: false,
     });
+    window.location.href = `/${locale}/login`;
   };
 
   if (isLoggingOut) {
@@ -43,7 +44,10 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto p-6">
           <div className="flex justify-between items-center mb-1">
             <Breadcrumbs />
-            <LanguageSwitcher />
+            <div className="flex items-center gap-2">
+              <NotificationBell />
+              <LanguageSwitcher />
+            </div>
           </div>
           {children}
         </div>

@@ -122,7 +122,8 @@ clientApi.interceptors.response.use(
         processQueue(refreshError, null);
 
         // Force Logout
-        await signOut({ callbackUrl: '/login' });
+        await signOut({ redirect: false });
+        window.location.href = '/login';
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
