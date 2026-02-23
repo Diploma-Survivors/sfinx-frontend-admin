@@ -97,6 +97,12 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           icon: Tag,
           permissions: [PermissionEnum.PROBLEM_UPDATE], // Assumption: Editors can manage tags
         },
+        {
+          name: t("problemReports"),
+          href: "/reports",
+          icon: Flag,
+          permissions: [PermissionEnum.COMMENT_REPORT_READ],
+        },
       ],
     },
     {
@@ -118,12 +124,6 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           name: t("ranking"),
           href: "/ranking",
           icon: Trophy,
-          permissions: [], // Public or basic auth
-        },
-        {
-          name: t("discussions"),
-          href: "/discussions",
-          icon: MessageSquare,
           permissions: [], // Public or basic auth
         },
       ],
@@ -155,16 +155,16 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           permissions: [PermissionEnum.USER_READ, PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: t("feedbackReports"),
-          href: "/reports",
-          icon: Flag,
-          permissions: [PermissionEnum.COMMENT_REPORT_READ],
-        },
-        {
           name: t("rolesAndPermissions"),
           href: "/roles",
           icon: Shield,
           permissions: [PermissionEnum.ADMIN_ROLES],
+        },
+        {
+          name: t("discussions"),
+          href: "/discussions",
+          icon: MessageSquare,
+          permissions: [], // Public or basic auth
         },
       ],
     },

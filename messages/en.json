@@ -50,6 +50,7 @@
         "userManagement": "USER MANAGEMENT",
         "userList": "User List",
         "feedbackReports": "Feedback & Reports",
+        "problemReports": "Problem Reports",
         "systemAi": "SYSTEM & AI",
         "manageAiPrompts": "Manage AI Prompts",
         "systemConfig": "System Configuration",
