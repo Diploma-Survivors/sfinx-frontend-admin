@@ -103,7 +103,7 @@ export default function ReportsTable({
 
     const formatDateTime = (dateString: string) => {
         if (!dateString) return 'N/A';
-        return new Date(dateString).toLocaleString('en-US', {
+        return new Date(dateString).toLocaleString(locale, {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
