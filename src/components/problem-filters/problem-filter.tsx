@@ -51,6 +51,8 @@ interface ProblemFilterProps {
   isLoading: boolean;
   tags: Tag[];
   topics: Topic[];
+  hideStatusFilter?: boolean;
+  hidePremiumFilter?: boolean;
 }
 
 export default function ProblemFilter({
@@ -66,6 +68,8 @@ export default function ProblemFilter({
   onReset,
   tags,
   topics,
+  hideStatusFilter,
+  hidePremiumFilter,
 }: ProblemFilterProps) {
   const t = useTranslations("ProblemFilter");
   // Search states for dropdowns
@@ -197,58 +201,62 @@ export default function ProblemFilter({
         </Select>
 
         {/* Status Filter */}
-        <Select
-          value={
-            filters.isActive === true
-              ? "active"
-              : filters.isActive === false
-                ? "inactive"
-                : "all"
-          }
-          onValueChange={handleStatusChange}
-        >
-          <SelectTrigger className="w-[150px] h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 focus:ring-0 focus:ring-offset-0 cursor-pointer">
-            <SelectValue placeholder={t("status")} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all" className="cursor-pointer">
-              {t("allStatus")}
-            </SelectItem>
-            <SelectItem value="active" className="cursor-pointer">
-              {t("active")}
-            </SelectItem>
-            <SelectItem value="inactive" className="cursor-pointer">
-              {t("inactive")}
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        {!hideStatusFilter && (
+          <Select
+            value={
+              filters.isActive === true
+                ? "active"
+                : filters.isActive === false
+                  ? "inactive"
+                  : "all"
+            }
+            onValueChange={handleStatusChange}
+          >
+            <SelectTrigger className="w-[150px] h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 focus:ring-0 focus:ring-offset-0 cursor-pointer">
+              <SelectValue placeholder={t("status")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="cursor-pointer">
+                {t("allStatus")}
+              </SelectItem>
+              <SelectItem value="active" className="cursor-pointer">
+                {t("active")}
+              </SelectItem>
+              <SelectItem value="inactive" className="cursor-pointer">
+                {t("inactive")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        )}
 
         {/* Premium Filter */}
-        <Select
-          value={
-            filters.isPremium === true
-              ? "premium"
-              : filters.isPremium === false
-                ? "free"
-                : "all"
-          }
-          onValueChange={handlePremiumChange}
-        >
-          <SelectTrigger className="w-[150px] h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 focus:ring-0 focus:ring-offset-0 cursor-pointer">
-            <SelectValue placeholder={t("allTypes")} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all" className="cursor-pointer">
-              {t("allTypes")}
-            </SelectItem>
-            <SelectItem value="premium" className="cursor-pointer">
-              {t("premium")}
-            </SelectItem>
-            <SelectItem value="free" className="cursor-pointer">
-              {t("free")}
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        {!hidePremiumFilter && (
+          <Select
+            value={
+              filters.isPremium === true
+                ? "premium"
+                : filters.isPremium === false
+                  ? "free"
+                  : "all"
+            }
+            onValueChange={handlePremiumChange}
+          >
+            <SelectTrigger className="w-[150px] h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 focus:ring-0 focus:ring-offset-0 cursor-pointer">
+              <SelectValue placeholder={t("allTypes")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="cursor-pointer">
+                {t("allTypes")}
+              </SelectItem>
+              <SelectItem value="premium" className="cursor-pointer">
+                {t("premium")}
+              </SelectItem>
+              <SelectItem value="free" className="cursor-pointer">
+                {t("free")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        )}
 
         {/* Draft Filter */}
         <Select

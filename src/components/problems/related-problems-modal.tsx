@@ -1,5 +1,5 @@
-'use client';
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,19 +7,21 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import ProblemTable, { ProblemTableMode } from '@/components/problems/problem-table';
-import ProblemFilter from '@/components/problem-filters/problem-filter';
-import useProblems from '@/hooks/use-problems';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import ProblemTable, {
+  ProblemTableMode,
+} from "@/components/problems/problem-table";
+import ProblemFilter from "@/components/problem-filters/problem-filter";
+import useProblems from "@/hooks/use-problems";
 import {
   type Problem,
   ProblemDifficulty,
   SortBy,
   SortOrder,
-} from '@/types/problems';
-import { Plus } from 'lucide-react';
-import { useAppSelector } from '@/store/hooks';
+} from "@/types/problems";
+import { Plus } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
 
 interface SelectProblemsModalProps {
   title: string;
@@ -34,7 +36,7 @@ export function SelectProblemsModal({
 }: SelectProblemsModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [localSelectedIds, setLocalSelectedIds] = useState<Set<number>>(
-    new Set(selectedProblemIds)
+    new Set(selectedProblemIds),
   );
   const { tags, topics } = useAppSelector((state) => state.metadata);
 
@@ -62,7 +64,8 @@ export function SelectProblemsModal({
     handleSearch,
     handleReset,
   } = useProblems(
-    'selectable-for-contest' as any // Using 'any' to bypass enum check if needed, or import enum
+    "selectable-for-contest" as any, // Using 'any' to bypass enum check if needed, or import enum
+    { isActive: true, isPremium: false },
   );
 
   const handleMultipleProblemsSelect = (selectedProblems: Problem[]) => {
@@ -101,6 +104,8 @@ export function SelectProblemsModal({
             isLoading={isLoading}
             tags={tags}
             topics={topics}
+            hideStatusFilter
+            hidePremiumFilter
           />
 
           <ProblemTable
