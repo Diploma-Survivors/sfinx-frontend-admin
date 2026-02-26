@@ -1685,7 +1685,7 @@
                 "medium": "Trung bình",
                 "hard": "Khó"
             },
-        "submissionStats": {
+            "submissionStats": {
                 "title": "Thống kê nộp bài",
                 "accepted": "Chấp nhận",
                 "wrongAnswer": "Kết quả sai",
