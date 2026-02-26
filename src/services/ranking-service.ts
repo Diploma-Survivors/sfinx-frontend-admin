@@ -25,8 +25,14 @@ export const RankingService = {
   /**
    * Get user contest history
    */
-  async getUserContestHistory(userId: number): Promise<ContestHistoryEntry[]> {
-    const response = await clientApi.get(`/users/${userId}/contest-history`);
+  async getUserContestHistory(
+    userId: number,
+    page = 1,
+    limit = 10,
+  ): Promise<PaginatedResult<ContestHistoryEntry>> {
+    const response = await clientApi.get(`/users/${userId}/contest-history`, {
+      params: { page, limit },
+    });
     // @ts-ignore
     return response.data.data || response.data;
   },
