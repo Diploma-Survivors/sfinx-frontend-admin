@@ -395,6 +395,8 @@
         "activate": "Activate",
         "deactivate": "Deactivate",
         "delete": "Delete",
+        "deleting": "Deleting...",
+        "processing": "Processing...",
         "cancel": "Cancel"
     },
     "ProgrammingLanguageTable": {
@@ -412,7 +414,8 @@
         "edit": "Edit",
         "delete": "Delete",
         "activate": "Activate",
-        "deactivate": "Deactivate"
+        "deactivate": "Deactivate",
+        "entityName": "languages"
     },
     "CreateProgrammingLanguageDialog": {
         "title": "Create Programming Language",
@@ -740,7 +743,27 @@
             "confirmCancel": "Yes, Cancel",
             "keepEditing": "No, Keep Editing",
             "success": "Contest created successfully",
-            "error": "Failed to create contest"
+            "error": "Failed to create contest",
+            "generalInfo": {
+                "title": "General Information",
+                "nameLabel": "Contest Name",
+                "namePlaceholder": "Enter contest name",
+                "descriptionLabel": "Description",
+                "startTimeLabel": "Start Time",
+                "durationLabel": "Duration (minutes)",
+                "endsAt": "Ends at: {time}",
+                "statusLabel": "Status",
+                "statusPlaceholder": "Select status",
+                "statusDraft": "Draft",
+                "statusScheduled": "Scheduled"
+            },
+            "problemSelection": {
+                "title": "Select Problems",
+                "tableProblem": "Problem",
+                "tableDifficulty": "Difficulty",
+                "tableScore": "Score",
+                "empty": "No problems selected."
+            }
         }
     },
     "EditContestPage": {
@@ -1074,7 +1097,6 @@
     "Subscription": {
         "title": "Subscription Management",
         "plans": "Plans",
-        "features": "Features",
         "transactions": "Transactions",
         "statistics": "Statistics",
         "plansDescription": "Manage subscription plans and pricing.",
@@ -1091,7 +1113,13 @@
             "amount": "Amount",
             "provider": "Provider",
             "date": "Date",
-            "txnId": "Transaction ID"
+            "txnId": "Transaction ID",
+            "noTransactions": "No transactions found"
+        },
+        "filter": {
+            "searchPlaceholder": "Search by username or transaction ID...",
+            "statusLabel": "Status",
+            "allStatuses": "All Statuses"
         },
         "stats": {
             "totalRevenue": "Total Revenue",
@@ -1122,7 +1150,124 @@
             "inactive": "Inactive"
         },
         "editPlan": "Edit Plan",
-        "updateSuccess": "Plan updated successfully"
+        "refresh": "Refresh",
+        "createPlan": "Create Plan",
+        "deletePlan": "Delete Plan",
+        "duration": {
+            "month": "month",
+            "year": "year"
+        },
+        "dialogs": {
+            "create": {
+                "title": "Create New Plan",
+                "description": "Add a new subscription plan with translations",
+                "typeLabel": "Plan Type *",
+                "selectType": "Select plan type",
+                "monthly": "Monthly",
+                "yearly": "Yearly",
+                "priceLabel": "Price (USD) *",
+                "durationLabel": "Duration (months) *",
+                "activeLabel": "Active",
+                "translations": "Translations",
+                "english": "English",
+                "vietnamese": "Vietnamese",
+                "nameLabel": "Name *",
+                "descLabel": "Description",
+                "cancel": "Cancel",
+                "createButton": "Create Plan",
+                "creatingButton": "Creating..."
+            },
+            "edit": {
+                "title": "Edit Plan",
+                "description": "Update the pricing, status, and features for this subscription plan.",
+                "saveButton": "Save changes",
+                "savingButton": "Saving..."
+            },
+            "delete": {
+                "title": "Confirm Delete",
+                "description": "Are you sure you want to delete the plan \"{name}\"? This action cannot be undone.",
+                "cancel": "Cancel",
+                "deleteButton": "Delete",
+                "deletingButton": "Deleting..."
+            }
+        },
+        "messages": {
+            "updateSuccess": "Plan updated successfully",
+            "updateError": "Failed to update plan",
+            "loadError": "Failed to load data",
+            "fillRequired": "Please fill in all required fields",
+            "nameRequired": "Plan name is required for both languages",
+            "createSuccess": "Plan created successfully",
+            "createError": "Failed to create plan",
+            "deleteSuccess": "Plan deleted successfully",
+            "deleteError": "Failed to delete plan",
+            "loadFeaturesError": "Failed to load features",
+            "loadFeatureDetailsError": "Failed to load feature details",
+            "deleteFeatureSuccess": "Feature deleted successfully",
+            "deleteFeatureError": "Failed to delete feature",
+            "keyRequired": "Feature key is required",
+            "featureNameRequired": "Feature name is required for both languages",
+            "createFeatureSuccess": "Feature created successfully",
+            "createFeatureError": "Failed to create feature",
+            "updateFeatureSuccess": "Feature updated successfully",
+            "updateFeatureError": "Failed to update feature",
+            "loadTransactionsError": "Failed to load transactions"
+        },
+        "features": {
+            "header": {
+                "title": "Features",
+                "description": "Manage subscription features",
+                "createFeature": "Create Feature"
+            },
+            "table": {
+                "title": "All Features",
+                "description": "Manage subscription features and translations",
+                "key": "Key",
+                "name": "Name",
+                "descLabel": "Description",
+                "status": "Status",
+                "actions": "Actions",
+                "noFeatures": "No features found",
+                "active": "Active",
+                "inactive": "Inactive"
+            },
+            "dialogs": {
+                "delete": {
+                    "title": "Confirm Delete",
+                    "description": "Are you sure you want to delete the feature \"{name}\"? This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "deleteButton": "Delete",
+                    "deletingButton": "Deleting..."
+                },
+                "create": {
+                    "title": "Create New Feature",
+                    "description": "Add a new subscription feature with translations",
+                    "keyLabel": "Feature Key *",
+                    "activeLabel": "Active",
+                    "translations": "Translations",
+                    "english": "English",
+                    "vietnamese": "Vietnamese",
+                    "nameLabel": "Name *",
+                    "descLabel": "Description",
+                    "cancel": "Cancel",
+                    "createButton": "Create Feature",
+                    "creatingButton": "Creating...",
+                    "placeholders": {
+                        "key": "unlimited_submissions",
+                        "enName": "Unlimited Submissions",
+                        "enDesc": "Submit code without daily limits",
+                        "viName": "Không giới hạn nộp bài",
+                        "viDesc": "Nộp bài không giới hạn trong ngày"
+                    }
+                },
+                "edit": {
+                    "title": "Edit Feature",
+                    "description": "Update feature status and translations",
+                    "saveButton": "Save Changes",
+                    "savingButton": "Saving..."
+                }
+            }
+        }
     },
     "SystemConfig": {
         "page": {
@@ -1232,6 +1377,16 @@
     },
     "Discuss": {
         "List": {
+            "header": {
+                "title": "Discussions",
+                "description": "Manage student discussions and community posts.",
+                "newDiscussion": "New Discussion"
+            },
+            "pagination": {
+                "previous": "Previous",
+                "next": "Next",
+                "page": "Page {page} of {totalPages}"
+            },
             "searchExample": "Search discussions...",
             "sortBy": "Sort by",
             "sortOptions": {
@@ -1305,7 +1460,8 @@
                 "tagsSearch": "Search tags..."
             },
             "helpText": {
-                "multiSelectTags": "Hold Ctrl/Cmd to select multiple tags."
+                "multiSelectTags": "Hold Ctrl/Cmd to select multiple tags.",
+                "tagsSelection": "Select one or more tags relevant to your discussion."
             },
             "buttons": {
                 "cancel": "Cancel",
@@ -1429,5 +1585,179 @@
         "topPercentage": "Top",
         "tooltipRating": "Rating",
         "tooltipRank": "Rank"
+    },
+    "SelectProblemsModal": {
+        "addProblems": "Add problems..."
+    },
+    "ReportsPage": {
+        "title": "Problem Reports",
+        "description": "Manage and resolve issues reported by users",
+        "refresh": "Refresh",
+        "fetchError": "Failed to fetch reports"
+    },
+    "ReportsTable": {
+        "types": {
+            "wrongDescription": "Wrong Description",
+            "wrongAnswer": "Wrong Answer / Expected Output",
+            "wrongTestCase": "Wrong Test Case",
+            "other": "Other"
+        },
+        "statuses": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "resolved": "Resolved",
+            "rejected": "Rejected"
+        },
+        "columns": {
+            "problem": "Problem",
+            "reportType": "Report Type",
+            "description": "Description",
+            "reporter": "Reporter",
+            "status": "Status",
+            "submittedAt": "Submitted At",
+            "actions": "Actions"
+        },
+        "actions": {
+            "changeStatus": "Change Status",
+            "markAsPending": "Mark as Pending",
+            "markAsInProgress": "Mark as In Progress",
+            "markAsResolved": "Mark as Resolved",
+            "markAsRejected": "Mark as Rejected"
+        },
+        "noReports": "No reports found.",
+        "unknownProblem": "Unknown Problem",
+        "unknownUser": "Unknown",
+        "statusUpdateSuccess": "Report status updated to {status}",
+        "statusUpdateError": "Failed to update report status",
+        "entityName": "reports"
+    },
+    "UserDetailPage": {
+        "notFound": "User not found",
+        "backToUsers": "Back to Users",
+        "tabs": {
+            "recentAC": "Recent AC Problems",
+            "solutions": "Solutions",
+            "contestHistory": "Contest History"
+        },
+        "components": {
+            "sidebar": {
+                "notVerified": "Not Verified",
+                "banned": "Banned",
+                "active": "Active",
+                "premium": "Premium",
+                "rank": "Rank {rank}",
+                "na": "N/A",
+                "joined": "Joined {date}"
+            },
+            "activityHeatmap": {
+                "title": "Activity Calendar",
+                "yearPlaceholder": "Year",
+                "mon": "Mon",
+                "wed": "Wed",
+                "fri": "Fri",
+                "totalActiveDays": "Total active days: {count}",
+                "submissionsOnDate": "{count} submissions on {date}"
+            },
+            "contestHistory": {
+                "title": "Contest History",
+                "loading": "Loading contest history...",
+                "empty": "No contest participation history found.",
+                "tableContest": "Contest",
+                "tableRank": "Rank",
+                "tableRatingCheck": "Rating Check",
+                "tableNewRating": "New Rating",
+                "tableDate": "Date",
+                "page": "Page {page} of {totalPages}",
+                "previous": "Previous",
+                "next": "Next"
+            },
+            "recentActivity": {
+                "title": "Recent AC Problems",
+                "empty": "No recent activity"
+            },
+            "solutions": {
+                "title": "Solutions",
+                "sortBy": "Sort by",
+                "mostRecent": "Most Recent",
+                "mostVoted": "Most Voted",
+                "empty": "No solutions shared"
+            },
+            "solvedProblems": {
+                "title": "Solved Problems",
+                "solved": "Solved",
+                "easy": "Easy",
+                "medium": "Medium",
+                "hard": "Hard"
+            },
+        "submissionStats": {
+                "title": "Submission Stats",
+                "accepted": "Accepted",
+                "wrongAnswer": "Wrong Answer",
+                "timeLimit": "Time Limit",
+                "runtimeError": "Runtime Error",
+                "others": "Others"
+            }
+        }
+    },
+    "UsersPage": {
+        "header": {
+            "title": "User Management",
+            "description": "Manage and monitor platform users",
+            "refresh": "Refresh"
+        },
+        "stats": {
+            "total": "Total Users",
+            "active": "Active Users",
+            "premium": "Premium Users",
+            "banned": "Banned Users"
+        },
+        "filter": {
+            "searchLabel": "Search Users",
+            "searchPlaceholder": "Search by name, username, or email...",
+            "accountStatus": "Account Status",
+            "allStatus": "All Status",
+            "active": "Active",
+            "banned": "Banned",
+            "notVerified": "Not Verified",
+            "premiumStatus": "Premium Status",
+            "allUsers": "All Users",
+            "premium": "Premium",
+            "free": "Free"
+        },
+        "table": {
+            "id": "ID",
+            "user": "User",
+            "email": "Email",
+            "status": "Status",
+            "plan": "Plan",
+            "lastLogin": "Last Login",
+            "actions": "Actions",
+            "noUsers": "No users found matching your criteria.",
+            "notVerifiedBadge": "Not Verified",
+            "bannedBadge": "Banned",
+            "activeBadge": "Active",
+            "premiumBadge": "Premium",
+            "freePlanBadge": "Free Plan",
+            "viewDetails": "View Details",
+            "banUser": "Ban User",
+            "unbanUser": "Unban User",
+            "entity": "users"
+        },
+        "dialogs": {
+            "banTitle": "Ban User",
+            "unbanTitle": "Unban User",
+            "banDescription": "Are you sure you want to ban this user? They will not be able to access their account.",
+            "unbanDescription": "Are you sure you want to unban this user? They will regain access to their account.",
+            "cancel": "Cancel",
+            "banButton": "Ban User",
+            "unbanButton": "Unban User",
+            "processing": "Processing..."
+        },
+        "toast": {
+            "fetchError": "Failed to fetch users",
+            "banSuccess": "User @{username} banned successfully",
+            "unbanSuccess": "User @{username} unbanned successfully",
+            "actionError": "Failed to update user status"
+        }
     }
 }
