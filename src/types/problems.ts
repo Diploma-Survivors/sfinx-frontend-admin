@@ -1,43 +1,43 @@
-import { getLexicalTextLength } from '@/lib/utils';
-import { z } from 'zod';
-import type { UserProfile } from './user';
-import type { UserInfo } from './states';
-import type { Tag } from './tags';
-import type { SampleTestCase } from './testcases';
+import { getLexicalTextLength } from "@/lib/utils";
+import { z } from "zod";
+import type { UserProfile } from "./user";
+import type { UserInfo } from "./states";
+import type { Tag } from "./tags";
+import type { SampleTestCase } from "./testcases";
 export type { SampleTestCase };
-import type { Topic } from './topics';
+import type { Topic } from "./topics";
 
 export enum ProblemDifficulty {
-  EASY = 'easy',
-  MEDIUM = 'medium',
-  HARD = 'hard',
+  EASY = "easy",
+  MEDIUM = "medium",
+  HARD = "hard",
 }
 
 export enum ProblemVisibility {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
+  PUBLIC = "public",
+  PRIVATE = "private",
 }
 
 export enum SortBy {
-  ID = 'id',
-  TITLE = 'title',
-  DIFFICULTY = 'difficulty',
-  ACCEPTANCE_RATE = 'acceptanceRate',
+  ID = "id",
+  TITLE = "title",
+  DIFFICULTY = "difficulty",
+  ACCEPTANCE_RATE = "acceptanceRate",
 }
 
 export enum SortOrder {
-  ASC = 'ASC',
-  DESC = 'DESC',
+  ASC = "ASC",
+  DESC = "DESC",
 }
 
 export enum ProblemType {
-  STANDALONE = 'standalone',
-  CONTEST = 'contest',
+  STANDALONE = "standalone",
+  CONTEST = "contest",
 }
 
 export enum MatchMode {
-  ANY = 'any',
-  ALL = 'all',
+  ANY = "any",
+  ALL = "all",
 }
 
 export interface Permission {
@@ -84,6 +84,7 @@ export interface CreateProblemRequest {
   officialSolutionContent?: string;
   hasOfficialSolution?: boolean;
   similarProblems?: number[];
+  isDraft?: boolean;
 }
 
 export interface TestcaseFileResponse {
@@ -113,6 +114,7 @@ export interface Problem {
   totalAccepted?: number;
   acceptanceRate?: string;
   totalAttempts?: number;
+  isDraft?: boolean;
   totalSolved?: number;
   averageTimeToSolve?: number;
   difficultyRating?: number;
@@ -155,6 +157,7 @@ export interface ProblemDataResponse {
   difficulty: ProblemDifficulty;
   visibility: ProblemVisibility;
   type: ProblemType;
+  isDraft?: boolean;
   createdAt?: string;
   updatedAt?: string;
   author: UserInfo;
@@ -167,18 +170,19 @@ export interface ProblemDataResponse {
 
 export const initialProblemData: Problem = {
   id: 0,
-  title: '',
-  slug: '',
-  description: '',
-  constraints: '',
+  title: "",
+  slug: "",
+  description: "",
+  constraints: "",
   difficulty: ProblemDifficulty.EASY,
   isPremium: false,
   isPublished: true,
   isActive: true,
   totalSubmissions: 0,
   totalAccepted: 0,
-  acceptanceRate: '0',
+  acceptanceRate: "0",
   totalAttempts: 0,
+  isDraft: true,
   totalSolved: 0,
   averageTimeToSolve: 0,
   difficultyRating: 0,
@@ -189,7 +193,7 @@ export const initialProblemData: Problem = {
   sampleTestcases: [],
   hints: [],
   hasOfficialSolution: false,
-  officialSolutionContent: '',
+  officialSolutionContent: "",
   createdBy: {} as UserProfile, // Placeholder
   updatedBy: {} as UserProfile, // Placeholder
   similarProblems: [],
@@ -199,8 +203,8 @@ export const initialProblemData: Problem = {
   updatedAt: new Date().toISOString(),
 
   // Legacy
-  inputDescription: '',
-  outputDescription: '',
+  inputDescription: "",
+  outputDescription: "",
   type: ProblemType.CONTEST,
   visibility: ProblemVisibility.PUBLIC,
   testcase: null,
@@ -211,6 +215,7 @@ export interface ProblemFilters {
   difficulty?: ProblemDifficulty;
   isActive?: boolean;
   isPremium?: boolean;
+  isDraft?: boolean;
   topicIds?: number[];
   tagIds?: number[];
 }
@@ -239,46 +244,46 @@ export interface ProblemListResponse {
 }
 
 export const DIFFICULTY_OPTIONS = [
-  { value: 'easy', label: 'Easy' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'hard', label: 'Hard' },
+  { value: "easy", label: "Easy" },
+  { value: "medium", label: "Medium" },
+  { value: "hard", label: "Hard" },
 ];
 
 export const TAG_OPTIONS = [
-  { value: 'all', label: 'Tất cả' },
-  { value: 'easy', label: 'Dễ' },
-  { value: 'medium', label: 'Trung bình' },
-  { value: 'hard', label: 'Khó' },
+  { value: "all", label: "Tất cả" },
+  { value: "easy", label: "Dễ" },
+  { value: "medium", label: "Trung bình" },
+  { value: "hard", label: "Khó" },
 ];
 
 export const VISIBILITY_OPTIONS = [
-  { value: 'public', label: 'Public' },
-  { value: 'private', label: 'Private' },
+  { value: "public", label: "Public" },
+  { value: "private", label: "Private" },
 ];
 
 export enum ProblemEndpointType {
-  SELECTABLE_FOR_CONTEST = 'selectable-for-contest',
-  PROBLEM_MANAGEMENT = 'managable/teacher',
-  TRAINING = 'training',
+  SELECTABLE_FOR_CONTEST = "selectable-for-contest",
+  PROBLEM_MANAGEMENT = "managable/teacher",
+  TRAINING = "training",
 }
 
 export const DIFFICULTY_LABELS = new Map([
-  [ProblemDifficulty.EASY, 'Easy'],
-  [ProblemDifficulty.MEDIUM, 'Medium'],
-  [ProblemDifficulty.HARD, 'Hard'],
+  [ProblemDifficulty.EASY, "Easy"],
+  [ProblemDifficulty.MEDIUM, "Medium"],
+  [ProblemDifficulty.HARD, "Hard"],
 ]);
 
 export const DIFFICULTY_COLORS = new Map([
-  [ProblemDifficulty.EASY, 'bg-green-100 text-green-800 hover:bg-green-200'],
+  [ProblemDifficulty.EASY, "bg-green-100 text-green-800 hover:bg-green-200"],
   [
     ProblemDifficulty.MEDIUM,
-    'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
+    "bg-yellow-100 text-yellow-800 hover:bg-yellow-200",
   ],
-  [ProblemDifficulty.HARD, 'bg-red-100 text-red-800 hover:bg-red-200'],
+  [ProblemDifficulty.HARD, "bg-red-100 text-red-800 hover:bg-red-200"],
 ]);
 
 export const DEFAULT_DIFFICULTY_COLOR =
-  'bg-gray-100 text-gray-800 hover:bg-gray-200';
+  "bg-gray-100 text-gray-800 hover:bg-gray-200";
 
 export const getDifficultyColor = (difficulty: ProblemDifficulty): string => {
   return DIFFICULTY_COLORS.get(difficulty) || DEFAULT_DIFFICULTY_COLOR;
@@ -293,19 +298,20 @@ export const ProblemSchema = z.object({
   title: z
     .string()
     .trim()
-    .min(3, 'Title must be at least 3 characters long')
-    .max(128, 'Title must be at most 128 characters long'),
+    .min(3, "Title must be at least 3 characters long")
+    .max(128, "Title must be at most 128 characters long"),
 
   slug: z.string().optional(),
   constraints: z
     .string()
-    .min(10, 'Constraints must be at least 10 characters long'),
-  isPremium: z.boolean({ message: 'Premium status is required' }),
+    .min(10, "Constraints must be at least 10 characters long"),
+  isPremium: z.boolean({ message: "Premium status is required" }),
   isPublished: z.boolean().optional(),
+  isDraft: z.boolean().optional(),
   isActive: z.boolean().optional(),
   totalSubmissions: z.number().optional(),
   totalAccepted: z.number().optional(),
-acceptanceRate: z.number().optional(),
+  acceptanceRate: z.number().optional(),
   totalAttempts: z.number().optional(),
   totalSolved: z.number().optional(),
   averageTimeToSolve: z.number().optional(),
@@ -327,14 +333,14 @@ acceptanceRate: z.number().optional(),
     if (len < 16) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Description must be at least 16 characters long',
+        message: "Description must be at least 16 characters long",
       });
     }
     if (len > 5000) {
       // Increased limit for markdown
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Description must be at most 5000 characters long',
+        message: "Description must be at most 5000 characters long",
       });
     }
   }),
@@ -343,30 +349,30 @@ acceptanceRate: z.number().optional(),
   outputDescription: z.string().optional(),
 
   timeLimitMs: z
-    .number('Time limit must be a number')
-    .positive('Time limit must be a positive number'),
+    .number("Time limit must be a number")
+    .positive("Time limit must be a positive number"),
 
   memoryLimitKb: z
-    .number('Memory limit must be a number')
-    .positive('Memory limit must be a positive number'),
+    .number("Memory limit must be a number")
+    .positive("Memory limit must be a positive number"),
 
   difficulty: z.enum(ProblemDifficulty, {
-    error: () => ({ message: 'Please select a difficulty' }),
+    error: () => ({ message: "Please select a difficulty" }),
   }),
   topics: z
     .array(z.any())
-    .min(1, 'Please select at least one topic')
-    .max(3, 'Only 3 topics can be selected'),
+    .min(1, "Please select at least one topic")
+    .max(3, "Only 3 topics can be selected"),
   tags: z
     .array(z.any())
-    .min(1, 'Please select at least one tag')
-    .max(4, 'Only 4 tags can be selected'),
+    .min(1, "Please select at least one tag")
+    .max(4, "Only 4 tags can be selected"),
   // testcase: z.instanceof(File).nullable(), // We'll add custom validation for this
   // testcaseSamples: z
   //   .array(z.any())
   //   .min(1, 'Vui lòng thêm ít nhất một test case mẫu'),
 });
 
-export const AllowedTypes = ['application/json'];
+export const AllowedTypes = ["application/json"];
 
-export const AllowedExtensions = ['.json'];
+export const AllowedExtensions = [".json"];

@@ -165,6 +165,7 @@
         "select": "Chọn",
         "id": "ID",
         "title": "Tiêu đề",
+        "draft": "Bản nháp",
         "difficulty": "Độ khó",
         "status": "Trạng thái",
         "acceptance": "TỈ LỆ CHẤP NHẬN",
@@ -238,6 +239,12 @@
         "allStatus": "Tất cả trạng thái",
         "active": "Hoạt động",
         "inactive": "Không hoạt động",
+        "premium": "Premium",
+        "free": "Miễn phí",
+        "allTypes": "Tất cả",
+        "draft": "Bản nháp",
+        "published": "Đã xuất bản",
+        "allVisibility": "Tất cả chế độ xem",
         "topics": "Chủ đề",
         "searchTopics": "Tìm kiếm chủ đề...",
         "noTopicsFound": "Không tìm thấy chủ đề",
@@ -250,10 +257,7 @@
             "medium": "Trung bình",
             "hard": "Khó"
         },
-        "allTypes": "Tất cả",
-        "allDifficulties": "Tất cả",
-        "premium": "Premium",
-        "free": "Free"
+        "allDifficulties": "Tất cả"
     },
     "SubmissionFilter": {
         "searchPlaceholder": "Tìm kiếm...",
@@ -552,6 +556,8 @@
             "difficultyPlaceholder": "Chọn độ khó",
             "premiumLabel": "Nội dung Premium",
             "premiumDescription": "Dành riêng cho thành viên premium.",
+            "draftLabel": "Bản nháp",
+            "draftDescription": "Chỉ người tạo mới có thể xem bản nháp.",
             "maxScoreLabel": "Điểm tối đa",
             "timeLimitLabel": "Giới hạn thời gian (ms)",
             "memoryLimitLabel": "Giới hạn bộ nhớ (KB)",

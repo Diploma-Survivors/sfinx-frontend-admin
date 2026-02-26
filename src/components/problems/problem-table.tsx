@@ -321,6 +321,14 @@ export default function ProblemTable({
                                 <Crown className="h-4 w-4 text-yellow-500" />
                               </Tooltip>
                             )}
+                            {problem.isDraft && (
+                              <Badge
+                                variant="outline"
+                                className="text-xs ml-2 border-orange-200 text-orange-600 dark:border-orange-800 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20"
+                              >
+                                {t("draft")}
+                              </Badge>
+                            )}
                           </div>
                         )}
                         <span className="text-xs text-slate-500 mt-1">

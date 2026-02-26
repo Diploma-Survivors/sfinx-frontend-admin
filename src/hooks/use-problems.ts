@@ -1,5 +1,5 @@
-'use client';
-import { ProblemsService } from '@/services/problems-service';
+"use client";
+import { ProblemsService } from "@/services/problems-service";
 import {
   type GetProblemListRequest,
   type Problem,
@@ -9,9 +9,9 @@ import {
   type ProblemMeta,
   SortBy,
   SortOrder,
-} from '@/types/problems';
-import { HttpStatus } from '@/types/api';
-import { useCallback, useEffect, useState } from 'react';
+} from "@/types/problems";
+import { HttpStatus } from "@/types/api";
+import { useCallback, useEffect, useState } from "react";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -43,7 +43,8 @@ interface UseProblemsReturn extends UseProblemsState, UseProblemsActions {
 }
 
 export default function useProblems(
-  endpointType: ProblemEndpointType
+  endpointType: ProblemEndpointType,
+  initialFilters?: ProblemFilters,
 ): UseProblemsReturn {
   // Main state to manage problems and loading/error states
   const [state, setState] = useState<UseProblemsState>({
@@ -54,8 +55,8 @@ export default function useProblems(
   });
 
   // states for filters and keyword to manage input values
-  const [filters, setFilters] = useState<ProblemFilters>({});
-  const [keyword, setKeyword] = useState<string>('');
+  const [filters, setFilters] = useState<ProblemFilters>(initialFilters || {});
+  const [keyword, setKeyword] = useState<string>("");
 
   // state for sorting
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.ID);
@@ -78,9 +79,7 @@ export default function useProblems(
       try {
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-        const response = await ProblemsService.getProblemList(
-          requestParams,
-        );
+        const response = await ProblemsService.getProblemList(requestParams);
         setState((prev) => ({
           ...prev,
           problems: response?.data?.data?.data,
@@ -88,7 +87,7 @@ export default function useProblems(
           isLoading: false,
         }));
       } catch (err) {
-        console.error('Error fetching problems:', err);
+        console.error("Error fetching problems:", err);
         setState((prev) => ({
           ...prev,
           error: "Can't load the problems.",
@@ -96,7 +95,7 @@ export default function useProblems(
         }));
       }
     },
-    []
+    [],
   );
 
   // Effect to fetch problems when request changes
@@ -112,15 +111,18 @@ export default function useProblems(
         ...updates,
       }));
     },
-    []
+    [],
   );
 
   // handle filter, keyword changes
-  const handleFiltersChange = useCallback((newFilters: ProblemFilters) => {
-    setFilters(newFilters);
-    // When filters change, reset to page 1
-    updateRequest({ filters: newFilters, page: 1 });
-  }, [updateRequest]);
+  const handleFiltersChange = useCallback(
+    (newFilters: ProblemFilters) => {
+      setFilters(newFilters);
+      // When filters change, reset to page 1
+      updateRequest({ filters: newFilters, page: 1 });
+    },
+    [updateRequest],
+  );
 
   const handleKeywordChange = useCallback((newKeyword: string) => {
     setKeyword(newKeyword);
@@ -147,7 +149,7 @@ export default function useProblems(
       setSortBy(newSortBy);
       updateRequest({ sortBy: newSortBy, page: 1 });
     },
-    [updateRequest]
+    [updateRequest],
   );
 
   const handleSortOrderChange = useCallback(
@@ -155,13 +157,16 @@ export default function useProblems(
       setSortOrder(newSortOrder);
       updateRequest({ sortOrder: newSortOrder, page: 1 });
     },
-    [updateRequest]
+    [updateRequest],
   );
 
   // handle page change
-  const handlePageChange = useCallback((page: number) => {
-    updateRequest({ page });
-  }, [updateRequest]);
+  const handlePageChange = useCallback(
+    (page: number) => {
+      updateRequest({ page });
+    },
+    [updateRequest],
+  );
 
   // handle search (now just forces a refresh if needed, but debounce handles typing)
   const handleSearch = useCallback(() => {
@@ -174,19 +179,19 @@ export default function useProblems(
   }, [keyword, filters, updateRequest]);
 
   const handleReset = useCallback(() => {
-    setFilters({});
-    setKeyword('');
+    setFilters(initialFilters || {});
+    setKeyword("");
     setSortBy(SortBy.ID);
     setSortOrder(SortOrder.ASC);
 
     updateRequest({
       search: undefined,
-      filters: {},
+      filters: initialFilters || {},
       page: 1,
       sortBy: SortBy.ID,
       sortOrder: SortOrder.ASC,
     });
-  }, [updateRequest]);
+  }, [updateRequest, initialFilters]);
 
   const refresh = useCallback(() => {
     fetchProblems(request);
