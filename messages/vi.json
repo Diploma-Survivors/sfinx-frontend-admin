@@ -1415,5 +1415,15 @@
             "rebuildSuccess": "Đã bắt đầu rebuild ({type}) thành công.",
             "rebuildError": "Khởi tạo rebuild thất bại."
         }
+    },
+    "UserContestRatingChart": {
+        "title": "Đánh giá Cuộc thi",
+        "noData": "Không có dữ liệu đánh giá cuộc thi.",
+        "currentRating": "Đánh giá Hiện tại",
+        "peakRating": "Đánh giá Cao nhất",
+        "globalRank": "Hạng Toàn cầu",
+        "topPercentage": "Top",
+        "tooltipRating": "Đánh giá",
+        "tooltipRank": "Hạng"
     }
 }

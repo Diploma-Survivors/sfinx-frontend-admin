@@ -47,3 +47,23 @@ export interface UserFilters {
   emailVerified?: boolean;
   status?: "active" | "banned" | "not_verified";
 }
+
+export interface ContestRatingDataPoint {
+  contestId: number;
+  contestTitle: string;
+  contestEndTime: string;
+  rating: number;
+  ratingDelta: number;
+  contestRank: number;
+}
+
+export interface ContestRatingChartData {
+  history: ContestRatingDataPoint[];
+  currentRating: number;
+  globalRank: number | null;
+  totalRanked: number;
+  contestsAttended: number;
+  topPercentage: number | null;
+  peakRating: number | null;
+  lowestRating: number | null;
+}

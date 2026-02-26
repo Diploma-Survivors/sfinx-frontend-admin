@@ -1419,5 +1419,15 @@
         "deleteSolutionConfirm": "Are you sure you want to delete this solution? This action cannot be undone.",
         "deleteSolutionSuccess": "Solution deleted successfully",
         "deleteSolutionError": "Failed to delete solution"
+    },
+    "UserContestRatingChart": {
+        "title": "Contest Rating",
+        "noData": "No contest rating data available.",
+        "currentRating": "Current Rating",
+        "peakRating": "Peak Rating",
+        "globalRank": "Global Rank",
+        "topPercentage": "Top",
+        "tooltipRating": "Rating",
+        "tooltipRank": "Rank"
     }
 }

@@ -1,6 +1,6 @@
 import clientApi from "@/lib/apis/axios-client";
 import { ApiResponse } from "@/types/api";
-import type { UserProfile } from "@/types/user";
+import type { ContestRatingChartData, UserProfile } from "@/types/user";
 
 export interface Permission {
   id: number;
@@ -270,5 +270,15 @@ export const usersService = {
       fullName: user.fullName,
       avatarUrl: user.avatarUrl,
     }));
+  },
+
+  /**
+   * Get contest rating chart data
+   */
+  async getContestRatingChart(userId: number): Promise<ContestRatingChartData> {
+    const response = await clientApi.get(
+      `/users/${userId}/contest-rating-chart`,
+    );
+    return response.data.data || response.data;
   },
 };

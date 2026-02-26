@@ -8,6 +8,7 @@ import { UserContestHistory } from "@/components/user/user-details/user-contest-
 import { UserProfileSidebar } from "@/components/user/user-details/user-profile-sidebar";
 import { UserRecentActivity } from "@/components/user/user-details/user-recent-activity";
 import { UserSolutions } from "@/components/user/user-details/user-solutions";
+import { UserContestRatingChart } from "@/components/user/user-details/user-contest-rating-chart";
 import { UserSolvedProblemsChart } from "@/components/user/user-details/user-solved-problems-chart";
 import { UserSubmissionStatsChart } from "@/components/user/user-details/user-submission-stats-chart";
 import { usersService } from "@/services/users-service";
@@ -98,6 +99,8 @@ export default function UserDetailPage({
 
         {/* Right Column: Stats, Heatmap, Activity */}
         <div className="col-span-12 lg:col-span-9 space-y-6">
+          <UserContestRatingChart userId={user.id} />
+
           {/* Stats Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {problemStats && <UserSolvedProblemsChart stats={problemStats} />}
