@@ -17,6 +17,7 @@ import { UserProblemStats, UserSubmissionStats } from "@/types/user-detail";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function UserDetailPage({
   params,
@@ -35,6 +36,7 @@ export default function UserDetailPage({
     useState<UserSubmissionStats | null>(null);
 
   const router = useRouter();
+  const t = useTranslations("UserDetailPage");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,14 +82,14 @@ export default function UserDetailPage({
     );
   }
 
-  if (!user) return <div>User not found</div>;
+  if (!user) return <div>{t("notFound")}</div>;
 
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-center gap-4 mb-6">
         <Button variant="ghost" className="pl-0" onClick={() => router.back()}>
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Users
+          {t("backToUsers")}
         </Button>
       </div>
 
@@ -115,9 +117,11 @@ export default function UserDetailPage({
           {/* Tabs: Recent AC & Solutions & Contest History */}
           <Tabs defaultValue="recent-ac" className="w-full">
             <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
-              <TabsTrigger value="recent-ac">Recent AC Problems</TabsTrigger>
-              <TabsTrigger value="solutions">Solutions</TabsTrigger>
-              <TabsTrigger value="contest-history">Contest History</TabsTrigger>
+              <TabsTrigger value="recent-ac">{t("tabs.recentAC")}</TabsTrigger>
+              <TabsTrigger value="solutions">{t("tabs.solutions")}</TabsTrigger>
+              <TabsTrigger value="contest-history">
+                {t("tabs.contestHistory")}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="recent-ac" className="mt-6">

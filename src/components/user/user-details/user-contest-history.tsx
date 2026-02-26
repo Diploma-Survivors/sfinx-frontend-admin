@@ -16,12 +16,14 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Trophy, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface UserContestHistoryProps {
   userId: number;
 }
 
 export function UserContestHistory({ userId }: UserContestHistoryProps) {
+  const t = useTranslations("UserDetailPage.components.contestHistory");
   const [history, setHistory] = useState<ContestHistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -73,14 +75,14 @@ export function UserContestHistory({ userId }: UserContestHistoryProps) {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading contest history...</div>;
+    return <div className="text-center py-8">{t("loading")}</div>;
   }
 
   if (history.length === 0) {
     return (
       <Card>
         <CardContent className="pt-6 text-center text-muted-foreground">
-          No contest participation history found.
+          {t("empty")}
         </CardContent>
       </Card>
     );
@@ -91,18 +93,22 @@ export function UserContestHistory({ userId }: UserContestHistoryProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Trophy className="h-5 w-5 text-yellow-500" />
-          Contest History
+          {t("title")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Contest</TableHead>
-              <TableHead className="text-right">Rank</TableHead>
-              <TableHead className="text-right">Rating Check</TableHead>
-              <TableHead className="text-right">New Rating</TableHead>
-              <TableHead className="text-right">Date</TableHead>
+              <TableHead>{t("tableContest")}</TableHead>
+              <TableHead className="text-right">{t("tableRank")}</TableHead>
+              <TableHead className="text-right">
+                {t("tableRatingCheck")}
+              </TableHead>
+              <TableHead className="text-right">
+                {t("tableNewRating")}
+              </TableHead>
+              <TableHead className="text-right">{t("tableDate")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -132,7 +138,7 @@ export function UserContestHistory({ userId }: UserContestHistoryProps) {
         {totalPages > 1 && (
           <div className="flex items-center justify-between space-x-2 py-4">
             <div className="text-sm text-muted-foreground">
-              Page {page} of {totalPages}
+              {t("page", { page, totalPages })}
             </div>
             <div className="flex gap-2">
               <Button
@@ -141,7 +147,7 @@ export function UserContestHistory({ userId }: UserContestHistoryProps) {
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
               >
-                Previous
+                {t("previous")}
               </Button>
               <Button
                 variant="outline"
@@ -149,7 +155,7 @@ export function UserContestHistory({ userId }: UserContestHistoryProps) {
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
               >
-                Next
+                {t("next")}
               </Button>
             </div>
           </div>

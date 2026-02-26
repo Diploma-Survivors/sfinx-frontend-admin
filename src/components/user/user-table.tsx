@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,8 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import type { UserProfile } from '@/types/user';
+} from "@/components/ui/table";
+import type { UserProfile } from "@/types/user";
 import {
   Ban,
   CheckCircle2,
@@ -18,7 +18,7 @@ import {
   MoreHorizontal,
   ShieldAlert,
   UserX,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,13 +26,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import React, { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { DataTablePagination } from '@/components/ui/data-table-pagination';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useTranslations } from 'next-intl';
+} from "@/components/ui/dropdown-menu";
+import React, { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataTablePagination } from "@/components/ui/data-table-pagination";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -40,10 +40,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { usersService } from '@/services/users-service';
-import { toastService } from '@/services/toasts-service';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/dialog";
+import { usersService } from "@/services/users-service";
+import { toastService } from "@/services/toasts-service";
+import { useRouter } from "next/navigation";
 
 interface UserTableMeta {
   page: number;
@@ -69,16 +69,18 @@ export default function UserTable({
   isLoading = false,
   onRefresh,
 }: UserTableProps) {
-  const t = useTranslations('UserTable');
+  const tTable = useTranslations("UsersPage.table");
+  const tDialogs = useTranslations("UsersPage.dialogs");
+  const tToast = useTranslations("UsersPage.toast");
   const router = useRouter();
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
-  const [actionType, setActionType] = useState<'ban' | 'unban' | null>(null);
+  const [actionType, setActionType] = useState<"ban" | "unban" | null>(null);
   const [isActionLoading, setIsActionLoading] = useState(false);
 
   const currentPage = meta?.page || 1;
   const totalPages = meta?.totalPages || 1;
 
-  const handleAction = (user: UserProfile, action: 'ban' | 'unban') => {
+  const handleAction = (user: UserProfile, action: "ban" | "unban") => {
     setSelectedUser(user);
     setActionType(action);
   };
@@ -93,18 +95,22 @@ export default function UserTable({
 
     setIsActionLoading(true);
     try {
-      if (actionType === 'ban') {
+      if (actionType === "ban") {
         await usersService.banUser(selectedUser.id);
-        toastService.success(t('banSuccess', { username: selectedUser.username }));
-      } else if (actionType === 'unban') {
+        toastService.success(
+          tToast("banSuccess", { username: selectedUser.username }),
+        );
+      } else if (actionType === "unban") {
         await usersService.unbanUser(selectedUser.id);
-        toastService.success(t('unbanSuccess', { username: selectedUser.username }));
+        toastService.success(
+          tToast("unbanSuccess", { username: selectedUser.username }),
+        );
       }
 
       onRefresh?.();
       closeDialog();
     } catch (error) {
-      toastService.error(t('actionError'));
+      toastService.error(tToast("actionError"));
     } finally {
       setIsActionLoading(false);
     }
@@ -112,21 +118,21 @@ export default function UserTable({
 
   const getInitials = (fullName: string) => {
     return fullName
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const formatDateTime = (dateString: string) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    if (!dateString) return "N/A";
+    return new Date(dateString).toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -138,25 +144,25 @@ export default function UserTable({
             <TableHeader>
               <TableRow className="bg-slate-50/50 dark:bg-slate-700/20 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 border-b border-slate-200 dark:border-slate-700">
                 <TableHead className="w-20 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  ID
+                  {tTable("id")}
                 </TableHead>
                 <TableHead className="font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  User
+                  {tTable("user")}
                 </TableHead>
                 <TableHead className="w-64 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  Email
+                  {tTable("email")}
                 </TableHead>
                 <TableHead className="w-32 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  Status
+                  {tTable("status")}
                 </TableHead>
                 <TableHead className="w-32 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  Plan
+                  {tTable("plan")}
                 </TableHead>
                 <TableHead className="w-56 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">
-                  Last Login
+                  {tTable("lastLogin")}
                 </TableHead>
                 <TableHead className="w-24 font-semibold text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider text-right">
-                  Actions
+                  {tTable("actions")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -195,8 +201,11 @@ export default function UserTable({
                 ))
               ) : users.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="h-32 text-center text-slate-500">
-                    {t('noUsersFound')}
+                  <TableCell
+                    colSpan={7}
+                    className="h-32 text-center text-slate-500"
+                  >
+                    {tTable("noUsers")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -211,7 +220,10 @@ export default function UserTable({
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <Avatar className="h-10 w-10">
-                          <AvatarImage src={user.avatarUrl} alt={user.username} />
+                          <AvatarImage
+                            src={user.avatarUrl}
+                            alt={user.username}
+                          />
                           <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                             {getInitials(user.fullName)}
                           </AvatarFallback>
@@ -221,7 +233,9 @@ export default function UserTable({
                             {user.fullName}
                           </span>
 
-                          <span className="text-xs text-slate-500">@{user.username}</span>
+                          <span className="text-xs text-slate-500">
+                            @{user.username}
+                          </span>
                         </div>
                       </div>
                     </TableCell>
@@ -232,23 +246,30 @@ export default function UserTable({
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={!user.isActive ? 'outline' : user.isBanned ? 'secondary' : 'default'}
-                        className={`${!user.isActive
-                          ? 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700'
-                          : user.isBanned
-                            ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 border-0'
-                            : 'bg-primary/10 text-primary hover:bg-primary/20 border-primary/20'
-                          } w-fit`}
+                        variant={
+                          !user.isActive
+                            ? "outline"
+                            : user.isBanned
+                              ? "secondary"
+                              : "default"
+                        }
+                        className={`${
+                          !user.isActive
+                            ? "bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"
+                            : user.isBanned
+                              ? "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 border-0"
+                              : "bg-primary/10 text-primary hover:bg-primary/20 border-primary/20"
+                        } w-fit`}
                       >
                         {!user.isActive ? (
-                          'Not Verified'
+                          tTable("notVerifiedBadge")
                         ) : user.isBanned ? (
                           <>
                             <UserX className="h-3 w-3 mr-1" />
-                            Banned
+                            {tTable("bannedBadge")}
                           </>
                         ) : (
-                          'Active'
+                          tTable("activeBadge")
                         )}
                       </Badge>
                     </TableCell>
@@ -259,14 +280,14 @@ export default function UserTable({
                           className="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 border-0 w-fit"
                         >
                           <Crown className="h-3 w-3 mr-1" />
-                          Premium
+                          {tTable("premiumBadge")}
                         </Badge>
                       ) : (
                         <Badge
                           variant="secondary"
                           className="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400 border-0 w-fit"
                         >
-                          Free Plan
+                          {tTable("freePlanBadge")}
                         </Badge>
                       )}
                     </TableCell>
@@ -284,13 +305,15 @@ export default function UserTable({
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuLabel>
+                            {tTable("actions")}
+                          </DropdownMenuLabel>
 
                           <DropdownMenuItem
                             onClick={() => router.push(`/users/${user.id}`)}
                           >
                             <Eye className="mr-2 h-4 w-4" />
-                            View Details
+                            {tTable("viewDetails")}
                           </DropdownMenuItem>
 
                           <DropdownMenuSeparator />
@@ -299,21 +322,24 @@ export default function UserTable({
                             <DropdownMenuItem
                               className="text-red-600 focus:text-red-600"
                               onSelect={() => {
-                                setTimeout(() => handleAction(user, 'ban'), 0);
+                                setTimeout(() => handleAction(user, "ban"), 0);
                               }}
                             >
                               <Ban className="mr-2 h-4 w-4" />
-                              Ban User
+                              {tTable("banUser")}
                             </DropdownMenuItem>
                           ) : (
                             <DropdownMenuItem
                               className="text-primary focus:text-primary"
                               onSelect={() => {
-                                setTimeout(() => handleAction(user, 'unban'), 0);
+                                setTimeout(
+                                  () => handleAction(user, "unban"),
+                                  0,
+                                );
                               }}
                             >
                               <CheckCircle2 className="mr-2 h-4 w-4" />
-                              Unban User
+                              {tTable("unbanUser")}
                             </DropdownMenuItem>
                           )}
                         </DropdownMenuContent>
@@ -331,48 +357,70 @@ export default function UserTable({
           totalPages={totalPages}
           onPageChange={onPageChange}
           meta={meta || undefined}
-          entityName="users"
+          entityName={tTable("entity")}
         />
       </div>
 
-      <Dialog open={!!actionType} onOpenChange={(open) => !open && closeDialog()}>
+      <Dialog
+        open={!!actionType}
+        onOpenChange={(open) => !open && closeDialog()}
+      >
         {selectedUser && (
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <ShieldAlert className={`h-5 w-5 ${actionType === 'ban' ? 'text-red-500' : 'text-primary'}`} />
-                {actionType === 'ban' ? 'Ban User' : 'Unban User'}
+                <ShieldAlert
+                  className={`h-5 w-5 ${actionType === "ban" ? "text-red-500" : "text-primary"}`}
+                />
+                {actionType === "ban"
+                  ? tDialogs("banTitle")
+                  : tDialogs("unbanTitle")}
               </DialogTitle>
               <DialogDescription>
-                {actionType === 'ban'
-                  ? 'Are you sure you want to ban this user? They will not be able to access their account.'
-                  : 'Are you sure you want to unban this user? They will regain access to their account.'}
+                {actionType === "ban"
+                  ? tDialogs("banDescription")
+                  : tDialogs("unbanDescription")}
               </DialogDescription>
             </DialogHeader>
 
             <div className="py-4">
               <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
                 <Avatar className="h-12 w-12">
-                  <AvatarImage src={selectedUser.avatarUrl} alt={selectedUser.username} />
-                  <AvatarFallback>{getInitials(selectedUser.fullName)}</AvatarFallback>
+                  <AvatarImage
+                    src={selectedUser.avatarUrl}
+                    alt={selectedUser.username}
+                  />
+                  <AvatarFallback>
+                    {getInitials(selectedUser.fullName)}
+                  </AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="font-semibold">{selectedUser.fullName}</p>
-                  <p className="text-sm text-slate-500">@{selectedUser.username}</p>
+                  <p className="text-sm text-slate-500">
+                    @{selectedUser.username}
+                  </p>
                 </div>
               </div>
             </div>
 
             <DialogFooter>
-              <Button variant="outline" onClick={closeDialog} disabled={isActionLoading}>
-                Cancel
+              <Button
+                variant="outline"
+                onClick={closeDialog}
+                disabled={isActionLoading}
+              >
+                {tDialogs("cancel")}
               </Button>
               <Button
-                variant={actionType === 'ban' ? 'destructive' : 'default'}
+                variant={actionType === "ban" ? "destructive" : "default"}
                 onClick={confirmAction}
                 disabled={isActionLoading}
               >
-                {isActionLoading ? 'Processing...' : actionType === 'ban' ? 'Ban User' : 'Unban User'}
+                {isActionLoading
+                  ? tDialogs("processing")
+                  : actionType === "ban"
+                    ? tDialogs("banButton")
+                    : tDialogs("unbanButton")}
               </Button>
             </DialogFooter>
           </DialogContent>

@@ -179,7 +179,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           permissions: [PermissionEnum.ADMIN_ACCESS],
         },
         {
-          name: tSub("features"),
+          name: tSub("features.header.title"),
           href: "/subscriptions/features",
           icon: Layers,
           permissions: [PermissionEnum.ADMIN_ACCESS],
