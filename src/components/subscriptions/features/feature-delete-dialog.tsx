@@ -10,22 +10,22 @@ import {
 
 import { useTranslations } from "next-intl";
 
-interface PlanDeleteDialogProps {
+interface FeatureDeleteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  plan: { id: number; name: string } | null;
+  feature: { id: number; name: string } | null;
   onConfirm: () => void;
   isDeleting?: boolean;
 }
 
-export function PlanDeleteDialog({
+export function FeatureDeleteDialog({
   open,
   onOpenChange,
-  plan,
+  feature,
   onConfirm,
   isDeleting,
-}: PlanDeleteDialogProps) {
-  const t = useTranslations("Subscription.dialogs.delete");
+}: FeatureDeleteDialogProps) {
+  const t = useTranslations("Subscription.features.dialogs.delete");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -33,7 +33,7 @@ export function PlanDeleteDialog({
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            {t("description", { name: plan?.name ?? "" })}
+            {t("description", { name: feature?.name ?? "" })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

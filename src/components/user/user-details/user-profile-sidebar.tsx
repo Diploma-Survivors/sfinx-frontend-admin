@@ -13,12 +13,15 @@ import {
   Phone,
   Trophy,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface UserProfileSidebarProps {
   user: UserProfile;
 }
 
 export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
+  const t = useTranslations("UserDetailPage.components.sidebar");
+
   return (
     <Card className="shadow-lg border border-border bg-card">
       <CardContent className="pt-6 flex flex-col items-center text-center space-y-4">
@@ -46,14 +49,14 @@ export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
               }
             >
               {!user.isActive
-                ? "Not Verified"
+                ? t("notVerified")
                 : user.isBanned
-                  ? "Banned"
-                  : "Active"}
+                  ? t("banned")
+                  : t("active")}
             </Badge>
             {user.isPremium && (
               <Badge className="bg-gradient-to-r from-amber-500 to-amber-600">
-                Premium
+                {t("premium")}
               </Badge>
             )}
           </div>
@@ -63,7 +66,7 @@ export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
           className="bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1"
         >
           <Trophy className="w-3 h-3 mr-1" />
-          Rank {user.problemRank ?? "N/A"}
+          {t("rank", { rank: user.problemRank ?? t("na") })}
         </Badge>
 
         <div className="w-full space-y-3 pt-4 text-left">
@@ -131,10 +134,11 @@ export function UserProfileSidebar({ user }: UserProfileSidebarProps) {
           <div className="flex items-center text-muted-foreground">
             <Calendar className="w-4 h-4 mr-3 text-muted-foreground/70" />
             <span className="text-sm truncate">
-              Joined{" "}
-              {user.createdAt
-                ? format(new Date(user.createdAt), "MMM yyyy")
-                : "N/A"}
+              {t("joined", {
+                date: user.createdAt
+                  ? format(new Date(user.createdAt), "MMM yyyy")
+                  : t("na"),
+              })}
             </span>
           </div>
         </div>

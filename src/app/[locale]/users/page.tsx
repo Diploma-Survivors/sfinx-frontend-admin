@@ -1,18 +1,20 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import UserTable from '@/components/user/user-table';
-import UserFilter from '@/components/user/user-filter';
-import { UserStats } from '@/components/user/user-stats';
-import { UserHeader } from '@/components/user/user-header';
-import type { UserProfile, UserFilters } from '@/types/user';
-import { usersService, SystemUserStatistics } from '@/services/users-service';
-import { toastService } from '@/services/toasts-service';
+import { useState, useEffect, useCallback } from "react";
+import UserTable from "@/components/user/user-table";
+import UserFilter from "@/components/user/user-filter";
+import { UserStats } from "@/components/user/user-stats";
+import { UserHeader } from "@/components/user/user-header";
+import type { UserProfile, UserFilters } from "@/types/user";
+import { usersService, SystemUserStatistics } from "@/services/users-service";
+import { toastService } from "@/services/toasts-service";
+import { useTranslations } from "next-intl";
 
 export default function UsersPage() {
+  const t = useTranslations("UsersPage.toast");
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<UserFilters>({});
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<{
@@ -48,12 +50,12 @@ export default function UsersPage() {
       setMeta(usersResponse.data.meta);
       setSystemStats(stats);
     } catch (error) {
-      toastService.error('Failed to fetch users');
-      console.error('Error fetching users:', error);
+      toastService.error(t("fetchError"));
+      console.error("Error fetching users:", error);
     } finally {
       setIsLoading(false);
     }
-  }, [page, searchQuery, filters]);
+  }, [page, searchQuery, filters, t]);
 
   useEffect(() => {
     fetchUsers();

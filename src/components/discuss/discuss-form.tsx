@@ -147,7 +147,7 @@ export function DiscussForm({ post, isEditing = false }: DiscussFormProps) {
               className="w-full"
             />
             <p className="text-xs text-muted-foreground">
-              Select one or more tags relevant to your discussion.
+              {t("helpText.tagsSelection")}
             </p>
           </div>
 

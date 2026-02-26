@@ -86,7 +86,7 @@ export function TransactionTable({
                 colSpan={7}
                 className="h-32 text-center text-slate-500"
               >
-                No transactions found
+                {t("table.noTransactions")}
               </TableCell>
             </TableRow>
           ) : (
@@ -142,7 +142,7 @@ export function TransactionTable({
             totalPages={meta.totalPages}
             onPageChange={onPageChange}
             meta={meta}
-            entityName="transactions"
+            entityName={t("transactions").toLowerCase()}
           />
         </div>
       )}

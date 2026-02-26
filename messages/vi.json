@@ -343,8 +343,8 @@
         "id": "ID",
         "createdAt": "Ngày tạo",
         "resetFilters": "Đặt lại bộ lọc",
-        "deleteConfirmTitle": "Xác nhận xóa",
-        "deleteConfirmMessage": "Bạn có chắc chắn muốn xóa ngôn ngữ \"{name}\"? Hành động này không thể hoàn tác.",
+        "confirmDeleteTitle": "Xác nhận xóa",
+        "confirmDeleteMessage": "Bạn có chắc chắn muốn xóa ngôn ngữ \"{name}\"? Hành động này không thể hoàn tác.",
         "deleteSuccess": "Xóa ngôn ngữ thành công",
         "deleteError": "Xóa ngôn ngữ thất bại",
         "activateSuccess": "Kích hoạt ngôn ngữ thành công",
@@ -358,6 +358,8 @@
         "activate": "Kích hoạt",
         "deactivate": "Hủy kích hoạt",
         "delete": "Xóa",
+        "deleting": "Đang xóa...",
+        "processing": "Đang xử lý...",
         "cancel": "Hủy"
     },
     "ProgrammingLanguageTable": {
@@ -375,7 +377,8 @@
         "edit": "Sửa",
         "delete": "Xóa",
         "activate": "Kích hoạt",
-        "deactivate": "Hủy kích hoạt"
+        "deactivate": "Hủy kích hoạt",
+        "entityName": "ngôn ngữ"
     },
     "CreateProgrammingLanguageDialog": {
         "title": "Thêm ngôn ngữ lập trình",
@@ -703,7 +706,27 @@
             "confirmCancel": "Có, Hủy",
             "keepEditing": "Không, Tiếp tục chỉnh sửa",
             "success": "Tạo cuộc thi thành công",
-            "error": "Tạo cuộc thi thất bại"
+            "error": "Tạo cuộc thi thất bại",
+            "generalInfo": {
+                "title": "Thông Tin Chung",
+                "nameLabel": "Tên Cuộc Thi",
+                "namePlaceholder": "Nhập tên cuộc thi",
+                "descriptionLabel": "Mô tả",
+                "startTimeLabel": "Thời Gian Bắt Đầu",
+                "durationLabel": "Thời Lượng (phút)",
+                "endsAt": "Kết thúc lúc: {time}",
+                "statusLabel": "Trạng Thái",
+                "statusPlaceholder": "Chọn trạng thái",
+                "statusDraft": "Bản Nháp",
+                "statusScheduled": "Đã Lên Lịch"
+            },
+            "problemSelection": {
+                "title": "Chọn Bài Tập",
+                "tableProblem": "Bài tập",
+                "tableDifficulty": "Độ khó",
+                "tableScore": "Điểm",
+                "empty": "Chưa có bài tập nào được chọn."
+            }
         }
     },
     "EditContestPage": {
@@ -1033,7 +1056,6 @@
     "Subscription": {
         "title": "Quản lý Gói đăng ký",
         "plans": "Gói dịch vụ",
-        "features": "Tính năng",
         "transactions": "Lịch sử giao dịch",
         "statistics": "Thống kê doanh thu",
         "plansDescription": "Quản lý các gói đăng ký và giá cả.",
@@ -1050,7 +1072,13 @@
             "amount": "Số tiền",
             "provider": "Cổng thanh toán",
             "date": "Ngày giao dịch",
-            "txnId": "Mã giao dịch"
+            "txnId": "Mã giao dịch",
+            "noTransactions": "Không tìm thấy giao dịch nào"
+        },
+        "filter": {
+            "searchPlaceholder": "Tìm kiếm theo người dùng hoặc mã...",
+            "statusLabel": "Trạng thái",
+            "allStatuses": "Tất cả trạng thái"
         },
         "stats": {
             "totalRevenue": "Tổng doanh thu",
@@ -1081,7 +1109,124 @@
             "inactive": "Tạm ngưng"
         },
         "editPlan": "Chỉnh sửa gói",
-        "updateSuccess": "Cập nhật gói thành công"
+        "refresh": "Làm mới",
+        "createPlan": "Tạo gói",
+        "deletePlan": "Xóa gói",
+        "duration": {
+            "month": "tháng",
+            "year": "năm"
+        },
+        "dialogs": {
+            "create": {
+                "title": "Tạo Gói Mới",
+                "description": "Thêm một gói đăng ký mới kèm theo bản dịch",
+                "typeLabel": "Loại Gói *",
+                "selectType": "Chọn loại gói",
+                "monthly": "Hàng tháng",
+                "yearly": "Hàng năm",
+                "priceLabel": "Giá (USD) *",
+                "durationLabel": "Thời hạn (tháng) *",
+                "activeLabel": "Hoạt động",
+                "translations": "Bản dịch",
+                "english": "Tiếng Anh",
+                "vietnamese": "Tiếng Việt",
+                "nameLabel": "Tên *",
+                "descLabel": "Mô tả",
+                "cancel": "Hủy",
+                "createButton": "Tạo Gói",
+                "creatingButton": "Đang tạo..."
+            },
+            "edit": {
+                "title": "Chỉnh Sửa Gói",
+                "description": "Cập nhật giá, trạng thái và các tính năng cho gói đăng ký này.",
+                "saveButton": "Lưu thay đổi",
+                "savingButton": "Đang lưu..."
+            },
+            "delete": {
+                "title": "Xác nhận xóa",
+                "description": "Bạn có chắc chắn muốn xóa gói \"{name}\"? Hành động này không thể hoàn tác.",
+                "cancel": "Hủy",
+                "deleteButton": "Xóa",
+                "deletingButton": "Đang xóa..."
+            }
+        },
+        "messages": {
+            "updateSuccess": "Cập nhật gói thành công",
+            "updateError": "Cập nhật gói thất bại",
+            "loadError": "Tải dữ liệu thất bại",
+            "fillRequired": "Vui lòng điền tất cả các trường bắt buộc",
+            "nameRequired": "Tên gói là bắt buộc cho cả hai ngôn ngữ",
+            "createSuccess": "Tạo gói thành công",
+            "createError": "Tạo gói thất bại",
+            "deleteSuccess": "Xóa gói thành công",
+            "deleteError": "Xóa gói thất bại",
+            "loadFeaturesError": "Không thể tải danh sách tính năng",
+            "loadFeatureDetailsError": "Không thể tải chi tiết tính năng",
+            "deleteFeatureSuccess": "Tính năng đã được xóa thành công",
+            "deleteFeatureError": "Xóa tính năng thất bại",
+            "keyRequired": "Yêu cầu mã tính năng (Key)",
+            "featureNameRequired": "Yêu cầu tên tính năng cho cả hai ngôn ngữ",
+            "createFeatureSuccess": "Đã tạo tính năng thành công",
+            "createFeatureError": "Tạo tính năng thất bại",
+            "updateFeatureSuccess": "Cập nhật tính năng thành công",
+            "updateFeatureError": "Cập nhật tính năng thất bại",
+            "loadTransactionsError": "Không thể tải danh sách giao dịch"
+        },
+        "features": {
+            "header": {
+                "title": "Tính năng",
+                "description": "Quản lý các tính năng của gói đăng ký",
+                "createFeature": "Tạo Tính năng"
+            },
+            "table": {
+                "title": "Tất cả Tính năng",
+                "description": "Quản lý các tính năng và bản dịch gói đăng ký",
+                "key": "Mã (Key)",
+                "name": "Tên",
+                "descLabel": "Mô tả",
+                "status": "Trạng thái",
+                "actions": "Hành động",
+                "noFeatures": "Không tìm thấy tính năng nào",
+                "active": "Hoạt động",
+                "inactive": "Không hoạt động"
+            },
+            "dialogs": {
+                "delete": {
+                    "title": "Xác nhận xóa",
+                    "description": "Bạn có chắc chắn muốn xóa tính năng \"{name}\"? Hành động này không thể hoàn tác.",
+                    "cancel": "Hủy",
+                    "deleteButton": "Xóa",
+                    "deletingButton": "Đang xóa..."
+                },
+                "create": {
+                    "title": "Tạo Tính Năng Mới",
+                    "description": "Thêm một tính năng mới hỗ trợ đa ngôn ngữ",
+                    "keyLabel": "Mã Tính Năng *",
+                    "activeLabel": "Hoạt động",
+                    "translations": "Bản dịch",
+                    "english": "Tiếng Anh",
+                    "vietnamese": "Tiếng Việt",
+                    "nameLabel": "Tên *",
+                    "descLabel": "Mô tả",
+                    "cancel": "Hủy",
+                    "createButton": "Tạo Tính Năng",
+                    "creatingButton": "Đang tạo...",
+                    "placeholders": {
+                        "key": "unlimited_submissions",
+                        "enName": "Unlimited Submissions",
+                        "enDesc": "Submit code without daily limits",
+                        "viName": "Không giới hạn nộp bài",
+                        "viDesc": "Nộp bài không giới hạn trong ngày"
+                    }
+                },
+                "edit": {
+                    "title": "Chỉnh Sửa Tính Năng",
+                    "description": "Cập nhật trạng thái và bản dịch của tính năng",
+                    "saveButton": "Lưu Thay Đổi",
+                    "savingButton": "Đang lưu..."
+                }
+            }
+        }
     },
     "SystemConfig": {
         "page": {
@@ -1191,6 +1336,16 @@
     },
     "Discuss": {
         "List": {
+            "header": {
+                "title": "Thảo luận",
+                "description": "Quản lý thảo luận học viên và bài viết cộng đồng.",
+                "newDiscussion": "Thảo luận mới"
+            },
+            "pagination": {
+                "previous": "Trước",
+                "next": "Tiếp",
+                "page": "Trang {page} / {totalPages}"
+            },
             "searchExample": "Tìm kiếm thảo luận...",
             "sortBy": "Sắp xếp theo",
             "sortOptions": {
@@ -1264,7 +1419,8 @@
                 "tagsSearch": "Tìm kiếm thẻ..."
             },
             "helpText": {
-                "multiSelectTags": "Giữ Ctrl/Cmd để chọn nhiều thẻ."
+                "multiSelectTags": "Giữ Ctrl/Cmd để chọn nhiều thẻ.",
+                "tagsSelection": "Chọn một hoặc nhiều thẻ liên quan đến thảo luận của bạn."
             },
             "buttons": {
                 "cancel": "Hủy",
@@ -1414,6 +1570,190 @@
         "messages": {
             "rebuildSuccess": "Đã bắt đầu rebuild ({type}) thành công.",
             "rebuildError": "Khởi tạo rebuild thất bại."
+        }
+    },
+    "UserContestRatingChart": {
+        "title": "Đánh giá Cuộc thi",
+        "noData": "Không có dữ liệu đánh giá cuộc thi.",
+        "currentRating": "Đánh giá Hiện tại",
+        "peakRating": "Đánh giá Cao nhất",
+        "globalRank": "Hạng Toàn cầu",
+        "topPercentage": "Top",
+        "tooltipRating": "Đánh giá",
+        "tooltipRank": "Hạng"
+    },
+    "SelectProblemsModal": {
+        "addProblems": "Thêm bài tập..."
+    },
+    "ReportsPage": {
+        "title": "Báo cáo lỗi bài tập",
+        "description": "Quản lý và giải quyết các vấn đề do người dùng báo cáo",
+        "refresh": "Làm mới",
+        "fetchError": "Tải danh sách báo cáo thất bại"
+    },
+    "ReportsTable": {
+        "types": {
+            "wrongDescription": "Sai đề bài",
+            "wrongAnswer": "Sai kết quả / Đầu ra dự kiến",
+            "wrongTestCase": "Sai Test Case",
+            "other": "Khác"
+        },
+        "statuses": {
+            "pending": "Chờ xử lý",
+            "inProgress": "Đang xử lý",
+            "resolved": "Đã giải quyết",
+            "rejected": "Đã từ chối"
+        },
+        "columns": {
+            "problem": "Bài tập",
+            "reportType": "Loại báo cáo",
+            "description": "Mô tả",
+            "reporter": "Người báo cáo",
+            "status": "Trạng thái",
+            "submittedAt": "Gửi lúc",
+            "actions": "Thao tác"
+        },
+        "actions": {
+            "changeStatus": "Thay đổi trạng thái",
+            "markAsPending": "Đánh dấu Chờ xử lý",
+            "markAsInProgress": "Đánh dấu Đang xử lý",
+            "markAsResolved": "Đánh dấu Đã giải quyết",
+            "markAsRejected": "Đánh dấu Đã từ chối"
+        },
+        "noReports": "Không tìm thấy báo cáo nào.",
+        "unknownProblem": "Bài tập không xác định",
+        "unknownUser": "Không rõ",
+        "statusUpdateSuccess": "Đã cập nhật trạng thái báo cáo thành {status}",
+        "statusUpdateError": "Cập nhật trạng thái báo cáo thất bại",
+        "entityName": "báo cáo"
+    },
+    "UserDetailPage": {
+        "notFound": "Không tìm thấy người dùng",
+        "backToUsers": "Quay lại danh sách",
+        "tabs": {
+            "recentAC": "Bài tập AC gần đây",
+            "solutions": "Lời giải",
+            "contestHistory": "Lịch sử tham gia thi"
+        },
+        "components": {
+            "sidebar": {
+                "notVerified": "Chưa xác thực",
+                "banned": "Bị cấm",
+                "active": "Hoạt động",
+                "premium": "Premium",
+                "rank": "Hạng {rank}",
+                "na": "N/A",
+                "joined": "Tham gia {date}"
+            },
+            "activityHeatmap": {
+                "title": "Lịch hoạt động",
+                "yearPlaceholder": "Năm",
+                "mon": "T2",
+                "wed": "T4",
+                "fri": "T6",
+                "totalActiveDays": "Tổng số ngày hoạt động: {count}",
+                "submissionsOnDate": "{count} lần nộp bài vào {date}"
+            },
+            "contestHistory": {
+                "title": "Lịch sử cuộc thi",
+                "loading": "Đang tải lịch sử cuộc thi...",
+                "empty": "Không tìm thấy lịch sử tham gia cuộc thi.",
+                "tableContest": "Cuộc thi",
+                "tableRank": "Hạng",
+                "tableRatingCheck": "Thay đổi Rating",
+                "tableNewRating": "Rating mới",
+                "tableDate": "Ngày",
+                "page": "Trang {page} trên {totalPages}",
+                "previous": "Trước",
+                "next": "Tiếp theo"
+            },
+            "recentActivity": {
+                "title": "Bài tập AC gần đây",
+                "empty": "Không có hoạt động gần đây"
+            },
+            "solutions": {
+                "title": "Lời giải",
+                "sortBy": "Sắp xếp theo",
+                "mostRecent": "Mới nhất",
+                "mostVoted": "Nhiều lượt vote nhất",
+                "empty": "Chưa có lời giải nào được chia sẻ"
+            },
+            "solvedProblems": {
+                "title": "Bài tập đã giải",
+                "solved": "Đã giải",
+                "easy": "Dễ",
+                "medium": "Trung bình",
+                "hard": "Khó"
+            },
+            "submissionStats": {
+                "title": "Thống kê nộp bài",
+                "accepted": "Chấp nhận",
+                "wrongAnswer": "Kết quả sai",
+                "timeLimit": "Quá thời gian",
+                "runtimeError": "Lỗi thực thi",
+                "others": "Khác"
+            }
+        }
+    },
+    "UsersPage": {
+        "header": {
+            "title": "Quản lý người dùng",
+            "description": "Quản lý và giám sát người dùng trên nền tảng",
+            "refresh": "Làm mới"
+        },
+        "stats": {
+            "total": "Tổng người dùng",
+            "active": "Đang hoạt động",
+            "premium": "Người dùng Premium",
+            "banned": "Đã chặn"
+        },
+        "filter": {
+            "searchLabel": "Tìm kiếm người dùng",
+            "searchPlaceholder": "Tìm theo Tên, Username hoặc Email...",
+            "accountStatus": "Trạng thái tài khoản",
+            "allStatus": "Tất cả trạng thái",
+            "active": "Đang hoạt động",
+            "banned": "Đã chặn",
+            "notVerified": "Chưa xác thực",
+            "premiumStatus": "Trạng thái Premium",
+            "allUsers": "Tất cả người dùng",
+            "premium": "Premium",
+            "free": "Miễn phí"
+        },
+        "table": {
+            "id": "ID",
+            "user": "Người dùng",
+            "email": "Email",
+            "status": "Trạng thái",
+            "plan": "Gói",
+            "lastLogin": "Lần đăng nhập cuối",
+            "actions": "Hành động",
+            "noUsers": "Không tìm thấy người dùng phù hợp.",
+            "notVerifiedBadge": "Chưa xác thực",
+            "bannedBadge": "Đã chặn",
+            "activeBadge": "Đang hoạt động",
+            "premiumBadge": "Premium",
+            "freePlanBadge": "Gói miễn phí",
+            "viewDetails": "Xem chi tiết",
+            "banUser": "Chặn người dùng",
+            "unbanUser": "Bỏ chặn người dùng",
+            "entity": "người dùng"
+        },
+        "dialogs": {
+            "banTitle": "Chặn người dùng",
+            "unbanTitle": "Bỏ chặn người dùng",
+            "banDescription": "Bạn có chắc chắn muốn chặn người dùng này? Họ sẽ không thể truy cập tài khoản của mình nữa.",
+            "unbanDescription": "Bạn có chắc chắn muốn bỏ chặn người dùng này? Họ sẽ có thể truy cập lại tài khoản của mình.",
+            "cancel": "Hủy",
+            "banButton": "Chặn người dùng",
+            "unbanButton": "Bỏ chặn người dùng",
+            "processing": "Đang xử lý..."
+        },
+        "toast": {
+            "fetchError": "Không thể tải danh sách người dùng",
+            "banSuccess": "Người dùng @{username} đã bị chặn",
+            "unbanSuccess": "Người dùng @{username} đã được bỏ chặn",
+            "actionError": "Không thể cập nhật trạng thái người dùng"
         }
     }
 }

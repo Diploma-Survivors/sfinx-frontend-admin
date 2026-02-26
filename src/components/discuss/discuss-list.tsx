@@ -339,10 +339,10 @@ export function DiscussList() {
             onClick={() => updateFilters({ page: page - 1 })}
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
-            Previous
+            {t("pagination.previous")}
           </Button>
           <div className="flex items-center px-4 text-sm font-medium">
-            Page {page} of {totalPages}
+            {t("pagination.page", { page, totalPages })}
           </div>
           <Button
             variant="outline"
@@ -350,7 +350,7 @@ export function DiscussList() {
             disabled={page >= totalPages}
             onClick={() => updateFilters({ page: page + 1 })}
           >
-            Next
+            {t("pagination.next")}
             <ChevronRight className="h-4 w-4 ml-2" />
           </Button>
         </div>
