@@ -22,6 +22,7 @@ import {
 } from "@/types/problems";
 import { Plus } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 interface SelectProblemsModalProps {
   title: string;
@@ -39,6 +40,7 @@ export function SelectProblemsModal({
     new Set(selectedProblemIds),
   );
   const { tags, topics } = useAppSelector((state) => state.metadata);
+  const t = useTranslations("SelectProblemsModal");
 
   // Sync with props when modal opens
   useEffect(() => {
@@ -81,7 +83,7 @@ export function SelectProblemsModal({
           className="w-full justify-start text-slate-500 font-normal"
         >
           <Plus className="mr-2 h-4 w-4" />
-          Add problems...
+          {t("addProblems")}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col">
