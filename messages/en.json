@@ -1689,7 +1689,7 @@
                 "medium": "Medium",
                 "hard": "Hard"
             },
-        "submissionStats": {
+            "submissionStats": {
                 "title": "Submission Stats",
                 "accepted": "Accepted",
                 "wrongAnswer": "Wrong Answer",

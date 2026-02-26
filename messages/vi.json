@@ -1660,7 +1660,7 @@
                 "empty": "Không tìm thấy lịch sử tham gia cuộc thi.",
                 "tableContest": "Cuộc thi",
                 "tableRank": "Hạng",
-                "tableRatingCheck": "Thay báo Rating",
+                "tableRatingCheck": "Thay đổi Rating",
                 "tableNewRating": "Rating mới",
                 "tableDate": "Ngày",
                 "page": "Trang {page} trên {totalPages}",
