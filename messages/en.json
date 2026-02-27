@@ -1764,5 +1764,11 @@
             "unbanSuccess": "User @{username} unbanned successfully",
             "actionError": "Failed to update user status"
         }
+    },
+    "NotificationBell": {
+        "title": "Notifications",
+        "markAllAsRead": "Mark all as read",
+        "emptyState": "You have no notifications right now.",
+        "viewDetails": "View details"
     }
 }

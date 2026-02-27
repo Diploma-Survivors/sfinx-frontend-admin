@@ -1760,5 +1760,11 @@
             "unbanSuccess": "Người dùng @{username} đã được bỏ chặn",
             "actionError": "Không thể cập nhật trạng thái người dùng"
         }
+    },
+    "NotificationBell": {
+        "title": "Thông báo",
+        "markAllAsRead": "Đánh dấu tất cả là đã đọc",
+        "emptyState": "Bạn không có thông báo nào lúc này.",
+        "viewDetails": "Xem chi tiết"
     }
 }
