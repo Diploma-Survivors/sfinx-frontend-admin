@@ -1,38 +1,33 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import clientApi from '@/lib/apis/axios-client';
-import { ForgotPasswordDialog } from '@/components/auth/forgot-password-dialog';
-import LanguageSwitcher from '@/components/layout/language-switcher';
-import { toastService } from '@/services/toasts-service';
-import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { useTranslations, useLocale } from 'next-intl';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import clientApi from "@/lib/apis/axios-client";
+import LanguageSwitcher from "@/components/layout/language-switcher";
+import { toastService } from "@/services/toasts-service";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { Eye, EyeOff, BrainCircuit, Loader2 } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
-  const t = useTranslations('LoginPage');
+  const t = useTranslations("LoginPage");
   const locale = useLocale();
   const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || `/${locale}/dashboard`;
+  const callbackUrl = searchParams.get("callbackUrl") || `/${locale}/dashboard`;
   const router = useRouter();
 
   const toggleMode = () => {
@@ -40,61 +35,70 @@ export default function LoginPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent page refresh
+    e.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const finalUsername = (formData.get('username') as string) || username;
-    const finalPassword = (formData.get('password') as string) || password;
+    const finalUsername = (formData.get("username") as string) || username;
+    const finalPassword = (formData.get("password") as string) || password;
 
     if (isSignUp) {
       if (password !== confirmPassword) {
-        toastService.error(t('passwordsDoNotMatch'));
+        toastService.error(t("passwordsDoNotMatch"));
+        setIsLoading(false);
         return;
       }
 
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
       if (!passwordRegex.test(password)) {
-        toastService.error(t('passwordComplexity')); // Need to make sure this key exists or use hardcoded if t fails? I added it to en.json
+        toastService.error(
+          t("passwordComplexity") ||
+            "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+        );
+        setIsLoading(false);
         return;
       }
 
       try {
-        await clientApi.post('/auth/register', {
+        await clientApi.post("/auth/register", {
           email,
           username,
           password,
           fullName,
         });
-        toastService.success(t('registrationSuccess'));
+        toastService.success(t("registrationSuccess"));
 
         // Auto login after successful registration
-        const result = await signIn('credentials', {
+        const result = await signIn("credentials", {
           username: finalUsername,
           password: finalPassword,
           redirect: false,
         });
 
         if (result?.error) {
-          toastService.error(t('loginFailed'));
+          toastService.error(t("loginFailed"));
         } else {
-          // Success: Redirect manually
           router.push(callbackUrl);
-          router.refresh(); // Optional: ensures session cookies are recognized
+          router.refresh();
         }
       } catch (error: any) {
         toastService.error(
-          error.response?.data?.message || t('registrationFailed')
+          error.response?.data?.message || t("registrationFailed"),
         );
+      } finally {
+        setIsLoading(false);
       }
     } else {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         username: finalUsername,
         password: finalPassword,
         redirect: false,
       });
 
       if (result?.error) {
-        toastService.error(t('loginFailed'));
+        toastService.error(t("loginFailed"));
+        setIsLoading(false);
       } else {
         router.push(callbackUrl);
         router.refresh();
@@ -103,146 +107,265 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
-    const url = process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google';
-    window.open(url, '_blank');
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL + "/auth/google";
+    window.open(url, "_blank");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4 relative">
-      <div className="absolute right-4 top-4">
-        <LanguageSwitcher />
+    <div className="min-h-screen w-full flex bg-black relative overflow-hidden">
+      {/* Deep, immersive background image spanning full width */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Image
+          src="/images/ai-texture.jpg"
+          alt="AI Texture Background"
+          fill
+          className="object-cover object-center opacity-40 lg:opacity-60 mix-blend-screen scale-105 animate-[gradient_20s_ease-in-out_infinite_alternate]"
+          priority
+        />
+        <div className="absolute inset-0 bg-background/50 lg:bg-background/20 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent hidden lg:block"></div>
       </div>
-      <Card className="w-full max-w-lg shadow-lg">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight text-primary">
-            {t('welcome')}
-          </CardTitle>
-          <CardDescription>
-            {isSignUp
-              ? t('createAccount')
-              : t('enterLogin')}
-          </CardDescription>
-        </CardHeader>
 
-        {/* 3. Wrap inputs in a <form> tag */}
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {isSignUp && (
-              <>
-                <div className="space-y-2">
-                  <Input
-                    id="email"
-                    name="email"
-                    placeholder={t('email')}
-                    type="email"
-                    autoCapitalize="none"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Input
-                    id="fullName"
-                    name="fullName"
-                    placeholder={t('fullName')}
-                    type="text"
-                    autoComplete="name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                  />
-                </div>
-              </>
-            )}
-            <div className="space-y-2">
-              <Input
-                id="username"
-                name="username" // 4. Add 'name' attribute for autofill
-                placeholder={t('username')}
-                type="text"
-                autoCapitalize="none"
-                autoComplete="username" // 5. Help browser identify field
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
+      <div className="relative overflow-visible z-50">
+        <div className="absolute top-4 right-4 z-50">
+          <LanguageSwitcher />
+        </div>
+      </div>
+
+      <div className="relative z-10 flex w-full h-full min-h-screen container mx-auto p-0">
+        {/* Left Column: Storytelling/Hero Area (Hidden on mobile) */}
+        <div className="hidden lg:flex flex-1 relative flex-col justify-end p-12 overflow-hidden text-left">
+          {/* Narrative Content */}
+          <div className="max-w-lg mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-foreground/5 dark:bg-white/10 backdrop-blur-md border border-border dark:border-white/20 text-foreground dark:text-white text-sm mb-6">
+              <BrainCircuit className="w-4 h-4 text-primary" />
+              <span>{t("heroBadge") || "Sfinx Workspace"}</span>
             </div>
-            <div className="space-y-2 relative">
-              <Input
-                id="password"
-                name="password" // 4. Add 'name' attribute
-                placeholder={t('password')}
-                type={showPassword ? "text" : "password"}
-                autoComplete={isSignUp ? 'new-password' : 'current-password'} // 5. Help browser
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </Button>
+            <h1 className="text-4xl xl:text-5xl font-bold text-foreground dark:text-white tracking-tight mb-4 text-balance leading-[1.1]">
+              {t("heroTitlePt1") || "Manage with"} <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/80 to-[oklch(0.55_0.18_160)]">
+                {t("heroTitlePt2") || "Intelligence."}
+              </span>
+            </h1>
+            <p className="text-muted-foreground dark:text-white/70 text-lg leading-relaxed text-balance">
+              {t("heroDescription") ||
+                "Seamlessly oversee users, configure system parameters, and monitor analytics with the powerful Sfinx administrative portal."}
+            </p>
+
+            <div className="mt-12 flex items-center gap-4">
+              <div className="flex -space-x-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="relative w-10 h-10 rounded-full border-2 border-background dark:border-black overflow-hidden bg-muted dark:bg-muted/80 backdrop-blur-sm"
+                  >
+                    <Image
+                      src={`https://randomuser.me/api/portraits/${i % 2 === 0 ? "men" : "women"}/${i + 32}.jpg`}
+                      alt="User Avatar"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="text-sm text-foreground/80 dark:text-white/80">
+                <span className="font-bold text-foreground dark:text-white">
+                  4,000+
+                </span>{" "}
+                {t("socialProof") || "users managed daily."}
+              </div>
             </div>
-            {/* {!isSignUp && (
-              <div className="flex justify-end">
-                <ForgotPasswordDialog />
-              </div>
-            )} */}
-            {isSignUp && (
-              <div className="space-y-2 relative">
-                <Input
-                  id="confirm-password"
-                  name="confirmPassword"
-                  placeholder={t('confirmPassword')}
-                  type={showConfirmPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </Button>
-              </div>
-            )}
-
-            {/* 6. Change type to "submit" to allow Enter key submission */}
-            <Button
-              className="w-full"
-              type="submit"
-            >
-              {isSignUp ? t('signUp') : t('login')}
-            </Button>
-          </form>
-
-
-        </CardContent>
-
-        <CardFooter className="flex flex-col space-y-2 text-center text-sm text-muted-foreground">
-          <div>
-            {isSignUp ? t('alreadyHaveAccount') : t('dontHaveAccount')}
-            <span
-              onClick={toggleMode}
-              className="underline underline-offset-4 hover:text-primary cursor-pointer font-medium"
-            >
-              {isSignUp ? t('login') : t('signUp')}
-            </span>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+
+        {/* Right Column: Interaction Area */}
+        <div className="w-full lg:w-[480px] xl:w-[500px] shrink-0 flex items-center justify-center p-6 sm:p-12 relative">
+          {/* Animated Orbs behind form */}
+          <div className="absolute top-[10%] left-[-20%] w-[40vw] h-[40vw] lg:w-96 lg:h-96 rounded-full bg-primary/20 blur-[100px] mix-blend-screen opacity-50 pointer-events-none"></div>
+          <div className="absolute bottom-[20%] right-[-10%] w-[30vw] h-[30vw] lg:w-72 lg:h-72 rounded-full bg-primary/10 blur-[80px] mix-blend-screen opacity-40 pointer-events-none"></div>
+
+          <div className="w-full max-w-md relative z-20">
+            <div className="p-8 sm:p-10 rounded-[2rem] bg-white/70 dark:bg-black/50 backdrop-blur-2xl border border-border/40 shadow-2xl shadow-primary/5 transition-all duration-300">
+              {/* Header */}
+              <div className="text-center mb-10 space-y-3">
+                <div className="inline-flex lg:hidden items-center justify-center p-3 mb-2 rounded-2xl bg-primary/10 border border-primary/20">
+                  <BrainCircuit className="w-6 h-6 text-primary" />
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight text-foreground">
+                  {t("welcome")}
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  {isSignUp ? t("createAccount") : t("enterLogin")}
+                </p>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+                {isSignUp && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2 col-span-2">
+                      <Input
+                        id="email"
+                        name="email"
+                        placeholder={t("email")}
+                        type="email"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="h-12 rounded-xl bg-white/50 dark:bg-black/40 border-border/40 focus-visible:ring-primary focus-visible:border-primary transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-2 col-span-2">
+                      <Input
+                        id="fullName"
+                        name="fullName"
+                        placeholder={t("fullName")}
+                        type="text"
+                        autoComplete="name"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        required
+                        className="h-12 rounded-xl bg-white/50 dark:bg-black/40 border-border/40 focus-visible:ring-primary transition-colors"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  <Input
+                    id="username"
+                    name="username"
+                    placeholder={t("username")}
+                    type="text"
+                    autoCapitalize="none"
+                    autoComplete="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className="h-12 rounded-xl bg-white/50 dark:bg-black/40 border-border/40 focus-visible:ring-primary transition-colors"
+                  />
+                </div>
+
+                <div className="space-y-2 relative">
+                  <Input
+                    id="password"
+                    name="password"
+                    placeholder={t("password")}
+                    type={showPassword ? "text" : "password"}
+                    autoComplete={
+                      isSignUp ? "new-password" : "current-password"
+                    }
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="h-12 rounded-xl bg-white/50 dark:bg-black/40 border-border/40 focus-visible:ring-primary transition-colors pr-12"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-0 top-0 h-12 w-12 hover:bg-transparent"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+
+                {isSignUp && (
+                  <div className="space-y-2 relative">
+                    <Input
+                      id="confirm-password"
+                      name="confirmPassword"
+                      placeholder={t("confirmPassword")}
+                      type={showConfirmPassword ? "text" : "password"}
+                      autoComplete="new-password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      className="h-12 rounded-xl bg-white/50 dark:bg-black/40 border-border/40 focus-visible:ring-primary transition-colors pr-12"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-0 top-0 h-12 w-12 hover:bg-transparent"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                )}
+
+                <Button
+                  className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 relative group overflow-hidden mt-2"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {isLoading ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : isSignUp ? (
+                      t("signUp")
+                    ) : (
+                      t("login")
+                    )}
+                  </span>
+                </Button>
+              </form>
+
+              <div className="relative my-8">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border/60" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background/80 dark:bg-[#1a1c1e] px-3 font-medium text-muted-foreground rounded-full backdrop-blur-xl border border-border/40">
+                    {t("orLoginWith") || "Or login with"}
+                  </span>
+                </div>
+              </div>
+
+              <Button
+                onClick={() => handleGoogleLogin()}
+                variant="outline"
+                className="w-full h-12 rounded-xl border-border/60 hover:bg-muted/50 bg-white/30 dark:bg-black/30 backdrop-blur-sm transition-all duration-200"
+                type="button"
+                disabled={isLoading}
+              >
+                <FcGoogle className="mr-3 h-5 w-5" />
+                <span className="font-medium text-foreground/90">
+                  {t("google") || "Google"}
+                </span>
+              </Button>
+
+              <div className="mt-8 text-center text-sm text-muted-foreground">
+                {isSignUp ? t("alreadyHaveAccount") : t("dontHaveAccount")}{" "}
+                <button
+                  type="button"
+                  onClick={toggleMode}
+                  className="font-semibold text-primary hover:underline underline-offset-4 transition-all"
+                  disabled={isLoading}
+                >
+                  {isSignUp ? t("login") : t("signUp")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -12,6 +12,11 @@
         "vi": "Vietnamese"
     },
     "LoginPage": {
+        "heroBadge": "Sfinx Workspace",
+        "heroTitlePt1": "Manage with",
+        "heroTitlePt2": "Intelligence.",
+        "heroDescription": "Seamlessly oversee users, configure system parameters, and monitor analytics with the powerful Sfinx administrative portal.",
+        "socialProof": "users managed daily.",
         "welcome": "Welcome to sFinx",
         "createAccount": "Create an account to get started",
         "enterLogin": "Enter your login information to access your account",

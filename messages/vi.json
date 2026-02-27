@@ -12,6 +12,11 @@
         "vi": "Tiếng Việt"
     },
     "LoginPage": {
+        "heroBadge": "Không gian làm việc Sfinx",
+        "heroTitlePt1": "Quản lý bằng",
+        "heroTitlePt2": "Trí tuệ nhân tạo.",
+        "heroDescription": "Giám sát người dùng liên tục, định dạng cấu hình hệ thông, và theo dõi các thông số cùng với hệ thống quản trị Sfinx mạnh mẽ.",
+        "socialProof": "người dùng được quản lý mỗi ngày.",
         "welcome": "Chào mừng đến với sFinx",
         "createAccount": "Tạo tài khoản để bắt đầu",
         "enterLogin": "Nhập thông tin đăng nhập để truy cập tài khoản của bạn",
