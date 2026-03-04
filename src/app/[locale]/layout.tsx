@@ -9,9 +9,12 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'SolVibe - Decentralized Social Media on Solana',
+  title: 'SfinX - Admin',
   description:
-    'Empowering creators with decentralized ownership, privacy, and fair rewards.',
+    'Improve your coding skills with SfinX. Practice problems, compete in contests, and climb the leaderboard.',
+  icons: {
+    icon: '/icons/logo.svg',
+  },
 };
 
 import { NextIntlClientProvider } from 'next-intl';
