@@ -26,6 +26,7 @@ interface TransactionTableProps {
 }
 
 import { TransactionTableSkeleton } from "./transaction-table-skeleton";
+import { format } from "date-fns";
 
 export function TransactionTable({
   transactions,
@@ -125,10 +126,7 @@ export function TransactionTable({
                   </Badge>
                 </TableCell>
                 <TableCell className="text-slate-600 dark:text-slate-400 text-sm">
-                  {new Date(txn.paymentDate).toLocaleDateString()}
-                  <div className="text-xs">
-                    {new Date(txn.paymentDate).toLocaleTimeString()}
-                  </div>
+                  {format(new Date(txn.paymentDate), "dd/MM/yyyy HH:mm")}
                 </TableCell>
               </TableRow>
             ))

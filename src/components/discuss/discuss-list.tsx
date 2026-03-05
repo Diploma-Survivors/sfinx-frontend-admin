@@ -297,7 +297,7 @@ export function DiscussList() {
                     </div>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {format(new Date(post.createdAt), "MMM d, yyyy")}
+                    {format(new Date(post.createdAt), "dd/MM/yyyy HH:mm")}
                   </TableCell>
                   <TableCell>
                     <DropdownMenu>
