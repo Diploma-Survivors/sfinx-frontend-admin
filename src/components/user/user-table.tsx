@@ -18,6 +18,7 @@ import {
   MoreHorizontal,
   ShieldAlert,
   UserX,
+  UserCog,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -45,6 +46,8 @@ import { usersService } from "@/services/users-service";
 import { toastService } from "@/services/toasts-service";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { RolesService } from "@/services/roles-service";
+import type { Role } from "@/types/role";
 
 interface UserTableMeta {
   page: number;
@@ -75,20 +78,49 @@ export default function UserTable({
   const tToast = useTranslations("UsersPage.toast");
   const router = useRouter();
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
-  const [actionType, setActionType] = useState<"ban" | "unban" | null>(null);
+  const [actionType, setActionType] = useState<"ban" | "unban" | "edit-role" | null>(null);
   const [isActionLoading, setIsActionLoading] = useState(false);
+  const [isFetchingRole, setIsFetchingRole] = useState(false);
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null);
 
   const currentPage = meta?.page || 1;
   const totalPages = meta?.totalPages || 1;
 
-  const handleAction = (user: UserProfile, action: "ban" | "unban") => {
+  const handleAction = async (user: UserProfile, action: "ban" | "unban" | "edit-role") => {
     setSelectedUser(user);
     setActionType(action);
+    if (action === "edit-role") {
+      setIsFetchingRole(true);
+      try {
+        const [fetchedRoles, userRoleRes] = await Promise.all([
+          roles.length === 0 ? RolesService.getAllRoles() : Promise.resolve(roles),
+          usersService.getUserRole(user.id).catch(() => null)
+        ]);
+
+        if (roles.length === 0) {
+          setRoles(fetchedRoles as Role[]);
+        }
+
+        if (userRoleRes && userRoleRes.data) {
+          setSelectedRoleId(userRoleRes.data.id);
+          // Optional: update the user object in state if we want to show it immediately
+          setSelectedUser({ ...user, role: userRoleRes.data });
+        } else {
+          setSelectedRoleId(user.role?.id ?? null);
+        }
+      } catch (error) {
+        toastService.error(tToast("fetchError"));
+      } finally {
+        setIsFetchingRole(false);
+      }
+    }
   };
 
   const closeDialog = () => {
     setActionType(null);
     setSelectedUser(null);
+    setSelectedRoleId(null);
   };
 
   const confirmAction = async () => {
@@ -106,6 +138,10 @@ export default function UserTable({
         toastService.success(
           tToast("unbanSuccess", { username: selectedUser.username }),
         );
+      } else if (actionType === "edit-role") {
+        if (!selectedRoleId) return;
+        await usersService.updateUserRole(selectedUser.id, selectedRoleId);
+        toastService.success(tToast("editRoleSuccess"));
       }
 
       onRefresh?.();
@@ -311,6 +347,15 @@ export default function UserTable({
                             {tTable("viewDetails")}
                           </DropdownMenuItem>
 
+                          <DropdownMenuItem
+                            onSelect={() => {
+                              setTimeout(() => handleAction(user, "edit-role"), 0);
+                            }}
+                          >
+                            <UserCog className="mr-2 h-4 w-4" />
+                            {tTable("editRole")}
+                          </DropdownMenuItem>
+
                           <DropdownMenuSeparator />
 
                           {!user.isBanned ? (
@@ -364,17 +409,28 @@ export default function UserTable({
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <ShieldAlert
-                  className={`h-5 w-5 ${actionType === "ban" ? "text-red-500" : "text-primary"}`}
-                />
-                {actionType === "ban"
-                  ? tDialogs("banTitle")
-                  : tDialogs("unbanTitle")}
+                {actionType === "edit-role" ? (
+                  <>
+                    <UserCog className="h-5 w-5 text-primary" />
+                    {tDialogs("editRoleTitle")}
+                  </>
+                ) : (
+                  <>
+                    <ShieldAlert
+                      className={`h-5 w-5 ${actionType === "ban" ? "text-red-500" : "text-primary"}`}
+                    />
+                    {actionType === "ban"
+                      ? tDialogs("banTitle")
+                      : tDialogs("unbanTitle")}
+                  </>
+                )}
               </DialogTitle>
               <DialogDescription>
-                {actionType === "ban"
-                  ? tDialogs("banDescription")
-                  : tDialogs("unbanDescription")}
+                {actionType === "edit-role"
+                  ? ""
+                  : actionType === "ban"
+                    ? tDialogs("banDescription")
+                    : tDialogs("unbanDescription")}
               </DialogDescription>
             </DialogHeader>
 
@@ -394,8 +450,70 @@ export default function UserTable({
                   <p className="text-sm text-slate-500">
                     @{selectedUser.username}
                   </p>
+                  {actionType === "edit-role" && selectedUser.role && (
+                    <div className="mt-1 flex items-center gap-2">
+                      <span className="text-xs text-slate-500">{tDialogs("currentRole")}:</span>
+                      <Badge variant="outline" className="bg-primary/5 text-primary">
+                        {selectedUser.role.name}
+                      </Badge>
+                    </div>
+                  )}
                 </div>
               </div>
+
+              {actionType === "edit-role" && (
+                <div className="mt-6 flex flex-col space-y-3">
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                    {tDialogs("selectRole")}
+                  </h4>
+                  {isFetchingRole ? (
+                    <div className="flex flex-col gap-3 rounded-md border border-slate-200 dark:border-slate-700 p-4">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <Skeleton className="h-4 w-4 rounded-full mt-0.5" />
+                          <div className="flex flex-col gap-2">
+                            <Skeleton className="h-4 w-24" />
+                            <Skeleton className="h-3 w-48" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-3 rounded-md border border-slate-200 dark:border-slate-700 p-4">
+                      {roles.map((role) => (
+                        <label 
+                          key={role.id} 
+                          className="flex items-start gap-3 cursor-pointer group"
+                        >
+                        <div className="flex h-5 items-center">
+                          <input
+                            type="radio"
+                            name="role"
+                            value={role.id}
+                            checked={selectedRoleId === role.id}
+                            onChange={() => setSelectedRoleId(role.id)}
+                            className="h-4 w-4 mt-0.5 border-slate-300 text-primary focus:ring-primary dark:border-slate-600 cursor-pointer"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium text-slate-900 dark:text-slate-100 transition-colors group-hover:text-primary">
+                            {role.name}
+                          </span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400">
+                            {role.description}
+                          </span>
+                        </div>
+                      </label>
+                    ))}
+                    {roles.length === 0 && (
+                      <div className="text-sm text-slate-500">
+                        {tTable("noData")}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
             </div>
 
             <DialogFooter>
@@ -406,17 +524,23 @@ export default function UserTable({
               >
                 {tDialogs("cancel")}
               </Button>
-              <Button
-                variant={actionType === "ban" ? "destructive" : "default"}
-                onClick={confirmAction}
-                disabled={isActionLoading}
-              >
-                {isActionLoading
-                  ? tDialogs("processing")
-                  : actionType === "ban"
-                    ? tDialogs("banButton")
-                    : tDialogs("unbanButton")}
-              </Button>
+                <Button
+                  variant={
+                    actionType === "ban"
+                      ? "destructive"
+                      : "default"
+                  }
+                  onClick={confirmAction}
+                  disabled={isActionLoading || isFetchingRole || (actionType === "edit-role" && !selectedRoleId)}
+                >
+                  {isActionLoading
+                    ? tDialogs("processing")
+                    : actionType === "edit-role"
+                      ? tDialogs("saveRole")
+                      : actionType === "ban"
+                        ? tDialogs("banButton")
+                        : tDialogs("unbanButton")}
+                </Button>
             </DialogFooter>
           </DialogContent>
         )}

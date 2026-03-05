@@ -212,13 +212,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           href: "/system-config",
           icon: Sliders,
           permissions: [PermissionEnum.ADMIN_ACCESS],
-        },
-        {
-          name: t("generalSettings"),
-          href: "/settings",
-          icon: Settings,
-          permissions: [PermissionEnum.ADMIN_ACCESS],
-        },
+        }
       ],
     },
   ];

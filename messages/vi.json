@@ -1781,6 +1781,7 @@
             "viewDetails": "Xem chi tiết",
             "banUser": "Chặn người dùng",
             "unbanUser": "Bỏ chặn người dùng",
+            "editRole": "Thay đổi quyền",
             "entity": "người dùng"
         },
         "dialogs": {
@@ -1791,12 +1792,18 @@
             "cancel": "Hủy",
             "banButton": "Chặn người dùng",
             "unbanButton": "Bỏ chặn người dùng",
+            "editRoleTitle": "Chỉnh sửa quyền hạn",
+            "currentRole": "Quyền hiện tại",
+            "selectRole": "Chọn một quyền",
+            "saveRole": "Lưu quyền",
             "processing": "Đang xử lý..."
         },
         "toast": {
             "fetchError": "Không thể tải danh sách người dùng",
             "banSuccess": "Người dùng @{username} đã bị chặn",
             "unbanSuccess": "Người dùng @{username} đã được bỏ chặn",
+            "editRoleSuccess": "Cập nhật quyền thành công",
+            "editRoleError": "Cập nhật quyền thất bại",
             "actionError": "Không thể cập nhật trạng thái người dùng"
         }
     },
