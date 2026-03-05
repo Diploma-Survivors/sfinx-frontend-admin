@@ -1,5 +1,6 @@
-import type { UserProfile } from './user';
-import type { Problem, SortOrder } from './problems';
+import type { UserProfile } from "./user";
+import type { Problem, SortOrder } from "./problems";
+import { ProgrammingLanguage } from "./languages";
 
 export enum SubmissionStatus {
   PENDING = "PENDING",
@@ -10,10 +11,10 @@ export enum SubmissionStatus {
   MEMORY_LIMIT_EXCEEDED = "MEMORY_LIMIT_EXCEEDED",
   RUNTIME_ERROR = "RUNTIME_ERROR",
   COMPILATION_ERROR = "COMPILATION_ERROR",
-  UNKNOWN_ERROR = "UNKNOWN_ERROR"
+  UNKNOWN_ERROR = "UNKNOWN_ERROR",
 }
 
-export const SubmissionStatusLabels : Record<SubmissionStatus, string> = {
+export const SubmissionStatusLabels: Record<SubmissionStatus, string> = {
   PENDING: "Pending",
   RUNNING: "Running",
   ACCEPTED: "Accepted",
@@ -22,64 +23,50 @@ export const SubmissionStatusLabels : Record<SubmissionStatus, string> = {
   MEMORY_LIMIT_EXCEEDED: "Memory Limit Exceeded",
   RUNTIME_ERROR: "Runtime Error",
   COMPILATION_ERROR: "Compilation Error",
-  UNKNOWN_ERROR: "Unknown Error"
-}
+  UNKNOWN_ERROR: "Unknown Error",
+};
 
-
-export interface TestCaseResult {
-  testcaseId: number;
-  status: string;
-  input: string;
-  actualOutput: string;
-  expectedOutput: string;
-  executionTime: number;
-  memoryUsed: number;
-  error: string;
-  stderr: string;
-}
-
-export interface FailedResult {
+export interface ResultDescription {
   message: string;
-  input: string;
-  expectedOutput: string;
-  actualOutput: string;
-  stderr: string;
-  compileOutput: string;
+  stdin?: string;
+  expectedOutput?: string;
+  stdout?: string;
+  stderr?: string;
+  compileOutput?: string;
 }
 
 export interface Submission {
   id: number;
   status: SubmissionStatus;
-  executionTime: number;
-  memoryUsed: number;
+  executionTime?: number;
+  memoryUsed?: number;
   testcasesPassed: number;
   totalTestcases: number;
-  testcaseResults: TestCaseResult[];
-  failedResult: FailedResult;
-  problem: Partial<Problem>;
-  compileError: string;
-  runtimeError: string;
+  resultDescription?: ResultDescription;
+  problem?: Partial<Problem>;
   submittedAt: string;
+  judgedAt?: string;
   problemId: number;
   languageId: number;
+  language?: Partial<ProgrammingLanguage>;
   sourceCode?: string;
   contestId?: number;
-  contest: {
+  contest?: {
     id: number;
-    title: string;    
-  }
-  author: {
-    id: number;
-    username: string;
-    avatarUrl: string;
-    isPremium: boolean; 
-  },
-  user: {
+    title: string;
+  };
+  author?: {
     id: number;
     username: string;
-    avatarUrl: string;
-    isPremium: boolean; 
-  }
+    avatarUrl?: string;
+    isPremium?: boolean;
+  };
+  user?: {
+    id: number;
+    username: string;
+    avatarUrl?: string;
+    isPremium?: boolean;
+  };
 }
 
 export interface SubmissionFilters {
@@ -93,10 +80,10 @@ export interface SubmissionFilters {
 }
 
 export enum SubmissionSortBy {
-  ID = 'id',
-  SUBMITTED_AT = 'submittedAt',
-  RUNTIME_MS = 'runtimeMs',
-  MEMORY_KB = 'memoryKb',
+  ID = "id",
+  SUBMITTED_AT = "submittedAt",
+  RUNTIME_MS = "runtimeMs",
+  MEMORY_KB = "memoryKb",
 }
 
 export interface GetSubmissionListRequest {
@@ -131,51 +118,50 @@ export interface SubmissionListResponse {
 // Map language names to Highlight.js language keys
 export const languageMap: Record<string, string> = {
   // --- Original ---
-  'C++': 'cpp',
-  'Python 2': 'python',
-  'Python 3': 'python',
-  Java: 'java',
-  JavaScript: 'javascript',
-  TypeScript: 'typescript',
-  'C#': 'csharp',
-  Go: 'go',
-  Rust: 'rust',
+  "C++": "cpp",
+  "Python 2": "python",
+  "Python 3": "python",
+  Java: "java",
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  "C#": "csharp",
+  Go: "go",
+  Rust: "rust",
 
   // --- Web Fundamentals ---
-  HTML: 'xml', // Highlight.js uses 'xml' for HTML
-  XML: 'xml',
-  CSS: 'css',
-  SCSS: 'scss',
-  LESS: 'less',
-  JSON: 'json',
+  HTML: "xml", // Highlight.js uses 'xml' for HTML
+  XML: "xml",
+  CSS: "css",
+  SCSS: "scss",
+  LESS: "less",
+  JSON: "json",
 
   // --- Backend / Scripting ---
-  PHP: 'php',
-  Ruby: 'ruby',
-  Perl: 'perl',
-  Bash: 'bash',
-  Shell: 'shell',
-  PowerShell: 'powershell',
-  Lua: 'lua',
-  SQL: 'sql',
-  GraphQL: 'graphql',
+  PHP: "php",
+  Ruby: "ruby",
+  Perl: "perl",
+  Bash: "bash",
+  Shell: "shell",
+  PowerShell: "powershell",
+  Lua: "lua",
+  SQL: "sql",
+  GraphQL: "graphql",
 
   // --- Systems / Data Science ---
-  C: 'c',
-  R: 'r',
-  Matlab: 'matlab',
-  Swift: 'swift',
-  Kotlin: 'kotlin',
-  Dart: 'dart',
-  Scala: 'scala',
-  ObjectiveC: 'objectivec',
+  C: "c",
+  R: "r",
+  Matlab: "matlab",
+  Swift: "swift",
+  Kotlin: "kotlin",
+  Dart: "dart",
+  Scala: "scala",
+  ObjectiveC: "objectivec",
 
   // --- Configuration / Docs ---
-  YAML: 'yaml',
-  Markdown: 'markdown',
-  Dockerfile: 'dockerfile',
-  Makefile: 'makefile',
-  INI: 'ini',
-  Diff: 'diff', // Great for showing git changes
+  YAML: "yaml",
+  Markdown: "markdown",
+  Dockerfile: "dockerfile",
+  Makefile: "makefile",
+  INI: "ini",
+  Diff: "diff", // Great for showing git changes
 };
-

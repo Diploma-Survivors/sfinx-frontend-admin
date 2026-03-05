@@ -1042,11 +1042,20 @@
         }
     },
     "NotFound": {
-        "title": "Không tìm thấy trang | SolVibe",
+        "title": "Không tìm thấy trang | SfinX",
         "description": "Trang bạn đang tìm kiếm không tồn tại.",
         "heading": "404",
         "subheading": "Không tìm thấy trang",
         "message": "Trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển."
+    },
+    "Unauthorized": {
+        "title": "Không có quyền truy cập | SfinX",
+        "description": "Bạn không có quyền xem trang này.",
+        "heading": "403",
+        "subheading": "Không có quyền truy cập",
+        "message": "Bạn không có quyền cần thiết để truy cập trang này. Vui lòng liên hệ quản trị viên nếu bạn cho rằng đây là lỗi.",
+        "goHome": "Về trang quản trị",
+        "goBack": "Quay lại"
     },
     "Loading": {
         "title": "Đang tải ứng dụng...",

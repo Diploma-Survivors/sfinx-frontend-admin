@@ -45,6 +45,7 @@ import {
 import { usersService } from "@/services/users-service";
 import { toastService } from "@/services/toasts-service";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
 import { RolesService } from "@/services/roles-service";
 import type { Role } from "@/types/role";
 
@@ -163,13 +164,7 @@ export default function UserTable({
 
   const formatDateTime = (dateString: string) => {
     if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return format(new Date(dateString), "dd/MM/yyyy HH:mm");
   };
 
   return (

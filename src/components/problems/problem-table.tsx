@@ -41,6 +41,7 @@ import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { useTranslations } from "next-intl";
 import { useApp } from "@/contexts/app-context";
 import { PermissionEnum } from "@/types/permission";
+import { format } from "date-fns";
 
 export enum ProblemTableMode {
   VIEW = "view",
@@ -333,9 +334,9 @@ export default function ProblemTable({
                         )}
                         <span className="text-xs text-slate-500 mt-1">
                           {t("lastUpdated")}{" "}
-                          {new Date(
-                            problem.updatedAt || "",
-                          ).toLocaleDateString()}
+                          {problem.updatedAt
+                            ? format(new Date(problem.updatedAt), "dd/MM/yyyy")
+                            : "N/A"}
                         </span>
                       </div>
                     </TableCell>
