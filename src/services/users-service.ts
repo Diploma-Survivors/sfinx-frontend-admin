@@ -1,6 +1,7 @@
 import clientApi from "@/lib/apis/axios-client";
 import { ApiResponse } from "@/types/api";
 import type { ContestRatingChartData, UserProfile } from "@/types/user";
+import type { Role } from "@/types/role";
 
 export interface Permission {
   id: number;
@@ -280,5 +281,24 @@ export const usersService = {
       `/users/${userId}/contest-rating-chart`,
     );
     return response.data.data || response.data;
+  },
+
+  /**
+   * Get User Role
+   */
+  async getUserRole(userId: number): Promise<ApiResponse<Role>> {
+    const response = await clientApi.get(`/users/${userId}/role`);
+    return response.data;
+  },
+
+  /**
+   * Update User Role
+   */
+  async updateUserRole(
+    userId: number,
+    roleId: number,
+  ): Promise<ApiResponse<UserProfile>> {
+    const response = await clientApi.patch(`/users/${userId}/role`, { roleId });
+    return response.data;
   },
 };

@@ -1776,6 +1776,7 @@
             "viewDetails": "View Details",
             "banUser": "Ban User",
             "unbanUser": "Unban User",
+            "editRole": "Edit Role",
             "entity": "users"
         },
         "dialogs": {
@@ -1786,12 +1787,18 @@
             "cancel": "Cancel",
             "banButton": "Ban User",
             "unbanButton": "Unban User",
+            "editRoleTitle": "Edit User Role",
+            "currentRole": "Current Role",
+            "selectRole": "Select a Role",
+            "saveRole": "Save Role",
             "processing": "Processing..."
         },
         "toast": {
             "fetchError": "Failed to fetch users",
             "banSuccess": "User @{username} banned successfully",
             "unbanSuccess": "User @{username} unbanned successfully",
+            "editRoleSuccess": "Role updated successfully",
+            "editRoleError": "Failed to update role",
             "actionError": "Failed to update user status"
         }
     },

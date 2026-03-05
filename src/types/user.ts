@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export interface UserProfile {
   id: number;
   email: string;
@@ -33,6 +35,7 @@ export interface UserProfile {
   createdAt: string; // ISO datetime
   lastLoginAt: string; // ISO datetime
   lastActiveAt: string; // ISO datetime
+  role?: Role;
 }
 
 export enum UserSortBy {
