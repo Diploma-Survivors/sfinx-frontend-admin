@@ -23,6 +23,7 @@ import MarkdownRenderer from "@/components/markdown-editor/markdown-renderer";
 import { Calendar, Clock, Trophy, ArrowLeft } from "lucide-react";
 
 import { ProblemDifficulty } from "@/types/problems";
+import { format } from "date-fns";
 
 export default function ViewContestPage() {
   const params = useParams();
@@ -94,7 +95,7 @@ export default function ViewContestPage() {
             <p className="text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-2">
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
-                {new Date(contest.startTime).toLocaleString()}
+                {format(new Date(contest.startTime), "dd/MM/yyyy HH:mm")}
               </span>
               <span>•</span>
               <span className="flex items-center gap-1">
