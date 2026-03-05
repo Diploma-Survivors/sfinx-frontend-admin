@@ -1089,6 +1089,15 @@
         "subheading": "Page Not Found",
         "message": "The page you are looking for does not exist or has been moved."
     },
+    "Unauthorized": {
+        "title": "Access Denied | SfinX",
+        "description": "You do not have permission to view this page.",
+        "heading": "403",
+        "subheading": "Access Denied",
+        "message": "You don't have the required permissions to access this page. Please contact an administrator if you believe this is a mistake.",
+        "goHome": "Go to Dashboard",
+        "goBack": "Go Back"
+    },
     "Loading": {
         "title": "Loading application...",
         "description": "Please wait while we initialize the system"
