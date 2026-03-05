@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Link } from '@/i18n/routing';
 
 export const metadata: Metadata = {
-  title: 'Không có quyền truy cập | SolVibe',
+  title: 'Không có quyền truy cập | SfinX',
   description: 'Bạn không có quyền xem trang này.',
 };
 

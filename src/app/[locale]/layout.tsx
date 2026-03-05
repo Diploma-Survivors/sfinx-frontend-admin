@@ -9,11 +9,11 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'SfinX - Admin',
+  title: 'Admin - SfinX',
   description:
     'Improve your coding skills with SfinX. Practice problems, compete in contests, and climb the leaderboard.',
   icons: {
-    icon: '/icons/logo.svg',
+    icon: '/logo.svg',
   },
 };
 
