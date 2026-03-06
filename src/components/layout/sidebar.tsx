@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Code,
   FileCode,
+  FileCode2,
   Flag,
   LayoutDashboard,
   LogOut,
@@ -84,6 +85,12 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           href: "/problems",
           icon: FileCode,
           permissions: [PermissionEnum.PROBLEM_READ],
+        },
+        {
+          name: t("solutionList"),
+          href: "/solutions",
+          icon: FileCode2,
+          permissions: [PermissionEnum.SOLUTION_READ],
         },
         {
           name: t("createNewProblem"),
@@ -212,7 +219,7 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           href: "/system-config",
           icon: Sliders,
           permissions: [PermissionEnum.ADMIN_ACCESS],
-        }
+        },
       ],
     },
   ];
@@ -285,8 +292,17 @@ export default function Sidebar({ onLogout }: SideBarProps) {
         >
           {/* Logo */}
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
-            <Image src="/logo.svg" alt="Logo" width={32} height={32} className="w-8 h-8" />
+          <Link
+            href="/"
+            className="flex items-center gap-2 transition-opacity hover:opacity-90"
+          >
+            <Image
+              src="/logo.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+            />
             <span className="text-xl font-bold tracking-tight text-primary">
               {tCommon("app_name")}
             </span>

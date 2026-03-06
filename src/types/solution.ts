@@ -25,6 +25,7 @@ export interface Solution {
   updatedAt: string;
   tags: Tag[];
   languageIds: number[];
+  isEditorial: boolean;
 }
 
 export enum SolutionSortBy {
@@ -44,6 +45,7 @@ export interface FilterSolutionDto {
   keyword?: string;
   tagIds?: number[];
   languageIds?: number[];
+  isEditorial?: boolean;
   sortBy?: SolutionSortBy;
 }
 
@@ -53,6 +55,7 @@ export interface CreateSolutionDto {
   content: string;
   tagIds?: number[];
   languageIds?: number[];
+  isEditorial?: boolean;
 }
 
 export interface UpdateSolutionDto {
@@ -60,6 +63,7 @@ export interface UpdateSolutionDto {
   content?: string;
   tagIds?: number[];
   languageIds?: number[];
+  isEditorial?: boolean;
 }
 
 export interface VoteDto {

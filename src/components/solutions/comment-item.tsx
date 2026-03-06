@@ -120,7 +120,11 @@ export default function CommentItem({
 
   const handleDelete = async () => {
     try {
-      await SolutionsService.deleteComment(comment.id);
+      if (isAdmin && !isAuthor) {
+        await SolutionsService.deleteCommentAdmin(comment.id);
+      } else {
+        await SolutionsService.deleteComment(comment.id);
+      }
       onDelete(comment.id);
       toast.success(t("deleteSuccess"));
     } catch (error) {
@@ -244,7 +248,7 @@ export default function CommentItem({
             </button>
           )}
 
-          {isAuthor && (
+          {(isAuthor || isAdmin) && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <button className="cursor-pointer flex items-center gap-1 hover:text-red-600 transition-colors">
