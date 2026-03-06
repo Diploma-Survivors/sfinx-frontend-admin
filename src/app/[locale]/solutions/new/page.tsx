@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -49,7 +49,7 @@ const createSolutionSchema = z.object({
 
 type CreateSolutionFormValues = z.infer<typeof createSolutionSchema>;
 
-export default function CreateSolutionPage() {
+function CreateSolutionPageContent() {
   const searchParams = useSearchParams();
   const initialProblemIdStr = searchParams.get("problemId");
   const t = useTranslations("CreateSolutionPage");
@@ -375,5 +375,13 @@ export default function CreateSolutionPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function CreateSolutionPage() {
+  return (
+    <Suspense>
+      <CreateSolutionPageContent />
+    </Suspense>
   );
 }
