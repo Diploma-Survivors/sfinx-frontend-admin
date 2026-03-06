@@ -11,7 +11,6 @@ import { useState } from "react";
 import { Eye, EyeOff, BrainCircuit, Loader2 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const t = useTranslations("LoginPage");
@@ -54,7 +53,7 @@ export default function LoginPage() {
       if (!passwordRegex.test(password)) {
         toastService.error(
           t("passwordComplexity") ||
-            "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
         );
         setIsLoading(false);
         return;
@@ -106,10 +105,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    const url = process.env.NEXT_PUBLIC_API_BASE_URL + "/auth/google";
-    window.open(url, "_blank");
-  };
 
   return (
     <div className="min-h-screen w-full flex bg-black relative overflow-hidden">
@@ -327,29 +322,7 @@ export default function LoginPage() {
                 </Button>
               </form>
 
-              <div className="relative my-8">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border/60" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background/80 dark:bg-[#1a1c1e] px-3 font-medium text-muted-foreground rounded-full backdrop-blur-xl border border-border/40">
-                    {t("orLoginWith") || "Or login with"}
-                  </span>
-                </div>
-              </div>
 
-              <Button
-                onClick={() => handleGoogleLogin()}
-                variant="outline"
-                className="w-full h-12 rounded-xl border-border/60 hover:bg-muted/50 bg-white/30 dark:bg-black/30 backdrop-blur-sm transition-all duration-200"
-                type="button"
-                disabled={isLoading}
-              >
-                <FcGoogle className="mr-3 h-5 w-5" />
-                <span className="font-medium text-foreground/90">
-                  {t("google") || "Google"}
-                </span>
-              </Button>
 
               <div className="mt-8 text-center text-sm text-muted-foreground">
                 {isSignUp ? t("alreadyHaveAccount") : t("dontHaveAccount")}{" "}
