@@ -138,7 +138,7 @@ export function DiscussList() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
         <div className="relative w-full sm:w-72">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -190,7 +190,7 @@ export function DiscussList() {
         </div>
       </div>
 
-      <div className="rounded-md border">
+      <div className="bg-background rounded-lg border shadow-sm w-full overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -239,7 +239,7 @@ export function DiscussList() {
                     <div className="flex flex-col gap-1">
                       <Link
                         href={`/discussions/${post.id}`}
-                        className="font-medium hover:underline flex items-center gap-2"
+                        className="font-medium hover:underline flex items-center gap-2 transition-colors hover:text-[#22c55e]"
                       >
                         {post.title}
                         {post.isDeleted && (

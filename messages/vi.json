@@ -1254,7 +1254,11 @@
             "deleteSuccess": "Xóa cấu hình thành công",
             "updateError": "Cập nhật cấu hình thất bại",
             "deleteError": "Xóa cấu hình thất bại",
-            "deleteConfirm": "Bạn có chắc chắn muốn xóa cấu hình \"{key}\"?"
+            "deleteConfirm": "Bạn có chắc chắn muốn xóa cấu hình \"{key}\"?",
+            "deleteTitle": "Xóa cấu hình",
+            "cancelButton": "Hủy",
+            "deleteButton": "Xóa",
+            "loading": "Đang tải..."
         },
         "table": {
             "key": "Khóa",

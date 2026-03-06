@@ -8,11 +8,11 @@ export default function DiscussionsPage() {
   const t = useTranslations("Discuss.List.header");
 
   return (
-    <div className="container py-8 space-y-6">
+    <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
-          <p className="text-muted-foreground mt-1">{t("description")}</p>
+          <p className="text-muted-foreground mt-2">{t("description")}</p>
         </div>
         <Button asChild>
           <Link href="/discussions/new">

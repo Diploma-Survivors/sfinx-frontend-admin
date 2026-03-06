@@ -1328,7 +1328,11 @@
             "deleteSuccess": "Configuration deleted successfully",
             "updateError": "Failed to update configuration",
             "deleteError": "Failed to delete configuration",
-            "deleteConfirm": "Are you sure you want to delete configuration \"{key}\"?"
+            "deleteConfirm": "Are you sure you want to delete configuration \"{key}\"?",
+            "deleteTitle": "Delete Configuration",
+            "cancelButton": "Cancel",
+            "deleteButton": "Delete",
+            "loading": "Loading..."
         },
         "table": {
             "key": "Key",
