@@ -1630,6 +1630,7 @@
         "errorTitle": "Error",
         "errorMessage": "Failed to create solution. Please try again.",
         "errorMessageEdit": "Failed to update solution. Please try again.",
+        "errorMessageFetch": "Failed to fetch solution details.",
         "selectProblemTitle": "Select a Problem",
         "noProblemSelected": "No problem selected",
         "editTitle": "Edit Solution",

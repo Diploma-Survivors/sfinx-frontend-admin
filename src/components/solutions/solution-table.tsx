@@ -73,6 +73,7 @@ export default function SolutionTable({
             <TableHead>{t("title")}</TableHead>
             <TableHead>{t("author")}</TableHead>
             <TableHead>{t("tags")}</TableHead>
+            <TableHead className="text-right">{t("stats")}</TableHead>
             <TableHead className="text-right">{t("created")}</TableHead>
             <TableHead className="w-[100px] text-right"></TableHead>
           </TableRow>

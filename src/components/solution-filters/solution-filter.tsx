@@ -1,5 +1,13 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -8,29 +16,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useProblems from "@/hooks/use-problems";
+import type { ProgrammingLanguage } from "@/types/languages";
+import { Problem, ProblemEndpointType } from "@/types/problems";
 import { FilterSolutionDto, SolutionSortBy } from "@/types/solution";
 import type { Tag } from "@/types/tags";
-import type { ProgrammingLanguage } from "@/types/languages";
-import {
-  ChevronDown,
-  RotateCcw,
-  Search,
-  Check,
-  X,
-  Loader2,
-} from "lucide-react";
-import React, { useState, useEffect, useRef } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Check, ChevronDown, Loader2, RotateCcw, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Problem, ProblemEndpointType } from "@/types/problems";
-import useProblems from "@/hooks/use-problems";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useEffect, useRef, useState } from "react";
 
 interface SolutionFilterProps {
   filters: FilterSolutionDto;

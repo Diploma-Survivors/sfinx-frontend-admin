@@ -1556,6 +1556,7 @@
         "errorTitle": "Lỗi",
         "errorMessage": "Tạo lời giải thất bại. Vui lòng thử lại.",
         "errorMessageEdit": "Cập nhật lời giải thất bại. Vui lòng thử lại.",
+        "errorMessageFetch": "Tải chi tiết lời giải thất bại.",
         "selectProblemTitle": "Chọn Bài Tập",
         "noProblemSelected": "Chưa chọn bài tập nào",
         "editTitle": "Chỉnh sửa Lời Giải",

@@ -93,7 +93,7 @@ export default function EditSolutionPage({ params }: EditSolutionPageProps) {
           isEditorial: solution.isEditorial || false,
         });
       } catch (error) {
-        toast.error("Failed to fetch solution details");
+        toast.error(t("errorMessageFetch"));
         router.push("/solutions");
       } finally {
         setIsLoading(false);
