@@ -9,21 +9,38 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Solution } from "@/types/solution"; // Fixed import path
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Eye, ThumbsUp, MessageSquare } from "lucide-react";
+import {
+  Eye,
+  ThumbsUp,
+  MessageSquare,
+  Trash2,
+  MoreHorizontal,
+  Pencil,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
+import { vi } from "date-fns/locale";
 import { PaginatedResult } from "@/types/common";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 interface SolutionTableProps {
   solutions: Solution[];
   meta: PaginatedResult<Solution>["meta"] | null;
   isLoading: boolean;
   onPageChange: (page: number) => void;
+  onDelete?: (solution: Solution) => void;
 }
 
 export default function SolutionTable({
@@ -31,8 +48,10 @@ export default function SolutionTable({
   meta,
   isLoading,
   onPageChange,
+  onDelete,
 }: SolutionTableProps) {
   const t = useTranslations("SolutionTable");
+  const locale = useLocale();
 
   if (isLoading) {
     return (
@@ -56,7 +75,7 @@ export default function SolutionTable({
             <TableHead>{t("tags")}</TableHead>
             <TableHead className="text-right">{t("stats")}</TableHead>
             <TableHead className="text-right">{t("created")}</TableHead>
-            <TableHead className="w-[100px]"></TableHead>
+            <TableHead className="w-[100px] text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,12 +89,22 @@ export default function SolutionTable({
             solutions.map((solution) => (
               <TableRow key={solution.id}>
                 <TableCell className="font-medium">
-                  <Link
-                    href={`/solutions/${solution.id}`}
-                    className="hover:underline text-primary font-semibold"
-                  >
-                    {solution.title}
-                  </Link>
+                  <div className="flex flex-col gap-1 items-start">
+                    <Link
+                      href={`/solutions/${solution.id}`}
+                      className="hover:underline text-primary font-semibold"
+                    >
+                      {solution.title}
+                    </Link>
+                    {solution.isEditorial && (
+                      <Badge
+                        variant="outline"
+                        className="text-[10px] bg-orange-50 text-orange-700 border-orange-200"
+                      >
+                        {t("editorial")}
+                      </Badge>
+                    )}
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
@@ -118,15 +147,48 @@ export default function SolutionTable({
                 <TableCell className="text-right text-muted-foreground text-sm">
                   {formatDistanceToNow(new Date(solution.createdAt), {
                     addSuffix: true,
+                    locale: locale === "vi" ? vi : undefined,
                   })}
                 </TableCell>
-                <TableCell>
-                  <Link
-                    href={`/solutions/${solution.id}`}
-                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9"
-                  >
-                    <Eye className="h-4 w-4" />
-                  </Link>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">{t("openMenu")}</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href={`/solutions/${solution.id}`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
+                          <span>{t("view")}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href={`/solutions/${solution.id}/edit`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          <Pencil className="mr-2 h-4 w-4" />
+                          <span>{t("edit")}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      {onDelete && (
+                        <DropdownMenuItem
+                          onClick={() => onDelete(solution)}
+                          className="flex items-center text-destructive focus:text-destructive cursor-pointer"
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          <span>{t("delete")}</span>
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))
@@ -147,6 +209,7 @@ export default function SolutionTable({
                 }
               : undefined
           }
+          entityName={t("entityName")}
         />
       </div>
     </div>

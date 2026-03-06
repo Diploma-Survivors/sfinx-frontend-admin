@@ -34,7 +34,7 @@ export function SystemConfigTable({
   const t = useTranslations("SystemConfig.table");
 
   return (
-    <div className="rounded-md border">
+    <div className="w-full">
       <Table>
         <TableHeader>
           <TableRow>

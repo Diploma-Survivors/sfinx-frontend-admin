@@ -34,9 +34,10 @@ import {
   Share2,
   Flag,
   Trash2,
+  Pencil,
 } from "lucide-react";
 import { useApp } from "@/contexts/app-context";
-import { useRouter } from "next/navigation";
+import { useRouter, Link } from "@/i18n/routing";
 
 interface SolutionDetailPageProps {
   params: Promise<{
@@ -136,35 +137,50 @@ export default function SolutionDetailPage({
         {/* Header */}
         <div>
           <div className="flex items-start justify-between mb-4">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">
-              {solution.title}
-            </h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                {solution.title}
+              </h1>
+              {solution.isEditorial && (
+                <Badge className="bg-accent text-accent-foreground border-transparent hover:bg-accent/90">
+                  {t("editorial")}
+                </Badge>
+              )}
+            </div>
             {isAdmin && (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="sm" className="gap-2">
-                    <Trash2 className="w-4 h-4" />
-                    {t("deleteSolution")}
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>{t("deleteSolution")}</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      {t("deleteSolutionConfirm")}
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={handleDelete}
-                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                    >
-                      {t("delete")}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <div className="flex items-center gap-2">
+                <Button asChild variant="outline" size="sm" className="gap-2">
+                  <Link href={`/solutions/${solution.id}/edit`}>
+                    <Pencil className="w-4 h-4" />
+                    {t("editSolution")}
+                  </Link>
+                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" size="sm" className="gap-2">
+                      <Trash2 className="w-4 h-4" />
+                      {t("deleteSolution")}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>{t("deleteSolution")}</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        {t("deleteSolutionConfirm")}
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleDelete}
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      >
+                        {t("delete")}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             )}
           </div>
           <div className="flex items-center justify-between">

@@ -59,6 +59,14 @@ export class SolutionsService {
     return response.data.data;
   }
 
+  static async createAdmin(data: CreateSolutionDto): Promise<Solution> {
+    const response = await clientApi.post<ApiResponse<Solution>>(
+      `/admin/solutions`,
+      data,
+    );
+    return response.data.data;
+  }
+
   static async update(id: number, data: UpdateSolutionDto): Promise<Solution> {
     const response = await clientApi.put<ApiResponse<Solution>>(
       `${this.BASE_URL}/${id}`,
@@ -131,7 +139,22 @@ export class SolutionsService {
     await clientApi.delete(`/admin/solutions/comments/${commentId}/pin`);
   }
 
+  static async updateAdmin(
+    id: number,
+    data: UpdateSolutionDto,
+  ): Promise<Solution> {
+    const response = await clientApi.put<ApiResponse<Solution>>(
+      `/admin/solutions/${id}`,
+      data,
+    );
+    return response.data.data;
+  }
+
   static async deleteSolutionAdmin(id: number): Promise<void> {
     await clientApi.delete(`/admin/solutions/${id}`);
+  }
+
+  static async deleteCommentAdmin(commentId: number): Promise<void> {
+    await clientApi.delete(`/admin/solutions/comments/${commentId}`);
   }
 }
