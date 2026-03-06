@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { FilterSolutionDto, Solution, SolutionSortBy } from "@/types/solution";
 import { SolutionsService } from "@/services/solutions-service";
 import { useTranslations } from "next-intl";
@@ -26,7 +26,7 @@ import {
 import { useToast } from "@/components/providers/toast-provider";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function SolutionsPage() {
+function SolutionsPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const t = useTranslations("SolutionsPage");
@@ -167,5 +167,13 @@ export default function SolutionsPage() {
         </AlertDialogContent>
       </AlertDialog>
     </div>
+  );
+}
+
+export default function SolutionsPage() {
+  return (
+    <Suspense>
+      <SolutionsPageContent />
+    </Suspense>
   );
 }
