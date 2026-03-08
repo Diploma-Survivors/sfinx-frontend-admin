@@ -40,10 +40,6 @@ export default function ContestStatisticsPage() {
         }
     }, [contestId, t]);
 
-    const handleBroadcast = () => {
-        // This would typically open a modal
-        toastService.info(t('header.broadcastComingSoon'));
-    };
 
     if (loading) {
         return <ContestStatisticsSkeleton />;
@@ -60,7 +56,7 @@ export default function ContestStatisticsPage() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6 space-y-6">
             {/* Header Section */}
-            <ContestHeader stats={stats} onBroadcast={handleBroadcast} />
+            <ContestHeader stats={stats} />
 
             {/* Key Metrics Row */}
             <KeyMetrics stats={stats} />

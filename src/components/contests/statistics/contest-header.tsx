@@ -4,17 +4,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ContestStatus } from "@/types/contest";
 import { ContestStatistics } from "@/types/contest-statistics";
-import { Megaphone, Timer } from "lucide-react";
+import { Timer } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 
 interface ContestHeaderProps {
   stats: ContestStatistics;
-  onBroadcast: () => void;
 }
 
-export function ContestHeader({ stats, onBroadcast }: ContestHeaderProps) {
+export function ContestHeader({ stats }: ContestHeaderProps) {
   const [timeLeft, setTimeLeft] = useState<string>("");
   const t = useTranslations("ContestStatistics.header");
 
@@ -87,13 +86,7 @@ export function ContestHeader({ stats, onBroadcast }: ContestHeaderProps) {
         </div>
       )}
 
-      <Button
-        onClick={onBroadcast}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg transition-all"
-      >
-        <Megaphone className="w-4 h-4 mr-2" />
-        {t("broadcast")}
-      </Button>
+
     </div>
   );
 }
