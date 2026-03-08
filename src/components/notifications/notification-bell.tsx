@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useSocket } from "@/hooks/use-socket";
 import {
   notificationService,
@@ -28,17 +29,33 @@ export function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
   const { socket } = useSocket("notifications");
   const t = useTranslations("NotificationBell");
   const locale = useLocale();
   dayjs.locale(locale);
 
   const fetchNotifications = async () => {
+    if (hasFetched || isLoading) return;
+
+    setIsLoading(true);
     try {
       const data = await notificationService.getNotifications(0, 20, locale);
-      setNotifications(data.data);
+      setNotifications((prev) => {
+        const fetchedIds = new Set(data.data.map((n: Notification) => n.id));
+        const newFromSocket = prev.filter((n) => !fetchedIds.has(n.id));
+        const merged = [...newFromSocket, ...data.data];
+        return merged.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+      setHasFetched(true);
     } catch (error) {
       console.error("Failed to fetch notifications:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,7 +82,10 @@ export function NotificationBell() {
     if (!socket) return;
 
     socket.on("notification", (newNotification: Notification) => {
-      setNotifications((prev) => [newNotification, ...prev]);
+      setNotifications((prev) => {
+        if (prev.some((n) => n.id === newNotification.id)) return prev;
+        return [newNotification, ...prev];
+      });
       setUnreadCount((prev) => prev + 1);
     });
 
@@ -132,7 +152,23 @@ export function NotificationBell() {
           )}
         </div>
         <div className="h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-700">
-          {notifications.length === 0 ? (
+          {isLoading ? (
+            <div className="flex flex-col">
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col p-4 border-b border-border/40 gap-3"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-3 w-12" />
+                  </div>
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-2/3" />
+                </div>
+              ))}
+            </div>
+          ) : notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full p-8 text-center text-muted-foreground">
               <Bell className="h-10 w-10 mb-4 opacity-20" />
               <p className="text-sm">{t("emptyState")}</p>
@@ -145,7 +181,7 @@ export function NotificationBell() {
                   className={cn(
                     "flex flex-col p-4 border-b border-border/40 transition-colors hover:bg-muted/30 cursor-pointer",
                     !notification.isRead &&
-                      "bg-accent/5 border-l-2 border-l-accent",
+                    "bg-accent/5 border-l-2 border-l-accent",
                   )}
                   onClick={() =>
                     handleMarkAsRead(notification.id, notification.isRead)
