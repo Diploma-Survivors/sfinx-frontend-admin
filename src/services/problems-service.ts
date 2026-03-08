@@ -321,7 +321,7 @@ async function updateProblem(id: number, problemRequest: CreateProblemRequest) {
 }
 
 async function updateProblemStatus(id: number) {
-  return await clientApi.post(`/problems/${id}/toggle`);
+  return await clientApi.put(`/problems/${id}/toggle`);
 }
 
 async function getProblemStatistics(
