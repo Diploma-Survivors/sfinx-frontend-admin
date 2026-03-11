@@ -170,7 +170,7 @@ export function RecentSubmissionsWidget({
                   {getStatusLabel(sub.status)}
                 </Badge>
                 <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
-                  {sub.executionTime}ms / {sub.memoryUsed}KB
+                  {sub.executionTime ? sub.executionTime.toFixed(2) : "N/A"}ms / {sub.memoryUsed != null ? sub.memoryUsed.toFixed(2) : "N/A"}KB
                 </div>
               </div>
             </div>
