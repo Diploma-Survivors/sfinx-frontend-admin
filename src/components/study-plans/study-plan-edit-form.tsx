@@ -1,52 +1,51 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useRouter } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { useToast } from "@/components/providers/toast-provider";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { useToast } from "@/components/providers/toast-provider";
+import { Textarea } from "@/components/ui/textarea";
 
-import {
-  StudyPlanDifficulty,
-  UpdateStudyPlanDto,
-  StudyPlanDetailResponseDto,
-  AdminStudyPlanDetailResponseDto,
-  StudyPlanTranslationDto,
-  StudyPlanStatus,
-} from "@/types/study-plan";
-import { studyPlanService } from "@/services/study-plan-service";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MultiSelect } from "@/components/ui/multi-select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useTags from "@/hooks/use-tags";
 import useTopics from "@/hooks/use-topics";
-import { Skeleton } from "@/components/ui/skeleton";
-import { SelectStudyPlansModal } from "./select-study-plans-modal";
+import { studyPlanService } from "@/services/study-plan-service";
+import {
+    AdminStudyPlanDetailResponseDto,
+    AdminStudyPlanResponseDto,
+    StudyPlanDifficulty,
+    StudyPlanStatus,
+    StudyPlanTranslationDto,
+    UpdateStudyPlanDto
+} from "@/types/study-plan";
 import { X } from "lucide-react";
 import Image from "next/image";
-import { AdminStudyPlanResponseDto } from "@/types/study-plan";
+import { SelectStudyPlansModal } from "./select-study-plans-modal";
 
 interface StudyPlanEditFormProps {
   id: number;
@@ -150,7 +149,7 @@ export default function StudyPlanEditForm({ id }: StudyPlanEditFormProps) {
         // Optionally fetch similar plans to display their names
         if (data.similarPlanIds && data.similarPlanIds.length > 0) {
           // Since we don't have a getManyByIds, we can fetch all and filter or fetch individually
-          // But for now, let's just use what we can. 
+          // But for now, let's just use what we can.
           // Re-using the getStudyPlans with IDs filter if possible, otherwise individual fetches.
           const plans = await Promise.all(
             data.similarPlanIds.map(id => studyPlanService.getStudyPlanById(id).then(res => res.data))
@@ -406,14 +405,14 @@ export default function StudyPlanEditForm({ id }: StudyPlanEditFormProps) {
                 <h4 className="font-medium mb-4">{t("translationsLabel")}</h4>
                 <Tabs defaultValue="en" className="w-full">
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger 
+                    <TabsTrigger
                       value="en"
                       className={hasEnError ? "text-red-500 data-[state=active]:text-red-600 border-red-200 bg-red-50/50" : ""}
                     >
                       {t("enTab")}
                       {hasEnError && <span className="ml-2 w-2 h-2 rounded-full bg-red-500 animate-pulse" />}
                     </TabsTrigger>
-                    <TabsTrigger 
+                    <TabsTrigger
                       value="vi"
                       className={hasViError ? "text-red-500 data-[state=active]:text-red-600 border-red-200 bg-red-50/50" : ""}
                     >
@@ -513,7 +512,7 @@ export default function StudyPlanEditForm({ id }: StudyPlanEditFormProps) {
                             onPlansSelect={(plans) => {
                               const newIds = [...new Set([...field.value, ...plans.map(p => p.id)])];
                               field.onChange(newIds);
-                              
+
                               // Update local display state
                               const newPlans = [...selectedSimilarPlans];
                               plans.forEach(p => {
@@ -524,7 +523,7 @@ export default function StudyPlanEditForm({ id }: StudyPlanEditFormProps) {
                               setSelectedSimilarPlans(newPlans);
                             }}
                           />
-                          
+
                           {selectedSimilarPlans.length > 0 && (
                             <div className="flex flex-wrap gap-2">
                               {selectedSimilarPlans.map((plan) => (

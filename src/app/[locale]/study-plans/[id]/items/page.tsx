@@ -1,33 +1,32 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState, useCallback, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
+import { useToast } from "@/components/providers/toast-provider";
 import StudyPlanItemsManager from "@/components/study-plans/study-plan-items-manager";
-import Breadcrumbs from "@/components/layout/breadcrumbs";
+import { Skeleton } from "@/components/ui/skeleton";
 import { studyPlanService } from "@/services/study-plan-service";
 import {
-  AdminStudyPlanDetailResponseDto,
-  AddStudyPlanItemDto,
+    AddStudyPlanItemDto,
+    AdminStudyPlanDetailResponseDto,
 } from "@/types/study-plan";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/components/providers/toast-provider";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import ProblemTable, {
-  ProblemTableMode,
-} from "@/components/problems/problem-table";
-import useProblems from "@/hooks/use-problems";
-import { ProblemEndpointType, Problem } from "@/types/problems";
 import ProblemFilter from "@/components/problem-filters/problem-filter";
+import ProblemTable, {
+    ProblemTableMode,
+} from "@/components/problems/problem-table";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+import useProblems from "@/hooks/use-problems";
 import { useAppSelector } from "@/store/hooks";
+import { Problem, ProblemEndpointType } from "@/types/problems";
 
 export default function StudyPlanItemsPage() {
   const t = useTranslations("StudyPlanItemsPage");

@@ -1,33 +1,32 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { Search, X, ChevronDown, Check } from "lucide-react";
-import {
-  FilterStudyPlanDto,
-  StudyPlanDifficulty,
-  StudyPlanStatus,
-} from "@/types/study-plan";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
-import { TopicsService } from "@/services/topics-service";
+import { Input } from "@/components/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { TagsService } from "@/services/tags-service";
-import { Topic } from "@/types/topics";
+import { TopicsService } from "@/services/topics-service";
+import {
+    FilterStudyPlanDto,
+    StudyPlanDifficulty,
+    StudyPlanStatus,
+} from "@/types/study-plan";
 import { Tag } from "@/types/tags";
+import { Topic } from "@/types/topics";
+import { Check, ChevronDown, Search, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 interface StudyPlanFilterProps {
   filters: FilterStudyPlanDto;

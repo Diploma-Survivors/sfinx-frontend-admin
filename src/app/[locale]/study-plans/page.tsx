@@ -1,20 +1,19 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useDebounce } from "@/hooks/use-debounce";
 import { Link } from "@/i18n/routing";
 import { Plus } from "lucide-react";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useLocale, useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
 
+import { useToast } from "@/components/providers/toast-provider";
 import { Button } from "@/components/ui/button";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { studyPlanService } from "@/services/study-plan-service";
 import {
-  AdminStudyPlanResponseDto,
-  FilterStudyPlanDto,
+    AdminStudyPlanResponseDto,
+    FilterStudyPlanDto,
 } from "@/types/study-plan";
-import { useToast } from "@/components/providers/toast-provider";
-import Breadcrumbs from "@/components/layout/breadcrumbs";
 
 import StudyPlanFilter from "@/components/study-plans/study-plan-filter";
 import StudyPlanTable from "@/components/study-plans/study-plan-table";

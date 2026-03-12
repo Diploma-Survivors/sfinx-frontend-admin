@@ -1,8 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import StudyPlanCreateForm from "@/components/study-plans/study-plan-create-form";
-import Breadcrumbs from "@/components/layout/breadcrumbs";
+import { useTranslations } from "next-intl";
 
 export default function CreateStudyPlanPage() {
   const t = useTranslations("CreateStudyPlanPage");

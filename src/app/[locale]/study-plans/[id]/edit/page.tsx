@@ -1,8 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import StudyPlanEditForm from "@/components/study-plans/study-plan-edit-form";
-import Breadcrumbs from "@/components/layout/breadcrumbs";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
 export default function EditStudyPlanPage() {
