@@ -1,43 +1,41 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  ProblemReport,
-  ProblemReportStatus,
-  ProblemReportType,
-} from "@/types/problem-reports";
-import {
-  MoreHorizontal,
-  CheckCircle2,
-  Clock,
-  XCircle,
-  AlertCircle,
-  Eye,
-} from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
-import { useTranslations, useLocale } from "next-intl";
-import Link from "next/link";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
 import { ProblemReportsService } from "@/services/problem-reports.service";
 import { toastService } from "@/services/toasts-service";
+import {
+    ProblemReport,
+    ProblemReportStatus,
+    ProblemReportType,
+} from "@/types/problem-reports";
+import {
+    AlertCircle,
+    CheckCircle2,
+    Clock,
+    MoreHorizontal,
+    XCircle
+} from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export const reportTypeKeys: Record<ProblemReportType, string> = {
   [ProblemReportType.WRONG_DESCRIPTION]: "types.wrongDescription",
@@ -230,7 +228,8 @@ export default function ReportsTable({
               reports.map((report) => (
                 <TableRow
                   key={report.id}
-                  className={`group transition-colors ${
+                  id={`report-${report.id}`}
+                  className={`group transition-colors highlight-target ${
                     updatingId === report.id
                       ? "opacity-50 pointer-events-none"
                       : "hover:bg-slate-50 dark:hover:bg-slate-700/30"

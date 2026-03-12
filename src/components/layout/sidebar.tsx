@@ -6,42 +6,39 @@ import { useApp } from "@/contexts/app-context";
 import { useSidebar } from "@/contexts/sidebar-context";
 import { cn } from "@/lib/utils";
 
-import LogoutConfirmationDialog from "./logout-confirmation-dialog";
+import { UserSettingsDialog } from "@/components/user/user-settings-dialog";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { PermissionEnum } from "@/types/permission";
 import { motion } from "framer-motion";
 import {
-  Bot,
+  BarChart3,
   CheckSquare,
   ChevronLeft,
   ChevronRight,
   Code,
+  CreditCard,
   FileCode,
   FileCode2,
   Flag,
+  Layers,
   LayoutDashboard,
   LogOut,
   Menu,
-  MonitorPlay,
+  MessageSquare,
   Plus,
   PlusCircle,
-  Settings,
   Shield,
+  Sliders,
   Sparkles,
   Tag,
   Trophy,
   Users,
   X,
-  CreditCard,
-  BarChart3,
-  Layers,
-  Sliders,
-  MessageSquare,
 } from "lucide-react";
-import Image from "next/image";
-import { Link, usePathname, useRouter } from "@/i18n/routing";
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { UserSettingsDialog } from "@/components/user/user-settings-dialog";
-import { PermissionEnum } from "@/types/permission";
+import Image from "next/image";
+import { useState } from "react";
+import LogoutConfirmationDialog from "./logout-confirmation-dialog";
 
 interface SideBarProps {
   onLogout: () => void;
@@ -109,6 +106,23 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           href: "/reports",
           icon: Flag,
           permissions: [PermissionEnum.COMMENT_REPORT_READ],
+        },
+      ],
+    },
+    {
+      title: t("studyPlanManagement"),
+      items: [
+        {
+          name: t("studyPlans"),
+          href: "/study-plans",
+          icon: Layers,
+          permissions: [PermissionEnum.STUDY_PLAN_READ],
+        },
+        {
+          name: t("createStudyPlan"),
+          href: "/study-plans/create",
+          icon: PlusCircle,
+          permissions: [PermissionEnum.STUDY_PLAN_CREATE],
         },
       ],
     },

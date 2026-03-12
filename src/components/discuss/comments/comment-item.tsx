@@ -1,27 +1,27 @@
 "use client";
 
+import { useToast } from "@/components/providers/toast-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import MarkdownRenderer from "@/components/ui/markdown-renderer";
-import { DiscussService, type Comment } from "@/services/discuss-service";
 import { useApp } from "@/contexts/app-context";
 import { cn } from "@/lib/utils";
+import { DiscussService, type Comment } from "@/services/discuss-service";
 import {
-  Pencil,
-  Trash2,
-  ArrowBigUp,
-  ArrowBigDown,
-  MessageSquare,
-  Reply,
+    ArrowBigDown,
+    ArrowBigUp,
+    MessageSquare,
+    Pencil,
+    Reply,
+    Trash2,
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useToast } from "@/components/providers/toast-provider";
-import { DeleteCommentDialog } from "./delete-comment-dialog";
-import { CommentForm } from "./comment-form";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { CommentForm } from "./comment-form";
+import { DeleteCommentDialog } from "./delete-comment-dialog";
 
-import { useTranslations, useFormatter } from "next-intl";
 import { PermissionEnum } from "@/types/permission";
+import { useFormatter, useTranslations } from "next-intl";
 
 interface CommentItemProps {
   comment: Comment;
@@ -206,8 +206,9 @@ export function CommentItem({
 
   return (
     <div
+      id={`comment-${comment.id}`}
       className={cn(
-        "relative animate-in fade-in slide-in-from-top-1",
+        "relative animate-in fade-in slide-in-from-top-1 highlight-target",
         depth > 0 ? "mt-2" : "py-2 border-b border-border/40 last:border-0",
       )}
     >

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
 import ReportsTable from "@/components/admin/reports/reports-table";
-import { ProblemReport } from "@/types/problem-reports";
+import { Button } from "@/components/ui/button";
 import { ProblemReportsService } from "@/services/problem-reports.service";
 import { toastService } from "@/services/toasts-service";
+import { ProblemReport } from "@/types/problem-reports";
 import { RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
 
 export default function ReportsPage() {
   const [reports, setReports] = useState<ProblemReport[]>([]);
@@ -37,6 +37,27 @@ export default function ReportsPage() {
   useEffect(() => {
     fetchReports();
   }, [fetchReports]);
+
+  // Scroll to and highlight a report targeted by URL hash (e.g. #report-123)
+  useEffect(() => {
+    if (!isLoading && reports.length > 0 && typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash.startsWith("#report-")) {
+        const id = hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add("is-highlighted");
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 300);
+
+          setTimeout(() => {
+            element.classList.remove("is-highlighted");
+          }, 5000);
+        }
+      }
+    }
+  }, [isLoading, reports]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);

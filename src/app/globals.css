@@ -177,3 +177,37 @@ input:disabled,
 textarea:disabled {
   opacity: 0.5;
 }
+
+/* ─── Notification highlight ───
+ * .highlight-target marks an element as eligible for highlight.
+ * :target  — browser natively matches the #hash fragment target.
+ * .is-highlighted — applied by JS after async data loads + scroll.
+ * Both trigger the same pulse animation.
+ */
+@keyframes highlight-pulse {
+  0% {
+    box-shadow:
+      0 0 0 4px var(--color-primary),
+      inset 0 0 0 200px color-mix(in oklch, var(--color-primary) 15%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px color-mix(in oklch, var(--color-primary) 40%, transparent),
+      inset 0 0 0 200px color-mix(in oklch, var(--color-primary) 8%, transparent);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 transparent,
+      inset 0 0 0 200px transparent;
+  }
+}
+
+.highlight-target {
+  scroll-margin-top: 5rem;
+}
+
+.highlight-target:target,
+.highlight-target.is-highlighted {
+  animation: highlight-pulse 2.5s ease-in-out;
+  border-radius: 0.5rem;
+}
