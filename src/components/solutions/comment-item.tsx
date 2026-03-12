@@ -1,35 +1,35 @@
 "use client";
 
+import { useToast } from "@/components/providers/toast-provider";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useApp } from "@/contexts/app-context";
 import { SolutionsService } from "@/services/solutions-service";
+import { PermissionEnum } from "@/types/permission";
 import { SolutionComment, SolutionCommentVoteType } from "@/types/solution";
 import { formatDistanceToNow } from "date-fns";
-import { vi, enUS } from "date-fns/locale";
+import { enUS, vi } from "date-fns/locale";
 import {
-  ArrowBigDown,
-  ArrowBigUp,
-  MessageSquare,
-  Trash2,
-  Pin,
+    ArrowBigDown,
+    ArrowBigUp,
+    MessageSquare,
+    Pin,
+    Trash2,
 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
-import { useToast } from "@/components/providers/toast-provider";
-import { PermissionEnum } from "@/types/permission";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 interface CommentItemProps {
   comment: SolutionComment;
@@ -150,7 +150,8 @@ export default function CommentItem({
 
   return (
     <div
-      className={`flex gap-3 group ${
+      id={`comment-${comment.id}`}
+      className={`flex gap-3 group highlight-target ${
         comment.isPinned
           ? "bg-amber-50/50 dark:bg-amber-900/10 p-2 rounded-md -mx-2"
           : ""

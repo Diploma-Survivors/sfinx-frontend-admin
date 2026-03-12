@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/components/providers/toast-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -8,10 +9,9 @@ import { useApp } from "@/contexts/app-context";
 import { SolutionsService } from "@/services/solutions-service";
 import { SolutionComment } from "@/types/solution";
 import { MessageSquare } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import CommentNode from "./comment-node";
-import { useToast } from "@/components/providers/toast-provider";
 
 interface CommentSectionProps {
   solutionId: number;
@@ -42,6 +42,27 @@ export default function CommentSection({ solutionId }: CommentSectionProps) {
     };
     fetchComments();
   }, [solutionId]);
+
+  // Scroll to and highlight a comment targeted by URL hash (e.g. #comment-123)
+  useEffect(() => {
+    if (!isLoading && comments.length > 0 && typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash.startsWith("#comment-")) {
+        const id = hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add("is-highlighted");
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 300);
+
+          setTimeout(() => {
+            element.classList.remove("is-highlighted");
+          }, 5000);
+        }
+      }
+    }
+  }, [isLoading, comments]);
 
   const handleSubmitComment = async () => {
     if (!newCommentContent.trim()) return;

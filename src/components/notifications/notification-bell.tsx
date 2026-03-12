@@ -1,27 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Bell } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSocket } from "@/hooks/use-socket";
-import {
-  notificationService,
-  Notification,
-} from "@/services/notification.service";
-import Link from "next/link";
+import { NotificationStrategyFactory } from "@/lib/notifications/notification-strategy";
 import { cn } from "@/lib/utils";
+import {
+    Notification,
+    notificationService,
+} from "@/services/notification.service";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { useLocale, useTranslations } from "next-intl";
 import "dayjs/locale/en";
 import "dayjs/locale/vi";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { Bell } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 dayjs.extend(relativeTime);
 
@@ -34,6 +35,7 @@ export function NotificationBell() {
   const { socket } = useSocket("notifications");
   const t = useTranslations("NotificationBell");
   const locale = useLocale();
+  const router = useRouter();
   dayjs.locale(locale);
 
   const fetchNotifications = async () => {
@@ -48,7 +50,7 @@ export function NotificationBell() {
         const merged = [...newFromSocket, ...data.data];
         return merged.sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
       });
       setHasFetched(true);
@@ -104,6 +106,18 @@ export function NotificationBell() {
       setUnreadCount((prev) => Math.max(0, prev - 1));
     } catch (error) {
       console.error("Failed to mark as read:", error);
+    }
+  };
+
+  const handleNotificationClick = async (notification: Notification) => {
+    const strategy = NotificationStrategyFactory.getStrategy(notification);
+    const link = strategy.getLink(notification, locale);
+
+    await handleMarkAsRead(notification.id, notification.isRead);
+    setIsOpen(false);
+
+    if (link && link !== "#") {
+      router.push(link);
     }
   };
 
@@ -175,43 +189,39 @@ export function NotificationBell() {
             </div>
           ) : (
             <div className="flex flex-col">
-              {notifications.map((notification) => (
-                <div
-                  key={notification.id}
-                  className={cn(
-                    "flex flex-col p-4 border-b border-border/40 transition-colors hover:bg-muted/30 cursor-pointer",
-                    !notification.isRead && "bg-muted/90",
-                  )}
-                  onClick={() =>
-                    handleMarkAsRead(notification.id, notification.isRead)
-                  }
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="font-medium text-sm text-foreground line-clamp-1">
-                      {notification.title}
-                    </span>
-                    <span className="text-xs text-muted-foreground whitespace-nowrap">
-                      {dayjs(notification.createdAt).fromNow()}
-                    </span>
+              {notifications.map((notification) => {
+                const strategy =
+                  NotificationStrategyFactory.getStrategy(notification);
+                const link = strategy.getLink(notification, locale);
+
+                return (
+                  <div
+                    key={notification.id}
+                    className={cn(
+                      "flex flex-col p-4 border-b border-border/40 transition-colors hover:bg-muted/30 cursor-pointer",
+                      !notification.isRead && "bg-muted/90",
+                    )}
+                    onClick={() => handleNotificationClick(notification)}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="font-medium text-sm text-foreground line-clamp-1">
+                        {notification.title}
+                      </span>
+                      <span className="text-xs text-muted-foreground whitespace-nowrap">
+                        {dayjs(notification.createdAt).fromNow()}
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                      {notification.content}
+                    </p>
+                    {link && link !== "#" && (
+                      <span className="text-xs text-primary font-medium mt-2">
+                        {t("viewDetails")}
+                      </span>
+                    )}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                    {notification.content}
-                  </p>
-                  {notification.link && (
-                    <Link
-                      href={notification.link}
-                      className="text-xs text-primary font-medium mt-2 hover:underline"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleMarkAsRead(notification.id, notification.isRead);
-                        setIsOpen(false);
-                      }}
-                    >
-                      {t("viewDetails")}
-                    </Link>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

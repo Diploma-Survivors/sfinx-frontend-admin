@@ -1,13 +1,13 @@
 "use client";
 
+import { useToast } from "@/components/providers/toast-provider";
 import { DiscussService } from "@/services/discuss-service";
 import type { Comment } from "@/types/discuss";
+import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { CommentForm } from "./comment-form";
 import { CommentList } from "./comment-list";
-import { useToast } from "@/components/providers/toast-provider";
-import { ChevronDown } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 interface CommentSectionProps {
   postId: string;
@@ -50,6 +50,27 @@ export function CommentSection({ postId }: CommentSectionProps) {
   useEffect(() => {
     fetchComments();
   }, [fetchComments]);
+
+  // Scroll to and highlight a comment targeted by URL hash (e.g. #comment-123)
+  useEffect(() => {
+    if (!isLoading && comments.length > 0 && typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash.startsWith("#comment-")) {
+        const id = hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add("is-highlighted");
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 300);
+
+          setTimeout(() => {
+            element.classList.remove("is-highlighted");
+          }, 5000);
+        }
+      }
+    }
+  }, [isLoading, comments]);
 
   const handlePostComment = async (content: string) => {
     await DiscussService.createComment(postId, content);

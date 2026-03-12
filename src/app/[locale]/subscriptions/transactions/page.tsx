@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { paymentService } from "@/services/payment-service";
-import { PaymentTransaction, PaymentStatus } from "@/types/payment";
-import { toastService } from "@/services/toasts-service";
-import { TransactionHeader } from "@/components/subscriptions/transactions/transaction-header";
 import { TransactionFilters } from "@/components/subscriptions/transactions/transaction-filters";
+import { TransactionHeader } from "@/components/subscriptions/transactions/transaction-header";
 import { TransactionTable } from "@/components/subscriptions/transactions/transaction-table";
+import { paymentService } from "@/services/payment-service";
+import { toastService } from "@/services/toasts-service";
+import { PaymentStatus, PaymentTransaction } from "@/types/payment";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 export default function TransactionsPage() {
   const t = useTranslations("Subscription");
@@ -46,6 +46,27 @@ export default function TransactionsPage() {
   useEffect(() => {
     fetchTransactions();
   }, [page, debouncedSearch, statusFilter, startDate, endDate]);
+
+  // Scroll to and highlight a transaction targeted by URL hash (e.g. #transaction-123)
+  useEffect(() => {
+    if (!isLoading && transactions.length > 0 && typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash.startsWith("#transaction-")) {
+        const id = hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.classList.add("is-highlighted");
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 300);
+
+          setTimeout(() => {
+            element.classList.remove("is-highlighted");
+          }, 5000);
+        }
+      }
+    }
+  }, [isLoading, transactions]);
 
   const fetchTransactions = async () => {
     setIsLoading(true);

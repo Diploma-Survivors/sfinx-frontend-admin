@@ -1,14 +1,14 @@
-import { PaymentTransaction, PaymentStatus } from "@/types/payment";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { PaymentStatus, PaymentTransaction } from "@/types/payment";
 import { useTranslations } from "next-intl";
 
 interface TransactionTableProps {
@@ -25,8 +25,8 @@ interface TransactionTableProps {
   onPageChange: (page: number) => void;
 }
 
-import { TransactionTableSkeleton } from "./transaction-table-skeleton";
 import { format } from "date-fns";
+import { TransactionTableSkeleton } from "./transaction-table-skeleton";
 
 export function TransactionTable({
   transactions,
@@ -94,7 +94,8 @@ export function TransactionTable({
             transactions.map((txn) => (
               <TableRow
                 key={txn.id}
-                className="hover:bg-slate-50 dark:hover:bg-slate-700/30"
+                id={`transaction-${txn.id}`}
+                className="hover:bg-slate-50 dark:hover:bg-slate-700/30 highlight-target"
               >
                 <TableCell className="font-mono text-xs">
                   {txn.transactionId}

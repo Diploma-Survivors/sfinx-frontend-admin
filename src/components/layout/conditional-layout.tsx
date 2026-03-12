@@ -1,16 +1,16 @@
 'use client';
 
 import Breadcrumbs from '@/components/layout/breadcrumbs';
+import LanguageSwitcher from '@/components/layout/language-switcher';
 import Sidebar from '@/components/layout/sidebar';
+import { NotificationBell } from '@/components/notifications/notification-bell';
+import GlobalLoader from '@/components/ui/global-loader';
 import { useApp } from '@/contexts/app-context';
 import { SidebarProvider, useSidebar } from '@/contexts/sidebar-context';
 import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
-import LanguageSwitcher from '@/components/layout/language-switcher';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
-import GlobalLoader from '@/components/ui/global-loader';
-import { NotificationBell } from '@/components/notifications/notification-bell';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { isOpen, isMobile } = useSidebar();
