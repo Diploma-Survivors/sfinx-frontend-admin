@@ -6,6 +6,7 @@ import {
   type GetTagListRequest,
   type Tag,
   type TagFilters,
+  type TagListResponse,
   type TagMeta,
   TagSortBy,
 } from '@/types/tags';
@@ -40,7 +41,8 @@ interface UseTagsReturn extends UseTagsState, UseTagsActions {
   sortOrder: SortOrder;
 }
 
-export default function useTags(): UseTagsReturn {
+export default function useTags(options?: { fetchAll?: boolean }): UseTagsReturn {
+  const fetchAll = options?.fetchAll ?? false;
   // Main state to manage tags and loading/error states
   const [state, setState] = useState<UseTagsState>({
     tags: [],
@@ -73,12 +75,14 @@ export default function useTags(): UseTagsReturn {
     try {
       setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-      const response = await TagsService.getAllTagsWithPagination(requestParams);
+      const response = fetchAll
+        ? await TagsService.getAllTags()
+        : await TagsService.getAllTagsWithPagination(requestParams);
 
       setState((prev) => ({
         ...prev,
-        tags: response.data.data.data,
-        meta: response.data.data.meta,
+        tags: fetchAll ? (response.data.data as Tag[]) : (response.data.data as TagListResponse).data,
+        meta: fetchAll ? null : (response.data.data as TagListResponse).meta,
         isLoading: false,
       }));
     } catch (err) {

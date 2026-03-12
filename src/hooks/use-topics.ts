@@ -6,6 +6,7 @@ import {
   type GetTopicListRequest,
   type Topic,
   type TopicFilters,
+  type TopicListResponse,
   type TopicMeta,
   TopicSortBy,
 } from '@/types/topics';
@@ -40,7 +41,8 @@ interface UseTopicsReturn extends UseTopicsState, UseTopicsActions {
   sortOrder: SortOrder;
 }
 
-export default function useTopics(): UseTopicsReturn {
+export default function useTopics(options?: { fetchAll?: boolean }): UseTopicsReturn {
+  const fetchAll = options?.fetchAll ?? false;
   // Main state to manage topics and loading/error states
   const [state, setState] = useState<UseTopicsState>({
     topics: [],
@@ -74,12 +76,14 @@ export default function useTopics(): UseTopicsReturn {
       try {
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-        const response = await TopicsService.getAllTopicsWithPagination(requestParams);
+        const response = fetchAll
+          ? await TopicsService.getAllTopics()
+          : await TopicsService.getAllTopicsWithPagination(requestParams);
 
         setState((prev) => ({
           ...prev,
-          topics: response.data.data.data,
-          meta: response.data.data.meta,
+          topics: fetchAll ? (response.data.data as Topic[]) : (response.data.data as TopicListResponse).data,
+          meta: fetchAll ? null : (response.data.data as TopicListResponse).meta,
           isLoading: false,
         }));
       } catch (err) {
