@@ -1,6 +1,9 @@
 {
     "General": {
-        "app_name": "SfinX"
+        "app_name": "SfinX",
+        "asc": "Tăng dần",
+        "desc": "Giảm dần",
+        "sortOrder": "Thứ tự sắp xếp"
     },
     "HomePage": {
         "title": "Chào mừng đến với Sol Vibe",
@@ -103,6 +106,10 @@
         "status": "Trạng thái",
         "enrollments": "Người tham gia",
         "actions": "Hành động",
+        "select": "Chọn",
+        "selectPlan": "Chọn lộ trình học",
+        "selectMultiple": "Chọn nhiều lộ trình học",
+        "selectCount": "Chọn {count} lộ trình học",
         "noPlansFound": "Không tìm thấy lộ trình học nào.",
         "edit": "Chỉnh sửa",
         "manageItems": "Quản lý bài tập",
@@ -250,12 +257,17 @@
             "slugReq": "Slug là bắt buộc và phải đúng định dạng",
             "slugInvalid": "Slug chỉ được chứa chữ cái thường, số và dấu gạch ngang, không bắt đầu hoặc kết thúc bằng dấu gạch ngang.",
             "daysReq": "Số ngày dự kiến phải ít nhất là 1",
-            "descriptionMinLen": "Mô tả phải có ít nhất 3 ký tự"
+            "descriptionMinLen": "Mô tả phải có ít nhất 3 ký tự",
+            "tagsReq": "Vui lòng chọn ít nhất một thẻ",
+            "topicsReq": "Vui lòng chọn ít nhất một chủ đề",
+            "fixErrors": "Vui lòng sửa các lỗi trong form trước khi gửi."
         },
         "currentCoverImage": "Ảnh bìa hiện tại:",
         "newSelected": "Ảnh mới đã chọn: {name}",
         "classificationAndLocalization": "Phân loại & Bản dịch",
-        "selected": "Đã chọn: {name}"
+        "selected": "Đã chọn: {name}",
+        "similarProblemsLabel": "Lộ trình học tương tự",
+        "selectSimilarProblems": "Chọn lộ trình học tương tự"
     },
     "StudyPlanItemsPage": {
         "title": "Quản lý bài tập",
@@ -1834,7 +1846,9 @@
         "tooltipRank": "Hạng"
     },
     "SelectProblemsModal": {
-        "addProblems": "Thêm bài tập..."
+        "addProblems": "Thêm bài tập...",
+        "addPlans": "Thêm lộ trình học",
+        "selectPlans": "Chọn lộ trình học"
     },
     "ReportsPage": {
         "title": "Báo cáo lỗi bài tập",

@@ -35,6 +35,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MultiSelect } from "@/components/ui/multi-select";
 import useTags from "@/hooks/use-tags";
 import useTopics from "@/hooks/use-topics";
+import { SelectStudyPlansModal } from "./select-study-plans-modal";
+import { X } from "lucide-react";
+import { AdminStudyPlanResponseDto } from "@/types/study-plan";
 
 export default function StudyPlanCreateForm() {
   const t = useTranslations("StudyPlanForm");
@@ -42,6 +45,7 @@ export default function StudyPlanCreateForm() {
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [selectedSimilarPlans, setSelectedSimilarPlans] = useState<AdminStudyPlanResponseDto[]>([]);
 
   // Use existing hooks for tags and topics
   const { tags } = useTags({ fetchAll: true });
@@ -61,8 +65,9 @@ export default function StudyPlanCreateForm() {
         description: z.string().min(3, t("validation.descriptionMinLen")),
       }),
     ),
-    tagIds: z.array(z.number()),
-    topicIds: z.array(z.number()),
+    tagIds: z.array(z.number()).min(1, t("validation.tagsReq")),
+    topicIds: z.array(z.number()).min(1, t("validation.topicsReq")),
+    similarPlanIds: z.array(z.number()),
   });
 
   type FormValues = z.infer<typeof formSchema>;
@@ -79,6 +84,7 @@ export default function StudyPlanCreateForm() {
       ],
       tagIds: [],
       topicIds: [],
+      similarPlanIds: [],
     },
   });
 
@@ -96,6 +102,7 @@ export default function StudyPlanCreateForm() {
         })),
         topicIds: values.topicIds,
         tagIds: values.tagIds,
+        similarPlanIds: values.similarPlanIds,
       };
 
       await studyPlanService.createStudyPlan(data, coverImage || undefined);
@@ -109,16 +116,24 @@ export default function StudyPlanCreateForm() {
     }
   };
 
+  const onError = () => {
+    toast.error(t("validation.fixErrors"));
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setCoverImage(e.target.files[0]);
     }
   };
 
+  const errors = form.formState.errors;
+  const hasEnError = !!errors.translations?.[0];
+  const hasViError = !!errors.translations?.[1];
+
   return (
     <div className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <h3 className="text-lg font-semibold border-b pb-2">
@@ -276,8 +291,20 @@ export default function StudyPlanCreateForm() {
                 <h4 className="font-medium mb-4">{t("translationsLabel")}</h4>
                 <Tabs defaultValue="en" className="w-full">
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="en">{t("enTab")}</TabsTrigger>
-                    <TabsTrigger value="vi">{t("viTab")}</TabsTrigger>
+                    <TabsTrigger 
+                      value="en"
+                      className={hasEnError ? "text-red-500 data-[state=active]:text-red-600 border-red-200 bg-red-50/50" : ""}
+                    >
+                      {t("enTab")}
+                      {hasEnError && <span className="ml-2 w-2 h-2 rounded-full bg-red-500 animate-pulse" />}
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="vi"
+                      className={hasViError ? "text-red-500 data-[state=active]:text-red-600 border-red-200 bg-red-50/50" : ""}
+                    >
+                      {t("viTab")}
+                      {hasViError && <span className="ml-2 w-2 h-2 rounded-full bg-red-500 animate-pulse" />}
+                    </TabsTrigger>
                   </TabsList>
 
                   {/* English Translation */}
@@ -353,6 +380,65 @@ export default function StudyPlanCreateForm() {
                     />
                   </TabsContent>
                 </Tabs>
+              </div>
+
+              <div className="space-y-4 pt-4 border-t">
+                <FormField
+                  control={form.control}
+                  name="similarPlanIds"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("similarProblemsLabel")}</FormLabel>
+                      <FormControl>
+                        <div className="space-y-4">
+                          <SelectStudyPlansModal
+                            title={t("selectSimilarProblems")}
+                            selectedPlanIds={field.value}
+                            onPlansSelect={(plans) => {
+                              const newIds = [...new Set([...field.value, ...plans.map(p => p.id)])];
+                              field.onChange(newIds);
+                              
+                              // Update local display state
+                              const newPlans = [...selectedSimilarPlans];
+                              plans.forEach(p => {
+                                if (!newPlans.find(existing => existing.id === p.id)) {
+                                  newPlans.push(p);
+                                }
+                              });
+                              setSelectedSimilarPlans(newPlans);
+                            }}
+                          />
+                          
+                          {selectedSimilarPlans.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {selectedSimilarPlans.map((plan) => (
+                                <div
+                                  key={plan.id}
+                                  className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full text-sm border border-slate-200 dark:border-slate-700 shadow-sm"
+                                >
+                                  <span className="font-medium">#{plan.id}</span>
+                                  <span className="max-w-[150px] truncate">{plan.name}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const newIds = field.value.filter(id => id !== plan.id);
+                                      field.onChange(newIds);
+                                      setSelectedSimilarPlans(prev => prev.filter(p => p.id !== plan.id));
+                                    }}
+                                    className="text-slate-400 hover:text-red-500 transition-colors"
+                                  >
+                                    <X className="h-4 w-4" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
           </div>

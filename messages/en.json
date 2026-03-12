@@ -1,6 +1,9 @@
 {
     "General": {
-        "app_name": "SfinX"
+        "app_name": "SfinX",
+        "asc": "ASC",
+        "desc": "DESC",
+        "sortOrder": "Sort Order"
     },
     "HomePage": {
         "title": "Welcome to Sol Vibe",
@@ -103,6 +106,10 @@
         "status": "Status",
         "enrollments": "Enrollments",
         "actions": "Actions",
+        "select": "Select",
+        "selectPlan": "Select Study Plan",
+        "selectMultiple": "Select multiple study plans",
+        "selectCount": "Select {count} study plans",
         "noPlansFound": "No study plans found.",
         "edit": "Edit",
         "manageItems": "Manage Items",
@@ -250,12 +257,17 @@
             "slugReq": "Slug is required and must follow format",
             "slugInvalid": "Slug must contain only lowercase letters, numbers, and hyphens, and not start or end with a hyphen.",
             "daysReq": "Estimated days must be at least 1",
-            "descriptionMinLen": "Description must be at least 3 characters"
+            "descriptionMinLen": "Description must be at least 3 characters",
+            "tagsReq": "Select at least one tag",
+            "topicsReq": "Select at least one topic",
+            "fixErrors": "Please fix the errors in the form before submitting."
         },
         "currentCoverImage": "Current Cover Image:",
         "newSelected": "New selected: {name}",
         "classificationAndLocalization": "Classification & Localization",
-        "selected": "Selected: {name}"
+        "selected": "Selected: {name}",
+        "similarProblemsLabel": "Similar Study Plans",
+        "selectSimilarProblems": "Select Similar Study Plans"
     },
     "StudyPlanItemsPage": {
         "title": "Manage Plan Items",
@@ -1838,7 +1850,9 @@
         "tooltipRank": "Rank"
     },
     "SelectProblemsModal": {
-        "addProblems": "Add problems..."
+        "addProblems": "Add problems...",
+        "addPlans": "Add Study Plans",
+        "selectPlans": "Select Study Plans"
     },
     "ReportsPage": {
         "title": "Problem Reports",

@@ -40,6 +40,7 @@ export default function StudyPlanFilter({
 }: StudyPlanFilterProps) {
   const t = useTranslations("ProblemFilter"); // Reusing for common filter terms (Search, Reset)
   const tTable = useTranslations("StudyPlanTable");
+  const tGeneral = useTranslations("General");
 
   const [topics, setTopics] = useState<Topic[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -187,7 +188,10 @@ export default function StudyPlanFilter({
             <ChevronDown className="h-4 w-4 opacity-50 shrink-0 ml-2" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-64 max-h-80 overflow-y-auto">
+        <DropdownMenuContent
+          align="start"
+          className="w-64 max-h-80 overflow-y-auto"
+        >
           <div className="p-2 sticky top-0 bg-white dark:bg-slate-950 z-10">
             <Input
               placeholder={t("searchTopics")}
@@ -242,7 +246,10 @@ export default function StudyPlanFilter({
             <ChevronDown className="h-4 w-4 opacity-50 shrink-0 ml-2" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-64 max-h-80 overflow-y-auto">
+        <DropdownMenuContent
+          align="start"
+          className="w-64 max-h-80 overflow-y-auto"
+        >
           <div className="p-2 sticky top-0 bg-white dark:bg-slate-950 z-10">
             <Input
               placeholder={t("searchTags")}
@@ -294,7 +301,9 @@ export default function StudyPlanFilter({
           <SelectContent>
             <SelectItem value="name">{tTable("name")}</SelectItem>
             <SelectItem value="estimatedDays">{tTable("duration")}</SelectItem>
-            <SelectItem value="enrollmentCount">{tTable("enrollments")}</SelectItem>
+            <SelectItem value="enrollmentCount">
+              {tTable("enrollments")}
+            </SelectItem>
             <SelectItem value="createdAt">{t("createdAt")}</SelectItem>
           </SelectContent>
         </Select>
@@ -304,12 +313,12 @@ export default function StudyPlanFilter({
           onValueChange={(value) => onFilterChange("sortOrder", value)}
         >
           <SelectTrigger className="w-10 h-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm p-0 flex items-center justify-center">
-             <span className="sr-only">Sort Order</span>
-             {filters.sortOrder === "ASC" ? "↑" : "↓"}
+            <span className="sr-only">Sort Order</span>
+            {filters.sortOrder === "ASC" ? "↑" : "↓"}
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="ASC">ASC</SelectItem>
-            <SelectItem value="DESC">DESC</SelectItem>
+            <SelectItem value="ASC">{tGeneral("asc")}</SelectItem>
+            <SelectItem value="DESC">{tGeneral("desc")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
