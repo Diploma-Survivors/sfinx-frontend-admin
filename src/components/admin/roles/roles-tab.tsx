@@ -20,16 +20,44 @@ import RoleFormDialog from './role-form-dialog';
 import EditRoleDrawer from './edit-role-drawer';
 import { useApp } from '@/contexts/app-context';
 import { PermissionEnum } from '@/types/permission';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { ArrowDown, ArrowUp, ChevronDown, RotateCcw } from 'lucide-react';
 
-export default function RolesTab() {
+enum RoleSortBy {
+    ID = 'id',
+    PRIORITY = 'priority',
+    PERMISSIONS_COUNT = 'permissions_count',
+}
+
+enum SortOrder {
+    ASC = 'asc',
+    DESC = 'desc',
+}
+
+export default function RolesTab({ refreshKey }: { refreshKey?: number }) {
     const t = useTranslations('RolesTab');
     const { hasPermission } = useApp();
     const [roles, setRoles] = useState<Role[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<Role | null>(null);
     const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
+    const [typeFilter, setTypeFilter] = useState<'all' | 'system' | 'custom'>('all');
+    const [sortBy, setSortBy] = useState<RoleSortBy>(RoleSortBy.ID);
+    const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC);
 
     const fetchRoles = async () => {
         setIsLoading(true);
@@ -45,12 +73,7 @@ export default function RolesTab() {
 
     useEffect(() => {
         fetchRoles();
-    }, []);
-
-    const handleCreateSuccess = () => {
-        fetchRoles();
-        setIsCreateDialogOpen(false);
-    };
+    }, [refreshKey]);
 
     const handleEditClick = (role: Role) => {
         setSelectedRole(role);
@@ -80,30 +103,150 @@ export default function RolesTab() {
         }
     };
 
-    const filteredRoles = roles.filter((role) =>
-        role.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        role.slug.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredRoles = roles
+        .filter((role) =>
+            role.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            role.slug.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .filter((role) => {
+            if (typeFilter === 'all') return true;
+            if (typeFilter === 'system') return role.isSystemRole;
+            if (typeFilter === 'custom') return !role.isSystemRole;
+            return true;
+        })
+        .sort((a, b) => {
+            let comparison = 0;
+            switch (sortBy) {
+                case RoleSortBy.ID:
+                    comparison = a.id - b.id;
+                    break;
+                case RoleSortBy.PRIORITY:
+                    comparison = a.priority - b.priority;
+                    break;
+                case RoleSortBy.PERMISSIONS_COUNT:
+                    comparison = (a.permissions?.length || 0) - (b.permissions?.length || 0);
+                    break;
+                default:
+                    comparison = 0;
+            }
+            return sortOrder === SortOrder.ASC ? comparison : -comparison;
+        });
+
+    const handleReset = () => {
+        setSearchQuery('');
+        setTypeFilter('all');
+        setSortBy(RoleSortBy.ID);
+        setSortOrder(SortOrder.ASC);
+    };
 
     return (
         <div className="space-y-6">
-            {/* Top Bar */}
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-                <div className="relative flex-1 w-full md:max-w-sm bg-white">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                    <Input
-                        placeholder={t('searchPlaceholder')}
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10"
-                    />
+            {/* Filters & Search Container */}
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col items-center md:flex-row justify-between gap-4">
+                
+                {/* Left side: Search and Type Filter */}
+                <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+                    {/* Search */}
+                    <div className="relative w-full md:w-64">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                        <Input
+                            placeholder={t('searchPlaceholder')}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-10 h-10 w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
+                    </div>
+                        {/* Type Filter */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className="h-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer whitespace-nowrap"
+                                >
+                                    {t('typeFilter')}
+                                    {typeFilter !== 'all' && (
+                                        <Badge variant="secondary" className="ml-2 h-5 px-1.5 capitalize">
+                                            {typeFilter}
+                                        </Badge>
+                                    )}
+                                    <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-48">
+                                <DropdownMenuLabel>{t('selectType')}</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                {[
+                                    { value: 'all', label: t('all') },
+                                    { value: 'system', label: t('system') },
+                                    { value: 'custom', label: t('custom') },
+                                ].map((option) => {
+                                    const isChecked = typeFilter === option.value;
+                                    return (
+                                        <div
+                                            key={option.value}
+                                            className="flex items-center px-2 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setTypeFilter(option.value as 'all' | 'system' | 'custom');
+                                            }}
+                                        >
+                                            <div className={`flex items-center justify-center w-4 h-4 mr-2 border rounded-full ${isChecked ? 'bg-primary border-primary text-primary-foreground' : 'border-slate-300'}`}>
+                                                {isChecked && <div className="w-2 h-2 bg-white rounded-full" />}
+                                            </div>
+                                            <span className="text-sm">{option.label}</span>
+                                        </div>
+                                    );
+                                })}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        {(searchQuery || typeFilter !== 'all' || sortBy !== RoleSortBy.ID || sortOrder !== SortOrder.ASC) && (
+                            <Button
+                                variant="ghost"
+                                onClick={handleReset}
+                                className="h-10 text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+                                title={t('reset')}
+                            >
+                                <RotateCcw className="w-4 h-4" />
+                            </Button>
+                        )}
                 </div>
-                {hasPermission(PermissionEnum.ADMIN_ROLES) && (
-                    <Button onClick={() => setIsCreateDialogOpen(true)} className="w-full md:w-auto">
-                        <Plus className="mr-2 h-4 w-4" />
-                        {t('addNewRole')}
-                    </Button>
-                )}
+
+                {/* Right side: Sort */}
+                <div className="flex flex-col items-end gap-4">
+                    <div className="flex items-center gap-2">
+                        <div className="text-sm font-medium text-slate-500 whitespace-nowrap">{t('sortByLabel')}</div>
+                        <Select
+                            value={sortBy}
+                            onValueChange={(value) => setSortBy(value as RoleSortBy)}
+                        >
+                            <SelectTrigger className="w-[180px] h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 focus:ring-0 focus:ring-offset-0 cursor-pointer">
+                                <SelectValue placeholder="Sort by" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value={RoleSortBy.ID} className="cursor-pointer">{t('id')}</SelectItem>
+                                <SelectItem value={RoleSortBy.PRIORITY} className="cursor-pointer">{t('priority')}</SelectItem>
+                                <SelectItem value={RoleSortBy.PERMISSIONS_COUNT} className="cursor-pointer">{t('permissionsCountSort')}</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() =>
+                                setSortOrder(
+                                    sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
+                                )
+                            }
+                            className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+                        >
+                            {sortOrder === SortOrder.ASC ? (
+                                <ArrowDown className="h-4 w-4" />
+                            ) : (
+                                <ArrowUp className="h-4 w-4" />
+                            )}
+                        </Button>
+                    </div>
+                </div>
             </div>
 
             {/* Roles Table */}
@@ -205,11 +348,7 @@ export default function RolesTab() {
                 </Table>
             </div>
 
-            <RoleFormDialog
-                open={isCreateDialogOpen}
-                onOpenChange={setIsCreateDialogOpen}
-                onSuccess={handleCreateSuccess}
-            />
+
 
             {selectedRole && (
                 <EditRoleDrawer

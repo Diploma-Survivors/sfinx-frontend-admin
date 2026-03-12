@@ -1135,10 +1135,16 @@
         "noResults": "No roles found.",
         "system": "System",
         "custom": "Custom",
+        "all": "All",
         "permissionsCount": "{count} Permissions assigned",
+        "permissionsCountSort": "Number of Permissions",
         "view": "View",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "sortByLabel": "Sort by:",
+        "typeFilter": "Type",
+        "selectType": "Select Type",
+        "reset": "Reset"
     },
     "RoleFormDialog": {
         "createRole": "Create New Role",

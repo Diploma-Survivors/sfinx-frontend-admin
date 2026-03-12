@@ -55,12 +55,12 @@ export function TagsTable({
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[80px] text-center">{t('tagId')}</TableHead>
-                            <TableHead className="text-center">{t('tagName')}</TableHead>
-                            <TableHead className="text-center">{t('slug')}</TableHead>
-                            <TableHead className="text-center">{t('status')}</TableHead>
-                            <TableHead className="text-center">{t('createdDate')}</TableHead>
-                            <TableHead className="text-center">{t('actions')}</TableHead>
+                            <TableHead className="w-[80px] text-left">{t('tagId')}</TableHead>
+                            <TableHead className="text-left">{t('tagName')}</TableHead>
+                            <TableHead className="text-left">{t('slug')}</TableHead>
+                            <TableHead className="text-left">{t('status')}</TableHead>
+                            <TableHead className="text-left">{t('createdDate')}</TableHead>
+                            <TableHead className="text-right">{t('actions')}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -73,14 +73,14 @@ export function TagsTable({
                         ) : (
                             tags.map((tag) => (
                                 <TableRow key={tag.id}>
-                                    <TableCell className="font-medium text-center">{tag.id}</TableCell>
-                                    <TableCell className="font-medium text-center">{tag.name}</TableCell>
-                                    <TableCell className="text-center">
+                                    <TableCell className="font-medium text-left">{tag.id}</TableCell>
+                                    <TableCell className="font-medium text-left">{tag.name}</TableCell>
+                                    <TableCell className="text-left">
                                         <Badge variant="secondary" className="font-mono text-xs">
                                             {tag.slug}
                                         </Badge>
                                     </TableCell>
-                                    <TableCell className="text-center">
+                                    <TableCell className="text-left">
                                         <Badge
                                             variant={tag.isActive === true ? 'default' : 'secondary'}
                                             className={
@@ -92,11 +92,11 @@ export function TagsTable({
                                             {tag.isActive === true ? t('active') : t('inactive')}
                                         </Badge>
                                     </TableCell>
-                                    <TableCell className="text-center">
+                                    <TableCell className="text-left">
                                         {tag.createdAt ? format(new Date(tag.createdAt), 'dd/MM/yyyy') : '-'}
                                     </TableCell>
-                                    <TableCell className="text-center">
-                                        <div className="flex items-center justify-center gap-2">
+                                    <TableCell className="text-right">
+                                        <div className="flex items-center justify-end gap-2">
                                             <Tooltip content={t('edit')}>
                                                 <Button
                                                     variant="ghost"

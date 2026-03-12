@@ -1063,10 +1063,16 @@
         "noResults": "Không tìm thấy vai trò nào.",
         "system": "Hệ thống",
         "custom": "Tùy chỉnh",
+        "all": "Tất cả",
         "permissionsCount": "{count} Quyền hạn được gán",
+        "permissionsCountSort": "Số lượng Quyền hạn",
         "view": "Xem",
         "edit": "Sửa",
-        "delete": "Xóa"
+        "delete": "Xóa",
+        "sortByLabel": "Sắp xếp theo:",
+        "typeFilter": "Loại",
+        "selectType": "Chọn loại",
+        "reset": "Đặt lại"
     },
     "RoleFormDialog": {
         "createRole": "Tạo Vai trò Mới",

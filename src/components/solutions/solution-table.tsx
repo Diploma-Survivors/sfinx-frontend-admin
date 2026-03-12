@@ -73,8 +73,8 @@ export default function SolutionTable({
             <TableHead>{t("title")}</TableHead>
             <TableHead>{t("author")}</TableHead>
             <TableHead>{t("tags")}</TableHead>
-            <TableHead className="text-right">{t("stats")}</TableHead>
-            <TableHead className="text-right">{t("created")}</TableHead>
+            <TableHead className="text-left">{t("stats")}</TableHead>
+            <TableHead className="text-left">{t("created")}</TableHead>
             <TableHead className="w-[100px] text-right"></TableHead>
           </TableRow>
         </TableHeader>
@@ -132,8 +132,8 @@ export default function SolutionTable({
                     ))}
                   </div>
                 </TableCell>
-                <TableCell className="text-right">
-                  <div className="flex items-center justify-end gap-4 text-muted-foreground text-sm">
+                <TableCell className="text-left">
+                  <div className="flex items-center justify-start gap-4 text-muted-foreground text-sm">
                     <div className="flex items-center gap-1">
                       <ThumbsUp className="h-4 w-4" />
                       <span>{solution.upvoteCount}</span>
@@ -144,7 +144,7 @@ export default function SolutionTable({
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="text-right text-muted-foreground text-sm">
+                <TableCell className="text-left text-muted-foreground text-sm">
                   {formatDistanceToNow(new Date(solution.createdAt), {
                     addSuffix: true,
                     locale: locale === "vi" ? vi : undefined,

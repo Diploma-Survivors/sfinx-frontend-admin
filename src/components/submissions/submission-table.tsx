@@ -220,11 +220,11 @@ export default function SubmissionTable({
                         <>
                           <div className="flex items-center gap-1">
                             <Clock className="h-3 w-3" />
-                            {submission.executionTime} ms
+                            {submission.executionTime ? submission.executionTime.toFixed(2) : "N/A"} ms
                           </div>
                           <div className="flex items-center gap-1">
                             <Cpu className="h-3 w-3" />
-                            {(submission.memoryUsed ?? 0 / 1024).toFixed(1)} MB
+                            {submission.memoryUsed ? (submission.memoryUsed / 1024).toFixed(2) : "N/A"} MB
                           </div>
                         </>
                       )}

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setContestDraft, clearContestDraft } from '@/store/slices/create-contest-slice';
 import { useDialog } from '@/components/providers/dialog-provider';
 import { Problem } from '@/types/problems';
+import { ContestStatus } from '@/types/contest';
 import { ContestSchema, ContestFormValues } from './schema';
 import { GeneralInfoSection } from './general-info-section';
 import { ProblemSelectionSection, SelectedProblem } from './problem-selection-section';
@@ -29,6 +30,7 @@ export default function CreateContestForm({ onSubmit, isSubmitting }: CreateCont
         description: draft.description,
         startTime: draft.startTime,
         durationMinutes: draft.durationMinutes,
+        status: draft.status || ContestStatus.DRAFT,
         problems: (draft.problems || []).map((p, index) => ({
             problemId: p.problemId,
             point: p.points,

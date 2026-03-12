@@ -16,7 +16,6 @@ import {
   Edit,
   Lock,
   MoreHorizontal,
-  Trash2,
   Unlock,
   BarChart2,
   Crown,
@@ -477,14 +476,7 @@ export default function ProblemTable({
                                 </DropdownMenuItem>
                               )}
 
-                              <DropdownMenuSeparator />
 
-                              {hasPermission(PermissionEnum.PROBLEM_DELETE) && (
-                                <DropdownMenuItem className="text-red-600">
-                                  <Trash2 className="mr-2 h-4 w-4" />
-                                  {t("delete")}
-                                </DropdownMenuItem>
-                              )}
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </div>

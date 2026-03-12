@@ -245,8 +245,8 @@ export default function SubmissionDetail({
             )}
             {submission.status !== SubmissionStatus.PENDING && (
               <div className="text-2xl font-bold">
-                {submission.executionTime != null
-                  ? `${submission.executionTime} ms`
+                {submission.executionTime
+                  ? `${submission.executionTime.toFixed(2)} ms`
                   : "N/A"}
               </div>
             )}
@@ -267,7 +267,7 @@ export default function SubmissionDetail({
             {submission.status !== SubmissionStatus.PENDING && (
               <div className="text-2xl font-bold">
                 {submission.memoryUsed != null
-                  ? `${(submission.memoryUsed / 1024).toFixed(1)} MB`
+                  ? `${(submission.memoryUsed / 1024).toFixed(2)} MB`
                   : "N/A"}
               </div>
             )}
