@@ -44,7 +44,7 @@ import {
     UpdateStudyPlanDto
 } from "@/types/study-plan";
 import { X } from "lucide-react";
-import Image from "next/image";
+
 import { SelectStudyPlansModal } from "./select-study-plans-modal";
 
 interface StudyPlanEditFormProps {
@@ -320,11 +320,11 @@ export default function StudyPlanEditForm({ id }: StudyPlanEditFormProps) {
                       {t("currentCoverImage")}
                     </p>
                     <div className="relative w-full h-32 rounded-md overflow-hidden border">
-                      <Image
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
                         src={initialData.coverImageUrl}
                         alt="Cover Image"
-                        fill
-                        className="object-cover"
+                        className="object-cover w-full h-full"
                       />
                     </div>
                   </div>
