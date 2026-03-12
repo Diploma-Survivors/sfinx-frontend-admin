@@ -181,6 +181,12 @@ export default function StudyPlanItemsManager({
         (i) => i.id.toString() === over.id,
       );
 
+      // Guard: bail out if either item isn't found (e.g., items changed during drag)
+      if (oldIndex === -1 || newIndex === -1) return;
+
+      // Snapshot current state before optimistic update so we can revert accurately
+      const previousDays = days;
+
       // Reorder locally first for snappy UI
       const newItems = arrayMove(currentDay.items, oldIndex, newIndex);
 
@@ -202,8 +208,8 @@ export default function StudyPlanItemsManager({
         toast.success(t("reorderSuccess"));
       } catch (error) {
         toast.error(t("actionError"));
-        // Revert on error
-        setDays(initialData.days || []);
+        // Revert to the pre-drag snapshot, not potentially stale initialData
+        setDays(previousDays);
       }
     }
   };
