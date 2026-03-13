@@ -1319,7 +1319,7 @@
         "table": {
             "id": "ID",
             "name": "Name",
-            "price": "Price (USD)",
+            "price": "Price (VND)",
             "duration": "Duration (Months)",
             "status": "Status",
             "actions": "Actions",
@@ -1379,7 +1379,7 @@
                 "selectType": "Select plan type",
                 "monthly": "Monthly",
                 "yearly": "Yearly",
-                "priceLabel": "Price (USD) *",
+                "priceLabel": "Base Price (VND) *",
                 "durationLabel": "Duration (months) *",
                 "activeLabel": "Active",
                 "translations": "Translations",
@@ -1394,6 +1394,15 @@
             "edit": {
                 "title": "Edit Plan",
                 "description": "Update the pricing, status, and features for this subscription plan.",
+                "finalPriceLabel": "Final Price (VND)",
+                "appliedFeesLabel": "Applied Fees",
+                "noAppliedFees": "No active fees applied",
+                "totalFeeLabel": "Total Fees",
+                "feeNames": {
+                    "vat": "Value Added Tax",
+                    "gatewayFee": "Payment Gateway Fee",
+                    "riskBuffer": "Risk Buffer"
+                },
                 "saveButton": "Save changes",
                 "savingButton": "Saving..."
             },
@@ -1480,6 +1489,131 @@
                     "saveButton": "Save Changes",
                     "savingButton": "Saving..."
                 }
+            }
+        },
+        "feeConfigs": {
+            "header": {
+                "title": "Fee Configs",
+                "description": "Manage fee configurations (VAT, gateway fees, etc.)",
+                "refresh": "Refresh",
+                "createFee": "Create Fee"
+            },
+            "table": {
+                "title": "All Fee Configs",
+                "description": "View and manage fee components applied to subscription pricing",
+                "code": "Code",
+                "descLabel": "Description",
+                "value": "Value",
+                "status": "Status",
+                "actions": "Actions",
+                "noFees": "No fee configs found",
+                "active": "Active",
+                "inactive": "Inactive"
+            },
+            "dialogs": {
+                "create": {
+                    "title": "Create Fee Config",
+                    "description": "Add a new fee component to subscription pricing",
+                    "codeLabel": "Code *",
+                    "descLabel": "Description",
+                    "valueLabel": "Value *",
+                    "activeLabel": "Active",
+                    "cancel": "Cancel",
+                    "createButton": "Create",
+                    "creatingButton": "Creating..."
+                },
+                "edit": {
+                    "title": "Edit Fee Config",
+                    "description": "Update fee configuration",
+                    "codeLabel": "Code *",
+                    "descLabel": "Description",
+                    "valueLabel": "Value *",
+                    "activeLabel": "Active",
+                    "cancel": "Cancel",
+                    "saveButton": "Save Changes",
+                    "savingButton": "Saving..."
+                },
+                "delete": {
+                    "title": "Confirm Delete",
+                    "description": "Are you sure you want to delete the fee config \"{code}\"? This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "deleteButton": "Delete",
+                    "deletingButton": "Deleting..."
+                }
+            },
+            "messages": {
+                "loadError": "Failed to load fee configs",
+                "fillRequired": "Please fill in all required fields",
+                "createSuccess": "Fee config created successfully",
+                "createError": "Failed to create fee config",
+                "updateSuccess": "Fee config updated successfully",
+                "updateError": "Failed to update fee config",
+                "deleteSuccess": "Fee config deleted successfully",
+                "deleteError": "Failed to delete fee config"
+            }
+        },
+        "currencies": {
+            "header": {
+                "title": "Currencies",
+                "description": "Manage currencies and exchange rates",
+                "refresh": "Refresh",
+                "createCurrency": "Create Currency"
+            },
+            "table": {
+                "title": "All Currencies",
+                "description": "View and manage supported currencies and their exchange rates to VND",
+                "code": "Code",
+                "name": "Name",
+                "symbol": "Symbol",
+                "rateToVnd": "Rate to VND",
+                "status": "Status",
+                "actions": "Actions",
+                "noCurrencies": "No currencies found",
+                "active": "Active",
+                "inactive": "Inactive"
+            },
+            "dialogs": {
+                "create": {
+                    "title": "Create Currency",
+                    "description": "Add a new currency with exchange rate",
+                    "codeLabel": "Code (ISO 4217) *",
+                    "nameLabel": "Name *",
+                    "symbolLabel": "Symbol *",
+                    "rateLabel": "Rate to VND *",
+                    "activeLabel": "Active",
+                    "cancel": "Cancel",
+                    "createButton": "Create",
+                    "creatingButton": "Creating..."
+                },
+                "edit": {
+                    "title": "Edit Currency",
+                    "description": "Update currency details and exchange rate",
+                    "codeLabel": "Code (ISO 4217) *",
+                    "nameLabel": "Name *",
+                    "symbolLabel": "Symbol *",
+                    "rateLabel": "Rate to VND *",
+                    "activeLabel": "Active",
+                    "cancel": "Cancel",
+                    "saveButton": "Save Changes",
+                    "savingButton": "Saving..."
+                },
+                "delete": {
+                    "title": "Confirm Delete",
+                    "description": "Are you sure you want to delete the currency \"{name}\"? This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "deleteButton": "Delete",
+                    "deletingButton": "Deleting..."
+                }
+            },
+            "messages": {
+                "loadError": "Failed to load currencies",
+                "fillRequired": "Please fill in all required fields",
+                "createSuccess": "Currency created successfully",
+                "createError": "Failed to create currency",
+                "updateSuccess": "Currency updated successfully",
+                "updateError": "Failed to update currency",
+                "deleteSuccess": "Currency deleted successfully",
+                "deleteError": "Failed to delete currency"
             }
         }
     },
@@ -2063,6 +2197,7 @@
         "plans": "Plans",
         "statistics": "Statistics",
         "features": "Features",
+        "fee-configs": "Fee Configs",
         "new": "New",
         "reset-password": "Reset Password",
         "login": "Login",

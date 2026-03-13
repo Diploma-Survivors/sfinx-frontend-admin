@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import { feeConfigService } from "@/services/fee-config-service";
+import { FeeConfig } from "@/types/fee-config";
 import {
   Dialog,
   DialogContent,
@@ -23,7 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { subscriptionService } from "@/services/subscription-service";
 import { SubscriptionPlan, SubscriptionType } from "@/types/subscription-plan";
 import { toastService } from "@/services/toasts-service";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface PlanEditDialogProps {
   plan: SubscriptionPlan | null;
@@ -39,6 +41,7 @@ export function PlanEditDialog({
   onSuccess,
 }: PlanEditDialogProps) {
   const t = useTranslations("Subscription");
+  const locale = useLocale();
   const [isSaving, setIsSaving] = useState(false);
 
   // Form state
@@ -52,13 +55,53 @@ export function PlanEditDialog({
     en: { name: "", description: "" },
     vi: { name: "", description: "" },
   });
-  const [selectedFeatureIds, setSelectedFeatureIds] = useState<number[]>([]); // Preserved but not used in UI for now as per previous page.tsx
+  const [selectedFeatureIds, setSelectedFeatureIds] = useState<number[]>([]);
+  const [activeFees, setActiveFees] = useState<FeeConfig[]>([]);
+
+  const basePrice = useMemo(() => parseFloat(editPrice) || 0, [editPrice]);
+  const feeBreakdown = useMemo(
+    () =>
+      activeFees.map((fee) => ({
+        id: fee.id,
+        name: fee.code,
+        displayName:
+          fee.translations?.find((item) => item.languageCode === locale)?.name ||
+          fee.translations?.find((item) => item.languageCode === "en")?.name ||
+          fee.code,
+        displayDescription:
+          fee.translations?.find((item) => item.languageCode === locale)
+            ?.description ||
+          fee.translations?.find((item) => item.languageCode === "en")
+            ?.description ||
+          "",
+        rate: Number(fee.value),
+        amount: Math.ceil(basePrice * Number(fee.value)),
+      })),
+    [activeFees, basePrice, locale],
+  );
+
+  const totalFeeAmount = useMemo(
+    () => feeBreakdown.reduce((sum, fee) => sum + fee.amount, 0),
+    [feeBreakdown],
+  );
+
+  const finalPrice = useMemo(() => {
+    return basePrice + totalFeeAmount;
+  }, [basePrice, totalFeeAmount]);
+
+  useEffect(() => {
+    if (open) {
+      feeConfigService.getAll().then((res) => {
+        setActiveFees(res.data.filter((f) => f.isActive));
+      }).catch(() => {});
+    }
+  }, [open]);
 
   useEffect(() => {
     if (plan && open) {
       // Initialize with current partial data first
       setEditType(plan.type);
-      setEditPrice(plan.priceUsd.toString());
+      setEditPrice(plan.basePrice.toString());
       setEditDuration(plan.durationMonths.toString());
       setEditIsActive(plan.isActive);
       setSelectedFeatureIds(plan.features.map((f) => f.id));
@@ -119,7 +162,7 @@ export function PlanEditDialog({
     try {
       await subscriptionService.updatePlan(plan.id, {
         type: editType,
-        priceUsd: parseFloat(editPrice),
+        basePrice: parseFloat(editPrice),
         durationMonths: parseInt(editDuration),
         isActive: editIsActive,
         featureIds: selectedFeatureIds,
@@ -185,6 +228,62 @@ export function PlanEditDialog({
               onChange={(e) => setEditPrice(e.target.value)}
               className="col-span-3"
             />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="edit-final-price" className="text-right">
+              {t("dialogs.edit.finalPriceLabel")}
+            </Label>
+            <Input
+              id="edit-final-price"
+              type="text"
+              value={`${finalPrice.toLocaleString("vi-VN")}₫`}
+              readOnly
+              disabled
+              className="col-span-3 bg-muted"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-start gap-4">
+            <Label className="pt-2 text-right">
+              {t("dialogs.edit.appliedFeesLabel")}
+            </Label>
+            <div className="col-span-3 rounded-md border bg-muted/30 px-3 py-2 text-sm">
+              {feeBreakdown.length === 0 ? (
+                <p className="text-muted-foreground">
+                  {t("dialogs.edit.noAppliedFees")}
+                </p>
+              ) : (
+                <div className="space-y-2">
+                  {feeBreakdown.map((fee) => (
+                    <div
+                      key={fee.id}
+                      className="flex items-center justify-between gap-4"
+                    >
+                      <div className="flex min-w-0 flex-col">
+                        <span className="text-muted-foreground">
+                          {fee.displayName} ({(fee.rate * 100).toFixed(2)}%)
+                        </span>
+                        {fee.displayDescription ? (
+                          <span className="truncate text-xs text-muted-foreground/80">
+                            {fee.displayDescription}
+                          </span>
+                        ) : null}
+                      </div>
+                      <span className="font-mono">
+                        +{fee.amount.toLocaleString("vi-VN")}₫
+                      </span>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-between gap-4 border-t pt-2 font-medium">
+                    <span>{t("dialogs.edit.totalFeeLabel")}</span>
+                    <span className="font-mono">
+                      +{totalFeeAmount.toLocaleString("vi-VN")}₫
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">

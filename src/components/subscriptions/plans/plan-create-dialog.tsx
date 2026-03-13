@@ -77,7 +77,7 @@ export function PlanCreateDialog({
     try {
       await subscriptionService.createPlan({
         type: newPlanType,
-        priceUsd: parseFloat(newPlanPrice),
+        basePrice: parseFloat(newPlanPrice),
         durationMonths: parseInt(newPlanDuration),
         isActive: newPlanActive,
         translations: [
@@ -139,11 +139,11 @@ export function PlanCreateDialog({
             <Input
               id="price"
               type="number"
-              step="0.01"
+              step="1000"
               min="0"
               value={newPlanPrice}
               onChange={(e) => setNewPlanPrice(e.target.value)}
-              placeholder="9.99"
+              placeholder="125000"
               className="col-span-3"
             />
           </div>

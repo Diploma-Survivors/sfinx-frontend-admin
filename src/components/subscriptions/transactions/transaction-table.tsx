@@ -112,10 +112,7 @@ export function TransactionTable({
                 </TableCell>
                 <TableCell>{txn.planName}</TableCell>
                 <TableCell className="font-medium">
-                  ${txn.amount.toFixed(2)}
-                  <div className="text-xs text-slate-500">
-                    {txn.amountVnd.toLocaleString("vi-VN")} VND
-                  </div>
+                  {txn.amount.toLocaleString("vi-VN")} VND
                 </TableCell>
                 <TableCell>{txn.provider}</TableCell>
                 <TableCell>

@@ -8,16 +8,15 @@ export interface PaymentTransaction {
     id: number;
     userId: number;
     username: string;
-    planId: number;
     planName: string;
     amount: number;
-    amountVnd: number;
+    basePriceSnapshot: number;
+    totalFeePercentage: number;
     currency: string;
     provider: string;
     transactionId: string;
     status: PaymentStatus;
     paymentDate: string;
-    createdAt: string;
 }
 
 export interface TransactionFilter {
