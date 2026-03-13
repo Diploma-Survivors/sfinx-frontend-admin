@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, Edit, Trash2 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { PlanListSkeleton } from "./plan-list-skeleton";
 
 interface PlanListProps {
@@ -20,6 +20,16 @@ interface PlanListProps {
   isLoading?: boolean;
 }
 
+function formatPrice(prices: Record<string, number> | undefined, locale: string): string {
+  const isVi = locale === "vi";
+  const currency = isVi ? "VND" : "USD";
+  const amount = prices?.[currency] ?? 0;
+  if (isVi) {
+    return `${amount.toLocaleString("vi-VN")}₫`;
+  }
+  return `$${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 export function PlanList({
   plans,
   onEdit,
@@ -27,6 +37,7 @@ export function PlanList({
   isLoading,
 }: PlanListProps) {
   const t = useTranslations("Subscription");
+  const locale = useLocale();
 
   if (isLoading) {
     return <PlanListSkeleton />;
@@ -41,7 +52,7 @@ export function PlanList({
               <div>
                 <CardTitle className="text-2xl">{plan.name}</CardTitle>
                 <CardDescription className="mt-2 text-lg font-semibold text-emerald-600 dark:text-emerald-400">
-                  ${plan.priceUsd}{" "}
+                  {formatPrice(plan.prices, locale)}{" "}
                   <span className="text-sm font-normal text-slate-500">
                     /{" "}
                     {plan.durationMonths === 1

@@ -10,7 +10,8 @@ export interface SubscriptionPlan {
     type: SubscriptionType;
     name: string;
     description: string;
-    priceUsd: number;
+    basePrice: number;
+    prices: Record<string, number>;
     durationMonths: number;
     isActive: boolean;
     features: SubscriptionFeature[];
@@ -25,7 +26,7 @@ export interface SubscriptionPlan {
 
 export interface CreatePlanDto {
     type: SubscriptionType;
-    priceUsd: number;
+    basePrice: number;
     durationMonths: number;
     isActive?: boolean;
     translations: {
@@ -37,7 +38,7 @@ export interface CreatePlanDto {
 
 export interface UpdatePlanDto {
     type?: SubscriptionType;
-    priceUsd?: number;
+    basePrice?: number;
     durationMonths?: number;
     isActive?: boolean;
     translations?: {

@@ -25,6 +25,7 @@ import {
   LogOut,
   Menu,
   MessageSquare,
+  Percent,
   Plus,
   PlusCircle,
   Shield,
@@ -205,6 +206,13 @@ export default function Sidebar({ onLogout }: SideBarProps) {
           icon: Layers,
           permissions: [PermissionEnum.ADMIN_ACCESS],
         },
+        {
+          name: tSub("feeConfigs.header.title"),
+          href: "/subscriptions/fee-configs",
+          icon: Percent,
+          permissions: [PermissionEnum.ADMIN_ACCESS],
+        },
+
         {
           name: tSub("transactions"),
           href: "/subscriptions/transactions",

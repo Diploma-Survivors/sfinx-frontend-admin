@@ -1245,7 +1245,7 @@
         "table": {
             "id": "ID",
             "name": "Tên gói",
-            "price": "Giá (USD)",
+            "price": "Giá (VND)",
             "duration": "Thời hạn (Tháng)",
             "status": "Trạng thái",
             "actions": "Hành động",
@@ -1305,7 +1305,7 @@
                 "selectType": "Chọn loại gói",
                 "monthly": "Hàng tháng",
                 "yearly": "Hàng năm",
-                "priceLabel": "Giá (USD) *",
+                "priceLabel": "Giá gốc (VND) *",
                 "durationLabel": "Thời hạn (tháng) *",
                 "activeLabel": "Hoạt động",
                 "translations": "Bản dịch",
@@ -1320,6 +1320,15 @@
             "edit": {
                 "title": "Chỉnh Sửa Gói",
                 "description": "Cập nhật giá, trạng thái và các tính năng cho gói đăng ký này.",
+                "finalPriceLabel": "Giá cuối (VND)",
+                "appliedFeesLabel": "Phí áp dụng",
+                "noAppliedFees": "Không có phí đang áp dụng",
+                "totalFeeLabel": "Tổng phí",
+                "feeNames": {
+                    "vat": "Thuế giá trị gia tăng",
+                    "gatewayFee": "Phí cổng thanh toán",
+                    "riskBuffer": "Phụ phí rủi ro"
+                },
                 "saveButton": "Lưu thay đổi",
                 "savingButton": "Đang lưu..."
             },
@@ -1406,6 +1415,131 @@
                     "saveButton": "Lưu Thay Đổi",
                     "savingButton": "Đang lưu..."
                 }
+            }
+        },
+        "feeConfigs": {
+            "header": {
+                "title": "Cấu Hình Phí",
+                "description": "Quản lý cấu hình phí cho gói đăng ký",
+                "refresh": "Làm mới",
+                "createFee": "Thêm Phí"
+            },
+            "table": {
+                "title": "Tất Cả Cấu Hình Phí",
+                "description": "Xem và quản lý các khoản phí áp dụng cho gói đăng ký",
+                "code": "Mã",
+                "descLabel": "Mô tả",
+                "value": "Giá trị (%)",
+                "status": "Trạng thái",
+                "actions": "Hành động",
+                "active": "Hoạt động",
+                "inactive": "Không hoạt động",
+                "noFees": "Không tìm thấy cấu hình phí."
+            },
+            "dialogs": {
+                "create": {
+                    "title": "Thêm Cấu Hình Phí",
+                    "description": "Tạo một cấu hình phí mới cho gói đăng ký",
+                    "codeLabel": "Mã *",
+                    "descLabel": "Mô tả",
+                    "valueLabel": "Giá trị (%) *",
+                    "activeLabel": "Hoạt động",
+                    "cancel": "Hủy",
+                    "createButton": "Tạo",
+                    "creatingButton": "Đang tạo..."
+                },
+                "edit": {
+                    "title": "Sửa Cấu Hình Phí",
+                    "description": "Cập nhật cấu hình phí",
+                    "codeLabel": "Mã *",
+                    "descLabel": "Mô tả",
+                    "valueLabel": "Giá trị (%) *",
+                    "activeLabel": "Hoạt động",
+                    "cancel": "Hủy",
+                    "saveButton": "Lưu",
+                    "savingButton": "Đang lưu..."
+                },
+                "delete": {
+                    "title": "Xóa Cấu Hình Phí",
+                    "description": "Bạn có chắc muốn xóa phí \"{code}\"? Hành động này không thể hoàn tác.",
+                    "cancel": "Hủy",
+                    "deleteButton": "Xóa",
+                    "deletingButton": "Đang xóa..."
+                }
+            },
+            "messages": {
+                "loadError": "Không thể tải danh sách phí",
+                "fillRequired": "Vui lòng điền đầy đủ các trường bắt buộc",
+                "createSuccess": "Tạo cấu hình phí thành công",
+                "createError": "Không thể tạo cấu hình phí",
+                "updateSuccess": "Cập nhật cấu hình phí thành công",
+                "updateError": "Không thể cập nhật cấu hình phí",
+                "deleteSuccess": "Xóa cấu hình phí thành công",
+                "deleteError": "Không thể xóa cấu hình phí"
+            }
+        },
+        "currencies": {
+            "header": {
+                "title": "Tiền Tệ",
+                "description": "Quản lý tiền tệ và tỷ giá",
+                "refresh": "Làm mới",
+                "createCurrency": "Thêm Tiền Tệ"
+            },
+            "table": {
+                "title": "Tất Cả Tiền Tệ",
+                "description": "Xem và quản lý các loại tiền tệ và tỷ giá sang VND",
+                "code": "Mã",
+                "name": "Tên",
+                "symbol": "Ký hiệu",
+                "rateToVnd": "Tỷ giá sang VND",
+                "status": "Trạng thái",
+                "actions": "Hành động",
+                "active": "Hoạt động",
+                "inactive": "Không hoạt động",
+                "noCurrencies": "Không tìm thấy tiền tệ."
+            },
+            "dialogs": {
+                "create": {
+                    "title": "Thêm Tiền Tệ",
+                    "description": "Tạo một tiền tệ mới",
+                    "codeLabel": "Mã tiền tệ *",
+                    "nameLabel": "Tên *",
+                    "symbolLabel": "Ký hiệu *",
+                    "rateLabel": "Tỷ giá sang VND *",
+                    "activeLabel": "Hoạt động",
+                    "cancel": "Hủy",
+                    "createButton": "Tạo",
+                    "creatingButton": "Đang tạo..."
+                },
+                "edit": {
+                    "title": "Sửa Tiền Tệ",
+                    "description": "Cập nhật thông tin tiền tệ",
+                    "codeLabel": "Mã tiền tệ *",
+                    "nameLabel": "Tên *",
+                    "symbolLabel": "Ký hiệu *",
+                    "rateLabel": "Tỷ giá sang VND *",
+                    "activeLabel": "Hoạt động",
+                    "cancel": "Hủy",
+                    "saveButton": "Lưu",
+                    "savingButton": "Đang lưu..."
+                },
+                "delete": {
+                    "title": "Xóa Tiền Tệ",
+                    "description": "Bạn có chắc muốn xóa tiền tệ \"{name}\"? Hành động này không thể hoàn tác.",
+                    "cancel": "Hủy",
+                    "deleteButton": "Xóa",
+                    "deletingButton": "Đang xóa..."
+                }
+            },
+            "messages": {
+                "loadError": "Không thể tải danh sách tiền tệ",
+                "fillRequired": "Vui lòng điền đầy đủ các trường bắt buộc",
+                "createSuccess": "Tạo tiền tệ thành công",
+                "createError": "Không thể tạo tiền tệ",
+                "updateSuccess": "Cập nhật tiền tệ thành công",
+                "updateError": "Không thể cập nhật tiền tệ",
+                "deleteSuccess": "Xóa tiền tệ thành công",
+                "deleteError": "Không thể xóa tiền tệ"
             }
         }
     },
@@ -2059,6 +2193,7 @@
         "plans": "Gói cước",
         "statistics": "Thống kê",
         "features": "Tính năng",
+        "fee-configs": "Cấu Hình Phí",
         "new": "Tạo mới",
         "reset-password": "Đặt lại mật khẩu",
         "login": "Đăng nhập",
