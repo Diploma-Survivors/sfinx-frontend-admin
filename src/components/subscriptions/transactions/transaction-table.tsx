@@ -112,13 +112,13 @@ export function TransactionTable({
                   </div>
                 </TableCell>
                 <TableCell>{txn.planName}</TableCell>
-                <TableCell className="font-medium">
+                <TableCell className="font-medium text-right">
                   {txn.currency === 'USD' 
                     ? `$${txn.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                     : `${txn.amount.toLocaleString('vi-VN')} ₫`
                   }
                 </TableCell>
-                <TableCell className="font-medium">
+                <TableCell className="font-medium text-right">
                   {txn.systemReceivedCurrency === 'USD' 
                     ? `$${txn.systemReceivedAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                     : `${txn.systemReceivedAmount.toLocaleString('vi-VN')} ₫`
