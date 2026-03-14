@@ -1,4 +1,4 @@
-import { Problem } from "./problems";
+import { Problem, SortOrder } from "./problems";
 import { Tag } from "./tags";
 
 export interface AuthorDto {
@@ -47,6 +47,7 @@ export interface FilterSolutionDto {
   languageIds?: number[];
   isEditorial?: boolean;
   sortBy?: SolutionSortBy;
+  sortOrder?: SortOrder;
 }
 
 export interface CreateSolutionDto {

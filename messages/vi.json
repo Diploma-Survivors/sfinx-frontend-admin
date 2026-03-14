@@ -3,7 +3,8 @@
         "app_name": "SfinX",
         "asc": "Tăng dần",
         "desc": "Giảm dần",
-        "sortOrder": "Thứ tự sắp xếp"
+        "sortOrder": "Thứ tự sắp xếp",
+        "toggleSortDirection": "Thay đổi hướng sắp xếp"
     },
     "HomePage": {
         "title": "Chào mừng đến với Sol Vibe",
@@ -423,7 +424,33 @@
         },
         "allDifficulties": "Tất cả",
         "createdAt": "Ngày tạo",
-        "updatedAt": "Ngày cập nhật"
+        "updatedAt": "Ngày cập nhật",
+        "lastLoginAt": "Đăng nhập lần cuối",
+        "lastActiveAt": "Hoạt động lần cuối"
+    },
+    "ReportFilter": {
+        "searchPlaceholder": "Tìm kiếm báo cáo...",
+        "status": "Trạng thái",
+        "allStatus": "Tất cả trạng thái",
+        "type": "Loại",
+        "allTypes": "Tất cả loại",
+        "sortByLabel": "Sắp xếp theo:",
+        "sortByPlaceholder": "Sắp xếp theo",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Ngày cập nhật",
+        "reset": "Đặt lại",
+        "typeOptions": {
+            "WRONG_DESCRIPTION": "Sai mô tả",
+            "WRONG_ANSWER": "Sai đáp án",
+            "WRONG_TEST_CASE": "Sai test case",
+            "OTHER": "Khác"
+        },
+        "statusOptions": {
+            "PENDING": "Chờ xử lý",
+            "IN_PROGRESS": "Đang xử lý",
+            "RESOLVED": "Đã giải quyết",
+            "REJECTED": "Đã từ chối"
+        }
     },
     "SubmissionFilter": {
         "searchPlaceholder": "Tìm kiếm...",
@@ -2117,7 +2144,15 @@
             "premiumStatus": "Trạng thái Premium",
             "allUsers": "Tất cả người dùng",
             "premium": "Premium",
-            "free": "Miễn phí"
+            "free": "Miễn phí",
+            "sortByLabel": "Sắp xếp theo",
+            "sortByPlaceholder": "Chọn tiêu chí sắp xếp",
+            "createdAt": "Ngày tạo",
+            "updatedAt": "Ngày cập nhật",
+            "asc": "Tăng dần",
+            "desc": "Giảm dần",
+            "lastLoginAt": "Đăng nhập lần cuối",
+            "lastActiveAt": "Hoạt động lần cuối"
         },
         "table": {
             "id": "ID",
@@ -2200,3 +2235,4 @@
         "unauthorized": "Không có quyền truy cập"
     }
 }
+

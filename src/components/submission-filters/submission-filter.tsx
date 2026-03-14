@@ -37,6 +37,7 @@ import useProblems from "@/hooks/use-problems";
 import { ProblemEndpointType, Problem, SortOrder } from "@/types/problems";
 import { Contest } from "@/types/contest";
 import { useTranslations } from "next-intl";
+import { Tooltip } from "@/components/ui/tooltip";
 
 import { getStatusLabel } from "@/services/submissions-service";
 import useUsers from "@/hooks/use-users";
@@ -66,6 +67,7 @@ export default function SubmissionFilter({
   onSortOrderChange: (sortOrder: SortOrder) => void;
 }) {
   const t = useTranslations("SubmissionFilter");
+  const tGeneral = useTranslations("General");
   // Problem Filter State
   const [problemSearch, setProblemSearch] = useState("");
   const [accumulatedProblems, setAccumulatedProblems] = useState<Problem[]>([]);
@@ -617,22 +619,24 @@ export default function SubmissionFilter({
                 </SelectItem>
               </SelectContent>
             </Select>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() =>
-                onSortOrderChange(
-                  sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC,
-                )
-              }
-              className="shrink-0 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700"
-            >
-              {sortOrder === SortOrder.ASC ? (
-                <ArrowDown className="h-4 w-4" />
-              ) : (
-                <ArrowUp className="h-4 w-4" />
-              )}
-            </Button>
+            <Tooltip content={sortOrder === SortOrder.DESC ? tGeneral("desc") : tGeneral("asc")}>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() =>
+                  onSortOrderChange(
+                    sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC,
+                  )
+                }
+                className="shrink-0 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700"
+              >
+                {sortOrder === SortOrder.DESC ? (
+                  <ArrowDown className="h-4 w-4" />
+                ) : (
+                  <ArrowUp className="h-4 w-4" />
+                )}
+              </Button>
+            </Tooltip>
           </div>
 
           <Button

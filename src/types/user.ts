@@ -42,6 +42,10 @@ export enum UserSortBy {
   ID = "id",
   RANK = "rank",
   GLOBAL_SCORE = "globalScore",
+  CREATED_AT = "createdAt",
+  UPDATED_AT = "updatedAt",
+  LAST_LOGIN_AT = "lastLoginAt",
+  LAST_ACTIVE_AT = "lastActiveAt",
 }
 
 export interface UserFilters {

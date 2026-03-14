@@ -35,6 +35,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ArrowDown, ArrowUp, ChevronDown, RotateCcw } from 'lucide-react';
+import { Tooltip } from '@/components/ui/tooltip';
 
 enum RoleSortBy {
     ID = 'id',
@@ -49,6 +50,7 @@ enum SortOrder {
 
 export default function RolesTab({ refreshKey }: { refreshKey?: number }) {
     const t = useTranslations('RolesTab');
+    const tGeneral = useTranslations('General');
     const { hasPermission } = useApp();
     const [roles, setRoles] = useState<Role[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -229,22 +231,24 @@ export default function RolesTab({ refreshKey }: { refreshKey?: number }) {
                                 <SelectItem value={RoleSortBy.PERMISSIONS_COUNT} className="cursor-pointer">{t('permissionsCountSort')}</SelectItem>
                             </SelectContent>
                         </Select>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() =>
-                                setSortOrder(
-                                    sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
-                                )
-                            }
-                            className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
-                        >
-                            {sortOrder === SortOrder.ASC ? (
-                                <ArrowDown className="h-4 w-4" />
-                            ) : (
-                                <ArrowUp className="h-4 w-4" />
-                            )}
-                        </Button>
+                        <Tooltip content={sortOrder === SortOrder.DESC ? tGeneral('desc') : tGeneral('asc')}>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() =>
+                                    setSortOrder(
+                                        sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
+                                    )
+                                }
+                                className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+                            >
+                                {sortOrder === SortOrder.DESC ? (
+                                    <ArrowDown className="h-4 w-4" />
+                                ) : (
+                                    <ArrowUp className="h-4 w-4" />
+                                )}
+                            </Button>
+                        </Tooltip>
                     </div>
                 </div>
             </div>

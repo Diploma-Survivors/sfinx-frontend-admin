@@ -36,6 +36,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";
+import { Tooltip } from "@/components/ui/tooltip";
 
 interface ProblemFilterProps {
   keyWord: string;
@@ -72,6 +73,7 @@ export default function ProblemFilter({
   hidePremiumFilter,
 }: ProblemFilterProps) {
   const t = useTranslations("ProblemFilter");
+  const tGeneral = useTranslations("General");
   // Search states for dropdowns
   const [topicSearch, setTopicSearch] = useState("");
   const [tagSearch, setTagSearch] = useState("");
@@ -155,22 +157,24 @@ export default function ProblemFilter({
               </SelectItem>
             </SelectContent>
           </Select>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() =>
-              onSortOrderChange(
-                sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC,
-              )
-            }
-            className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
-          >
-            {sortOrder === SortOrder.ASC ? (
-              <ArrowDown className="h-4 w-4" />
-            ) : (
-              <ArrowUp className="h-4 w-4" />
-            )}
-          </Button>
+          <Tooltip content={sortOrder === SortOrder.DESC ? tGeneral("desc") : tGeneral("asc")}>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                onSortOrderChange(
+                  sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC,
+                )
+              }
+              className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+            >
+              {sortOrder === SortOrder.DESC ? (
+                <ArrowDown className="h-4 w-4" />
+              ) : (
+                <ArrowUp className="h-4 w-4" />
+              )}
+            </Button>
+          </Tooltip>
         </div>
       </div>
 

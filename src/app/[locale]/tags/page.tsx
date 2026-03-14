@@ -11,6 +11,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Search, Filter, ArrowUpDown, ArrowDown, ArrowUp, RotateCcw, Tag as TagIcon, Layers } from 'lucide-react';
+import { Tooltip } from '@/components/ui/tooltip';
 import { TagsTable } from '@/components/tags-topics/tags-table';
 import { CreateTagDialog } from '@/components/tags-topics/create-tag-dialog';
 import { EditTagDialog } from '@/components/tags-topics/edit-tag-dialog';
@@ -31,6 +32,7 @@ import { SortOrder } from '@/types/problems';
 
 export default function TagsPage() {
     const t = useTranslations('TagsPage');
+    const tGeneral = useTranslations('General');
     // Tags Hook
     const {
         tags,
@@ -277,22 +279,24 @@ export default function TagsPage() {
                                         <SelectItem value={TagSortBy.CREATED_AT} className="cursor-pointer">{t('createdAt')}</SelectItem>
                                     </SelectContent>
                                 </Select>
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={() =>
-                                        handleTagSortOrderChange(
-                                            tagSortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
-                                        )
-                                    }
-                                    className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
-                                >
-                                    {tagSortOrder === SortOrder.ASC ? (
-                                        <ArrowDown className="h-4 w-4" />
-                                    ) : (
-                                        <ArrowUp className="h-4 w-4" />
-                                    )}
-                                </Button>
+                                <Tooltip content={tagSortOrder === SortOrder.DESC ? tGeneral('desc') : tGeneral('asc')}>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() =>
+                                            handleTagSortOrderChange(
+                                                tagSortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
+                                            )
+                                        }
+                                        className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+                                    >
+                                        {tagSortOrder === SortOrder.DESC ? (
+                                            <ArrowDown className="h-4 w-4" />
+                                        ) : (
+                                            <ArrowUp className="h-4 w-4" />
+                                        )}
+                                    </Button>
+                                </Tooltip>
                             </div>
                             <Button
                                 variant="outline"
@@ -361,22 +365,24 @@ export default function TagsPage() {
                                         <SelectItem value={TopicSortBy.CREATED_AT} className="cursor-pointer">{t('createdAt')}</SelectItem>
                                     </SelectContent>
                                 </Select>
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={() =>
-                                        handleTopicSortOrderChange(
-                                            topicSortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
-                                        )
-                                    }
-                                    className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
-                                >
-                                    {topicSortOrder === SortOrder.ASC ? (
-                                        <ArrowDown className="h-4 w-4" />
-                                    ) : (
-                                        <ArrowUp className="h-4 w-4" />
-                                    )}
-                                </Button>
+                                <Tooltip content={topicSortOrder === SortOrder.DESC ? tGeneral('desc') : tGeneral('asc')}>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() =>
+                                            handleTopicSortOrderChange(
+                                                topicSortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
+                                            )
+                                        }
+                                        className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+                                    >
+                                        {topicSortOrder === SortOrder.DESC ? (
+                                            <ArrowDown className="h-4 w-4" />
+                                        ) : (
+                                            <ArrowUp className="h-4 w-4" />
+                                        )}
+                                    </Button>
+                                </Tooltip>
                             </div>
                         </div>
                         <Button
