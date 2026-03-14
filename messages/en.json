@@ -1262,7 +1262,7 @@
                 "problems": "Problems",
                 "activeProblems": "{count} Active",
                 "monthlyRevenue": "Monthly Revenue",
-                "revenueToday": "+${amount} Today",
+                "revenueToday": "+{amount} Today",
                 "premiumHealth": "Premium Health",
                 "conversionRate": "{rate}% Conversion Rate"
             },
@@ -1352,6 +1352,7 @@
             "actions": "Actions",
             "user": "User",
             "amount": "Amount",
+            "systemReceived": "System Received",
             "provider": "Provider",
             "date": "Date",
             "txnId": "Transaction ID",

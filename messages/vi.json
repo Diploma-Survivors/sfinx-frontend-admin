@@ -1188,7 +1188,7 @@
                 "problems": "Bài tập",
                 "activeProblems": "{count} Đang hoạt động",
                 "monthlyRevenue": "Doanh thu tháng",
-                "revenueToday": "+${amount} Hôm nay",
+                "revenueToday": "+{amount} Hôm nay",
                 "premiumHealth": "Sức khỏe Premium",
                 "conversionRate": "Tỷ lệ chuyển đổi {rate}%"
             },
@@ -1278,6 +1278,7 @@
             "actions": "Hành động",
             "user": "Người dùng",
             "amount": "Số tiền",
+            "systemReceived": "Hệ thống nhận được",
             "provider": "Cổng thanh toán",
             "date": "Ngày giao dịch",
             "txnId": "Mã giao dịch",

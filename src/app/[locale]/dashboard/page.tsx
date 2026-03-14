@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { DashboardService } from '@/services/dashboard-service';
 import type { PlatformStatistics } from '@/types/dashboard';
 import { KPICards } from '@/components/admin/dashboard/kpi-cards';
@@ -12,13 +12,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
     const t = useTranslations('admin.dashboard');
+    const locale = useLocale();
     const [stats, setStats] = useState<PlatformStatistics | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await DashboardService.getPlatformStatistics();
+                const response = await DashboardService.getPlatformStatistics(locale);
                 if (response.data.data) {
                     setStats(response.data.data);
                 }
@@ -30,7 +31,7 @@ export default function DashboardPage() {
         };
 
         fetchStats();
-    }, []);
+    }, [locale]);
 
 
     if (loading) {

@@ -10,9 +10,11 @@ export interface PaymentTransaction {
     username: string;
     planName: string;
     amount: number;
+    currency: string;
+    systemReceivedAmount: number;
+    systemReceivedCurrency: string;
     basePriceSnapshot: number;
     totalFeePercentage: number;
-    currency: string;
     provider: string;
     transactionId: string;
     status: PaymentStatus;

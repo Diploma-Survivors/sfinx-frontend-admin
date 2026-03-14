@@ -1,7 +1,8 @@
 import React from 'react';
 import { Users, FileQuestion, DollarSign, Crown } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import type { PlatformStatistics } from '@/types/dashboard';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 interface KPICardsProps {
     stats: PlatformStatistics['platform'] & PlatformStatistics['revenue'] & {
@@ -12,6 +13,7 @@ interface KPICardsProps {
 
 export function KPICards({ stats }: KPICardsProps) {
     const t = useTranslations('admin.dashboard');
+    const locale = useLocale();
 
     const cards = [
         {
@@ -34,8 +36,8 @@ export function KPICards({ stats }: KPICardsProps) {
         },
         {
             title: t('kpi.monthlyRevenue'),
-            value: `$${stats.revenueThisMonth.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-            subText: t('kpi.revenueToday', { amount: stats.revenueToday.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }),
+            value: formatCurrency(stats.revenueThisMonth, locale),
+            subText: t('kpi.revenueToday', { amount: formatCurrency(stats.revenueToday, locale) }),
             icon: DollarSign,
             color: 'text-green-500',
             bgColor: 'bg-green-500/10',
