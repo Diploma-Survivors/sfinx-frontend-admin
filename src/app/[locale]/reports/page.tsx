@@ -4,16 +4,23 @@ import ReportsTable from "@/components/admin/reports/reports-table";
 import { Button } from "@/components/ui/button";
 import { ProblemReportsService } from "@/services/problem-reports.service";
 import { toastService } from "@/services/toasts-service";
-import { ProblemReport } from "@/types/problem-reports";
+import { ProblemReport, ProblemReportStatus, ProblemReportType } from "@/types/problem-reports";
+import { SortOrder } from "@/types/problems";
 import { RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import ReportFilter from "@/components/admin/reports/report-filter";
 
 export default function ReportsPage() {
   const [reports, setReports] = useState<ProblemReport[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<any | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [status, setStatus] = useState<ProblemReportStatus | "all">("all");
+  const [type, setType] = useState<ProblemReportType | "all">("all");
+  const [sortBy, setSortBy] = useState<string>("createdAt");
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC);
   const t = useTranslations("ReportsPage");
 
   const fetchReports = useCallback(async () => {
@@ -22,6 +29,11 @@ export default function ReportsPage() {
       const response = await ProblemReportsService.getProblemReports({
         page,
         limit: 10,
+        search: searchQuery,
+        status: status === "all" ? undefined : status,
+        type: type === "all" ? undefined : type,
+        sortBy,
+        sortOrder,
       });
 
       setReports(response.data.data);
@@ -32,7 +44,7 @@ export default function ReportsPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [page]);
+  }, [page, searchQuery, status, type, sortBy, sortOrder]);
 
   useEffect(() => {
     fetchReports();
@@ -67,6 +79,31 @@ export default function ReportsPage() {
     fetchReports();
   };
 
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setPage(1);
+  };
+
+  const handleStatusChange = (newStatus: ProblemReportStatus | "all") => {
+    setStatus(newStatus);
+    setPage(1);
+  };
+
+  const handleTypeChange = (newType: ProblemReportType | "all") => {
+    setType(newType);
+    setPage(1);
+  };
+
+  const handleSortByChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setPage(1);
+  };
+
+  const handleSortOrderChange = (newSortOrder: SortOrder) => {
+    setSortOrder(newSortOrder);
+    setPage(1);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <div className="container mx-auto px-4 py-8">
@@ -93,6 +130,22 @@ export default function ReportsPage() {
               {t("refresh")}
             </Button>
           </div>
+        </div>
+
+        {/* Filters */}
+        <div className="mb-6">
+          <ReportFilter
+            searchQuery={searchQuery}
+            onSearchChange={handleSearchChange}
+            status={status}
+            onStatusChange={handleStatusChange}
+            type={type}
+            onTypeChange={handleTypeChange}
+            sortBy={sortBy}
+            onSortByChange={handleSortByChange}
+            sortOrder={sortOrder}
+            onSortOrderChange={handleSortOrderChange}
+          />
         </div>
 
         {/* Reports Table */}

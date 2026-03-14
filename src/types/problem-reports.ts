@@ -14,6 +14,11 @@ export enum ProblemReportStatus {
     REJECTED = "REJECTED",
 }
 
+export enum ProblemReportSortBy {
+    CREATED_AT = "createdAt",
+    UPDATED_AT = "updatedAt",
+}
+
 export interface ProblemReport {
     id: string;
     type: ProblemReportType;

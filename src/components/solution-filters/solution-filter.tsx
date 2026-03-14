@@ -18,11 +18,12 @@ import {
 } from "@/components/ui/select";
 import useProblems from "@/hooks/use-problems";
 import type { ProgrammingLanguage } from "@/types/languages";
-import { Problem, ProblemEndpointType } from "@/types/problems";
+import { Problem, ProblemEndpointType, SortOrder } from "@/types/problems";
 import { FilterSolutionDto, SolutionSortBy } from "@/types/solution";
 import type { Tag } from "@/types/tags";
-import { Check, ChevronDown, Loader2, RotateCcw, Search } from "lucide-react";
+import { Check, ChevronDown, Loader2, RotateCcw, Search, ArrowDown, ArrowUp } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Tooltip } from "@/components/ui/tooltip";
 import { useEffect, useRef, useState } from "react";
 
 interface SolutionFilterProps {
@@ -41,6 +42,7 @@ export default function SolutionFilter({
   languages,
 }: SolutionFilterProps) {
   const t = useTranslations("SolutionFilter");
+  const tGeneral = useTranslations("General");
   // Search states for dropdowns
   const [tagSearch, setTagSearch] = useState("");
   const [languageSearch, setLanguageSearch] = useState("");
@@ -183,6 +185,28 @@ export default function SolutionFilter({
               </SelectItem>
             </SelectContent>
           </Select>
+          <Tooltip content={filters.sortOrder === SortOrder.DESC ? tGeneral("desc") : tGeneral("asc")}>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                onFiltersChange({
+                  ...filters,
+                  sortOrder:
+                    filters.sortOrder === SortOrder.ASC
+                      ? SortOrder.DESC
+                      : SortOrder.ASC,
+                })
+              }
+              className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+            >
+              {filters.sortOrder === SortOrder.DESC ? (
+                <ArrowDown className="h-4 w-4" />
+              ) : (
+                <ArrowUp className="h-4 w-4" />
+              )}
+            </Button>
+          </Tooltip>
         </div>
       </div>
 

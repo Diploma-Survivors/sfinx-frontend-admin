@@ -3,7 +3,8 @@
         "app_name": "SfinX",
         "asc": "ASC",
         "desc": "DESC",
-        "sortOrder": "Sort Order"
+        "sortOrder": "Sort Order",
+        "toggleSortDirection": "Toggle Sort Direction"
     },
     "HomePage": {
         "title": "Welcome to Sol Vibe",
@@ -493,7 +494,33 @@
         "premium": "Premium",
         "free": "Free",
         "createdAt": "Created At",
-        "updatedAt": "Updated At"
+        "updatedAt": "Updated At",
+        "lastLoginAt": "Last Login At",
+        "lastActiveAt": "Last Active At"
+    },
+    "ReportFilter": {
+        "searchPlaceholder": "Search reports...",
+        "status": "Status",
+        "allStatus": "All Statuses",
+        "type": "Type",
+        "allTypes": "All Types",
+        "sortByLabel": "Sort by:",
+        "sortByPlaceholder": "Sort by",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "reset": "Reset",
+        "typeOptions": {
+            "WRONG_DESCRIPTION": "Wrong Description",
+            "WRONG_ANSWER": "Wrong Answer",
+            "WRONG_TEST_CASE": "Wrong Test Case",
+            "OTHER": "Other"
+        },
+        "statusOptions": {
+            "PENDING": "Pending",
+            "IN_PROGRESS": "In Progress",
+            "RESOLVED": "Resolved",
+            "REJECTED": "Rejected"
+        }
     },
     "SubmissionFilter": {
         "searchPlaceholder": "Find ...",
@@ -2121,7 +2148,15 @@
             "premiumStatus": "Premium Status",
             "allUsers": "All Users",
             "premium": "Premium",
-            "free": "Free"
+            "free": "Free",
+            "sortByLabel": "Sort by",
+            "sortByPlaceholder": "Select sort criteria",
+            "createdAt": "Created At",
+            "updatedAt": "Updated At",
+            "asc": "Ascending",
+            "desc": "Descending",
+            "lastLoginAt": "Last Login At",
+            "lastActiveAt": "Last Active At"
         },
         "table": {
             "id": "ID",

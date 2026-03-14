@@ -37,6 +37,7 @@ import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Label } from '@/components/ui/label';
 import { useTranslations } from 'next-intl';
+import { Tooltip } from '@/components/ui/tooltip';
 
 interface ContestFilterProps {
     keyword: string;
@@ -65,6 +66,7 @@ export default function ContestFilter({
     onReset,
 }: ContestFilterProps) {
     const t = useTranslations('ContestFilter');
+    const tGeneral = useTranslations('General');
 
     const handleStatusChange = (status: ContestStatus) => {
         // Single select: if clicking the same status, deselect it (undefined), otherwise select it
@@ -105,22 +107,24 @@ export default function ContestFilter({
                             <SelectItem value={ContestSortBy.PARTICIPANT_COUNT} className="cursor-pointer">{t('participantCount')}</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                            onSortOrderChange(
-                                sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
-                            )
-                        }
-                        className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
-                    >
-                        {sortOrder === SortOrder.ASC ? (
-                            <ArrowDown className="h-4 w-4" />
-                        ) : (
-                            <ArrowUp className="h-4 w-4" />
-                        )}
-                    </Button>
+                    <Tooltip content={sortOrder === SortOrder.DESC ? tGeneral('desc') : tGeneral('asc')}>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() =>
+                                onSortOrderChange(
+                                    sortOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
+                                )
+                            }
+                            className="h-10 w-10 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer"
+                        >
+                            {sortOrder === SortOrder.DESC ? (
+                                <ArrowDown className="h-4 w-4" />
+                            ) : (
+                                <ArrowUp className="h-4 w-4" />
+                            )}
+                        </Button>
+                    </Tooltip>
                 </div>
             </div>
 

@@ -26,6 +26,9 @@ export default function UsersPage() {
     hasPreviousPage: boolean;
   } | null>(null);
 
+  const [sortBy, setSortBy] = useState<string>("createdAt");
+  const [sortOrder, setSortOrder] = useState<"ASC" | "DESC">("DESC");
+
   const [systemStats, setSystemStats] = useState<SystemUserStatistics>({
     total: 0,
     active: 0,
@@ -41,6 +44,8 @@ export default function UsersPage() {
           page,
           limit: 10,
           search: searchQuery,
+          sortBy,
+          sortOrder,
           ...filters,
         }),
         usersService.getSystemStatistics(),
@@ -55,11 +60,21 @@ export default function UsersPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [page, searchQuery, filters, t]);
+  }, [page, searchQuery, filters, sortBy, sortOrder, t]);
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
+
+  const handleSortByChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setPage(1);
+  };
+
+  const handleSortOrderChange = (newSortOrder: "ASC" | "DESC") => {
+    setSortOrder(newSortOrder);
+    setPage(1);
+  };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -93,6 +108,10 @@ export default function UsersPage() {
             onFiltersChange={handleFiltersChange}
             searchQuery={searchQuery}
             onSearchChange={handleSearchChange}
+            sortBy={sortBy}
+            onSortByChange={handleSortByChange}
+            sortOrder={sortOrder}
+            onSortOrderChange={handleSortOrderChange}
           />
         </div>
 

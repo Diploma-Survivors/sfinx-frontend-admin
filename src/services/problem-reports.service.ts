@@ -1,12 +1,16 @@
 import clientApi from "@/lib/apis/axios-client";
 import type { ApiResponse, PaginatedResponse } from "@/types/api";
 import { type ProblemReport, type ProblemReportStatus, type ProblemReportType } from "@/types/problem-reports";
+import { SortOrder } from "@/types/problems";
 
 export interface GetProblemReportsParams {
     page?: number;
     limit?: number;
+    search?: string;
     status?: ProblemReportStatus;
     type?: ProblemReportType;
+    sortBy?: string;
+    sortOrder?: SortOrder;
 }
 
 const getProblemReports = async (
