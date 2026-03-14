@@ -15,6 +15,7 @@ export function TransactionTableSkeleton() {
                         <TableHead><Skeleton width={100} /></TableHead>
                         <TableHead><Skeleton width={80} /></TableHead>
                         <TableHead><Skeleton width={100} /></TableHead>
+                        <TableHead><Skeleton width={100} /></TableHead>
                         <TableHead><Skeleton width={80} /></TableHead>
                         <TableHead><Skeleton width={120} /></TableHead>
                     </TableRow>
@@ -28,6 +29,10 @@ export function TransactionTableSkeleton() {
                                 <Skeleton width={80} height={10} className="mt-1" />
                             </TableCell>
                             <TableCell><Skeleton width={150} /></TableCell>
+                            <TableCell>
+                                <Skeleton width={80} />
+                                <Skeleton width={60} height={10} className="mt-1" />
+                            </TableCell>
                             <TableCell>
                                 <Skeleton width={80} />
                                 <Skeleton width={60} height={10} className="mt-1" />

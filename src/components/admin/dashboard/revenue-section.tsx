@@ -1,9 +1,10 @@
 import React from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import type { PlatformStatistics } from '@/types/dashboard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { TrendingUp, CreditCard, Users } from 'lucide-react';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 interface RevenueSectionProps {
     revenue: PlatformStatistics['revenue'];
@@ -11,6 +12,7 @@ interface RevenueSectionProps {
 
 export function RevenueSection({ revenue }: RevenueSectionProps) {
     const t = useTranslations('admin.dashboard');
+    const locale = useLocale();
 
     return (
         <Card className="bg-gradient-to-r from-slate-900 to-slate-800 text-white border-none">
@@ -41,7 +43,7 @@ export function RevenueSection({ revenue }: RevenueSectionProps) {
                         <div>
                             <div className="text-sm text-slate-400">{t('revenue.arpu')}</div>
                             <div className="text-2xl font-bold">
-                                ${revenue.averageRevenuePerUser.toFixed(2)}
+                                {formatCurrency(revenue.averageRevenuePerUser, locale)}
                             </div>
                         </div>
                     </div>

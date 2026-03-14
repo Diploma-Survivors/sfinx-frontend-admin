@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { RevenueChartItem } from '@/types/subscription-plan';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { format, parseISO } from 'date-fns';
+import { formatCurrency, formatCurrencyShort, getCurrencyCode } from '@/lib/currency-formatter';
 
 interface RevenueChartProps {
     data: RevenueChartItem[];
@@ -11,6 +12,7 @@ interface RevenueChartProps {
 
 export function RevenueChart({ data, period = 'year' }: RevenueChartProps) {
     const t = useTranslations('StatisticsPage');
+    const locale = useLocale();
 
     const formatXAxis = (tickItem: string) => {
         if (!tickItem) return '';
@@ -49,9 +51,9 @@ export function RevenueChart({ data, period = 'year' }: RevenueChartProps) {
                                 tickLine={false}
                                 tickFormatter={formatXAxis}
                             />
-                            <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `$${value}`} />
+                            <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => formatCurrencyShort(value, locale)} />
                             <Tooltip
-                                formatter={(value: any) => [`$${value}`, t('revenue')]}
+                                formatter={(value: any) => [formatCurrency(value, locale), t('revenue')]}
                                 cursor={{ fill: 'transparent' }}
                                 labelFormatter={formatXAxis}
                             />

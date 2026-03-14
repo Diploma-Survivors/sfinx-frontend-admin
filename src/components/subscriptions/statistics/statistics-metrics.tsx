@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RevenueStats } from '@/types/subscription-plan';
 import { Activity, DollarSign, TrendingUp, Users } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 interface StatisticsMetricsProps {
     stats: RevenueStats;
@@ -10,6 +11,7 @@ interface StatisticsMetricsProps {
 
 export function StatisticsMetrics({ stats, period }: StatisticsMetricsProps) {
     const t = useTranslations('Subscription');
+    const locale = useLocale();
 
     // Calculate monthly revenue from revenueByMonth data
     const currentRevenue = stats.revenueByMonth.length > 0
@@ -38,7 +40,7 @@ export function StatisticsMetrics({ stats, period }: StatisticsMetricsProps) {
                     <DollarSign className="h-4 w-4 text-slate-500" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${stats.totalRevenue.toLocaleString()}</div>
+                    <div className="text-2xl font-bold">{formatCurrency(stats.totalRevenue, locale)}</div>
                     <p className="text-xs text-slate-500">{t('stats.totalRevenueNote')}</p>
                 </CardContent>
             </Card>
@@ -48,7 +50,7 @@ export function StatisticsMetrics({ stats, period }: StatisticsMetricsProps) {
                     <TrendingUp className="h-4 w-4 text-slate-500" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${currentRevenue.toLocaleString()}</div>
+                    <div className="text-2xl font-bold">{formatCurrency(currentRevenue, locale)}</div>
                     <p className="text-xs text-slate-500">{getRevenueDescription()}</p>
                 </CardContent>
             </Card>

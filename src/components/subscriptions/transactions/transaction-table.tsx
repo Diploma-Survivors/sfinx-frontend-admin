@@ -75,6 +75,7 @@ export function TransactionTable({
             <TableHead>{t("table.user")}</TableHead>
             <TableHead>{t("table.name")}</TableHead>
             <TableHead>{t("table.amount")}</TableHead>
+            <TableHead>{t("table.systemReceived")}</TableHead>
             <TableHead>{t("table.provider")}</TableHead>
             <TableHead>{t("table.status")}</TableHead>
             <TableHead>{t("table.date")}</TableHead>
@@ -84,7 +85,7 @@ export function TransactionTable({
           {transactions.length === 0 ? (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="h-32 text-center text-slate-500"
               >
                 {t("table.noTransactions")}
@@ -112,7 +113,16 @@ export function TransactionTable({
                 </TableCell>
                 <TableCell>{txn.planName}</TableCell>
                 <TableCell className="font-medium">
-                  {txn.amount.toLocaleString("vi-VN")} VND
+                  {txn.currency === 'USD' 
+                    ? `$${txn.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                    : `${txn.amount.toLocaleString('vi-VN')} ₫`
+                  }
+                </TableCell>
+                <TableCell className="font-medium">
+                  {txn.systemReceivedCurrency === 'USD' 
+                    ? `$${txn.systemReceivedAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                    : `${txn.systemReceivedAmount.toLocaleString('vi-VN')} ₫`
+                  }
                 </TableCell>
                 <TableCell>{txn.provider}</TableCell>
                 <TableCell>

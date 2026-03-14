@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { DashboardService } from "@/services/dashboard-service";
 import type { TimeSeriesPoint, DashboardMetric } from "@/types/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,6 +32,7 @@ import { Calendar as CalendarIcon } from "lucide-react";
 
 export function AnalyticsChart() {
   const t = useTranslations("admin.dashboard");
+  const locale = useLocale();
   const [data, setData] = useState<TimeSeriesPoint[]>([]);
   const [metric, setMetric] = useState<DashboardMetric>("users");
   const [range, setRange] = useState<string>("7d");
@@ -73,6 +74,7 @@ export function AnalyticsChart() {
           metric,
           fromStr,
           to,
+          locale,
         );
         if (response.data.data) {
           const dataMap: Record<
