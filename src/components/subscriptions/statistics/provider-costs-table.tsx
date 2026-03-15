@@ -31,7 +31,7 @@ const PROVIDER_COLORS: Record<Provider, string> = {
 };
 
 const PROVIDER_LABELS: Record<Provider, string> = {
-  langsmith: 'LangSmith',
+  langsmith: 'LLM',
   deepgram: 'Deepgram',
   elevenlabs: 'ElevenLabs',
   brevo: 'Brevo',

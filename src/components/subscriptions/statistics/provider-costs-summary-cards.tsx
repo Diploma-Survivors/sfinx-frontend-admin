@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { CostSummaryResponse, Provider } from '@/types/provider-costs';
-import { DollarSign, Cpu, Mic, Volume2, Mail } from 'lucide-react';
+import { DollarSign, BrainCircuit, Mic, Volume2, Mail } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 const PROVIDER_META: Record<
@@ -10,8 +10,8 @@ const PROVIDER_META: Record<
   { label: string; icon: React.ElementType; textClass: string; bgClass: string; barColor: string }
 > = {
   langsmith: {
-    label: 'LangSmith',
-    icon: Cpu,
+    label: 'LLM',
+    icon: BrainCircuit,
     textClass: 'text-purple-600 dark:text-purple-400',
     bgClass: 'bg-purple-50 dark:bg-purple-900/20',
     barColor: 'oklch(0.55 0.2 280)',
