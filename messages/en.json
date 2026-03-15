@@ -149,6 +149,10 @@
             "day": "Days",
             "month": "Months",
             "year": "Years"
+        },
+        "tabs": {
+            "revenue": "Revenue",
+            "providerCosts": "Provider Costs"
         }
     },
     "ContestsPage": {
@@ -1642,6 +1646,64 @@
                 "updateError": "Failed to update currency",
                 "deleteSuccess": "Currency deleted successfully",
                 "deleteError": "Failed to delete currency"
+            }
+        },
+        "providerCosts": {
+            "sectionTitle": "Provider API Costs",
+            "sectionDescription": "Monitor third-party API usage and cost breakdown by provider.",
+            "datePresets": {
+                "last7d": "Last 7 days",
+                "last30d": "Last 30 days",
+                "mtd": "Month to date",
+                "custom": "Custom"
+            },
+            "controls": {
+                "refresh": "Refresh",
+                "triggerFetch": "Trigger Fetch",
+                "allProviders": "All providers",
+                "rows": "Rows"
+            },
+            "summary": {
+                "totalCost": "Total API Cost",
+                "allProviders": "All providers combined",
+                "costDistribution": "Cost Distribution",
+                "thisPeriod": "This period",
+                "noData": "No data for this period"
+            },
+            "table": {
+                "provider": "Provider",
+                "date": "Date",
+                "usage": "Usage",
+                "usageTooltip": "Provider-specific usage metrics for the period",
+                "cost": "Cost",
+                "fetchedAt": "Fetched at",
+                "noRecords": "No cost records found for this period.",
+                "page": "Page",
+                "of": "of"
+            },
+            "fetchNow": {
+                "title": "Trigger Manual Cost Fetch",
+                "description": "Immediately fetch provider cost data for a specific past date. The fetch runs asynchronously — records will appear after a few seconds.",
+                "dateLabel": "Date (UTC)",
+                "pollingNote": "After triggering, poll the records list for the selected date to verify the data was written.",
+                "cancel": "Cancel",
+                "trigger": "Trigger Fetch",
+                "triggering": "Triggering…",
+                "successMessage": "Cost fetch triggered for {date}. Check records in a few seconds.",
+                "errorMessage": "Failed to trigger cost fetch"
+            },
+            "errors": {
+                "loadSummary": "Failed to load cost summary",
+                "loadRecords": "Failed to load cost records"
+            },
+            "profit": {
+                "title": "Profitability Overview",
+                "revenue": "Total Revenue",
+                "apiCosts": "API Costs",
+                "grossProfit": "Gross Profit",
+                "margin": "Margin",
+                "samePeriod": "Same date range comparison",
+                "loadError": "Failed to load revenue for profit overview"
             }
         }
     },
