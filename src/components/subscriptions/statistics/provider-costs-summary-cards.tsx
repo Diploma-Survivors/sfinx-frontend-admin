@@ -3,7 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { CostSummaryResponse, Provider } from '@/types/provider-costs';
 import { DollarSign, BrainCircuit, Mic, Volume2, Mail } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 const PROVIDER_META: Record<
   Provider,
@@ -45,23 +46,14 @@ interface ProviderCostsSummaryCardsProps {
   summary: CostSummaryResponse;
 }
 
-function formatUsd(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-}
-
-function formatConverted(value: number, currency: string) {
-  return `${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)} ${currency}`;
-}
-
 export function ProviderCostsSummaryCards({ summary }: ProviderCostsSummaryCardsProps) {
   const t = useTranslations('Subscription.providerCosts.summary');
+  const locale = useLocale();
   const { totalCost, totalCostUsd, byProvider, currency } = summary;
   const showConverted = currency !== 'USD';
+
+  const fmt = (usd: number, converted: number) =>
+    showConverted ? formatCurrency(converted, locale) : formatCurrency(usd, 'en');
 
   return (
     <div className="space-y-4">
@@ -78,13 +70,8 @@ export function ProviderCostsSummaryCards({ summary }: ProviderCostsSummaryCards
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-              {showConverted ? formatConverted(totalCost, currency) : formatUsd(totalCostUsd)}
+              {fmt(totalCostUsd, totalCost)}
             </div>
-            {showConverted && (
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                ≈ {formatUsd(totalCostUsd)}
-              </p>
-            )}
             <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">{t('allProviders')}</p>
           </CardContent>
         </Card>
@@ -106,7 +93,7 @@ export function ProviderCostsSummaryCards({ summary }: ProviderCostsSummaryCards
                   <div className="flex items-center justify-between text-xs">
                     <span className={`font-medium ${meta.textClass}`}>{meta.label}</span>
                     <span className="text-slate-500 dark:text-slate-400">
-                      {formatUsd(entry.costUsd)} ({pct.toFixed(1)}%)
+                      {fmt(entry.costUsd, entry.cost)} ({pct.toFixed(1)}%)
                     </span>
                   </div>
                   <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
@@ -145,13 +132,8 @@ export function ProviderCostsSummaryCards({ summary }: ProviderCostsSummaryCards
                 {entry ? (
                   <>
                     <div className={`text-xl font-bold ${meta.textClass}`}>
-                      {formatUsd(entry.costUsd)}
+                      {fmt(entry.costUsd, entry.cost)}
                     </div>
-                    {showConverted && (
-                      <p className="text-xs text-slate-500 mt-0.5">
-                        {formatConverted(entry.cost, currency)}
-                      </p>
-                    )}
                   </>
                 ) : (
                   <div className="text-xl font-bold text-slate-300 dark:text-slate-600">—</div>

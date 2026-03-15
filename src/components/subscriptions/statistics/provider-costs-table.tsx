@@ -21,7 +21,8 @@ import { Tooltip } from '@/components/ui/tooltip';
 import type { CostRecord, Provider } from '@/types/provider-costs';
 import { format } from 'date-fns';
 import { ChevronLeft, ChevronRight, Info } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 const PROVIDER_COLORS: Record<Provider, string> = {
   langsmith: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
@@ -85,19 +86,13 @@ export function ProviderCostsTable({
   onLimitChange,
 }: ProviderCostsTableProps) {
   const t = useTranslations('Subscription.providerCosts');
+  const locale = useLocale();
   const totalPages = Math.ceil(total / limit);
   const showConverted = currency !== 'USD';
 
   const formatCost = (usd: number, converted: number) => {
-    if (!showConverted) return `$${usd.toFixed(4)}`;
-    return (
-      <span>
-        <span className="font-medium">
-          {new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(converted)} {currency}
-        </span>
-        <span className="text-slate-400 ml-1.5 text-xs">(${usd.toFixed(4)})</span>
-      </span>
-    );
+    if (!showConverted) return formatCurrency(usd, locale, { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+    return formatCurrency(converted, locale, { maximumFractionDigits: 0 });
   };
 
   return (

@@ -1,8 +1,9 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useTranslations } from 'next-intl';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useTranslations, useLocale } from 'next-intl';
 import { TrendingUp, TrendingDown, DollarSign, Cpu, Minus } from 'lucide-react';
+import { formatCurrency } from '@/lib/currency-formatter';
 
 interface ProfitOverviewCardProps {
   totalRevenue: number;
@@ -12,25 +13,23 @@ interface ProfitOverviewCardProps {
   isLoading: boolean;
 }
 
-function formatUsd(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-}
-
 export function ProfitOverviewCard({
   totalRevenue,
   totalCostUsd,
+  totalCostConverted,
+  currency,
   isLoading,
 }: ProfitOverviewCardProps) {
   const t = useTranslations('Subscription.providerCosts.profit');
+  const locale = useLocale();
 
-  const netProfit = totalRevenue - totalCostUsd;
+  const isVnd = currency === 'VND';
+  const totalCost = isVnd ? totalCostConverted : totalCostUsd;
+  const netProfit = totalRevenue - totalCost;
   const margin = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0;
   const isProfitable = netProfit >= 0;
+
+  const fmt = (value: number) => formatCurrency(value, locale);
 
   if (isLoading) {
     return (
@@ -64,7 +63,7 @@ export function ProfitOverviewCard({
           </CardHeader>
           <CardContent>
             <div className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              {formatUsd(totalRevenue)}
+              {fmt(totalRevenue)}
             </div>
           </CardContent>
         </Card>
@@ -81,7 +80,7 @@ export function ProfitOverviewCard({
           </CardHeader>
           <CardContent>
             <div className="text-xl font-bold text-red-600 dark:text-red-400">
-              {formatUsd(totalCostUsd)}
+              {fmt(totalCost)}
             </div>
           </CardContent>
         </Card>
@@ -120,7 +119,7 @@ export function ProfitOverviewCard({
                   : 'text-red-600 dark:text-red-400'
               }`}
             >
-              {isProfitable ? '+' : ''}{formatUsd(netProfit)}
+              {isProfitable ? '+' : ''}{fmt(netProfit)}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 flex items-center gap-1">
               <Minus className="w-3 h-3" />
