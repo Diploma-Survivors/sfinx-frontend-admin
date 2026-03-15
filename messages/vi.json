@@ -149,6 +149,10 @@
             "day": "Ngày",
             "month": "Tháng",
             "year": "Năm"
+        },
+        "tabs": {
+            "revenue": "Doanh Thu",
+            "providerCosts": "Chi Phí API"
         }
     },
     "ContestsPage": {
@@ -1568,6 +1572,64 @@
                 "updateError": "Không thể cập nhật tiền tệ",
                 "deleteSuccess": "Xóa tiền tệ thành công",
                 "deleteError": "Không thể xóa tiền tệ"
+            }
+        },
+        "providerCosts": {
+            "sectionTitle": "Chi Phí API Nhà Cung Cấp",
+            "sectionDescription": "Theo dõi lượng sử dụng và chi phí API từ các nhà cung cấp bên thứ ba.",
+            "datePresets": {
+                "last7d": "7 ngày qua",
+                "last30d": "30 ngày qua",
+                "mtd": "Tháng hiện tại",
+                "custom": "Tùy chỉnh"
+            },
+            "controls": {
+                "refresh": "Làm mới",
+                "triggerFetch": "Kích Hoạt",
+                "allProviders": "Tất cả nhà cung cấp",
+                "rows": "Hàng"
+            },
+            "summary": {
+                "totalCost": "Tổng Chi Phí API",
+                "allProviders": "Tổng hợp từ tất cả nhà cung cấp",
+                "costDistribution": "Phân Bổ Chi Phí",
+                "thisPeriod": "Kỳ này",
+                "noData": "Không có dữ liệu cho kỳ này"
+            },
+            "table": {
+                "provider": "Nhà cung cấp",
+                "date": "Ngày",
+                "usage": "Sử dụng",
+                "usageTooltip": "Số liệu sử dụng theo từng nhà cung cấp trong kỳ",
+                "cost": "Chi phí",
+                "fetchedAt": "Cập nhật lúc",
+                "noRecords": "Không tìm thấy bản ghi chi phí cho kỳ này.",
+                "page": "Trang",
+                "of": "trong"
+            },
+            "fetchNow": {
+                "title": "Kích Hoạt Lấy Dữ Liệu Thủ Công",
+                "description": "Ngay lập tức lấy dữ liệu chi phí nhà cung cấp cho một ngày cụ thể trong quá khứ. Quá trình chạy bất đồng bộ — bản ghi sẽ xuất hiện sau vài giây.",
+                "dateLabel": "Ngày (UTC)",
+                "pollingNote": "Sau khi kích hoạt, kiểm tra danh sách bản ghi cho ngày đã chọn để xác nhận dữ liệu đã được ghi.",
+                "cancel": "Hủy",
+                "trigger": "Kích Hoạt",
+                "triggering": "Đang kích hoạt…",
+                "successMessage": "Đã kích hoạt lấy dữ liệu cho {date}. Kiểm tra bản ghi sau vài giây.",
+                "errorMessage": "Không thể kích hoạt lấy dữ liệu chi phí"
+            },
+            "errors": {
+                "loadSummary": "Không thể tải tóm tắt chi phí",
+                "loadRecords": "Không thể tải bản ghi chi phí"
+            },
+            "profit": {
+                "title": "Tổng Quan Lợi Nhuận",
+                "revenue": "Tổng Doanh Thu",
+                "apiCosts": "Chi Phí API",
+                "grossProfit": "Lợi Nhuận Gộp",
+                "margin": "Biên Lợi Nhuận",
+                "samePeriod": "So sánh cùng khoảng thời gian",
+                "loadError": "Không thể tải doanh thu để tính lợi nhuận"
             }
         }
     },
